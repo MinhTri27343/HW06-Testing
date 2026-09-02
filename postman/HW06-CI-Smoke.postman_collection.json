@@ -23,7 +23,7 @@
           "listen": "test",
           "script": {
             "exec": [
-              "pm.test('Status 200',()=>pm.response.to.have.status(200));",
+              "pm.test('[CI FAILURE DEMO] Cố ý kỳ vọng 201',()=>pm.response.to.have.status(201));",
               "const d=pm.response.json();pm.test('Có message và token',()=>{pm.expect(d.message).to.be.a('string');pm.expect(d.resetToken).to.be.a('string');});"
             ]
           }
