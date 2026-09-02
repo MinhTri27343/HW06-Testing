@@ -1,0 +1,1311 @@
+[
+  {
+    "id": "FR-09-TC-001",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "domain",
+    "title": "SAVE10 hợp lệ trên ngưỡng",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "coupon_id",
+      "discount_amount",
+      "final_amount",
+      "message"
+    ],
+    "expectedRule": "percent-formula",
+    "expectedData": {
+      "discount": 50000,
+      "final": 450000
+    },
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; 1 assertion lỗi: expected -4500000 to deeply equal 50000",
+    "status": "FAIL",
+    "bugId": "BUG-FR09-01"
+  },
+  {
+    "id": "FR-09-TC-002",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "domain",
+    "title": "BIGBUY fixed hợp lệ",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 600000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "coupon_id",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "fixed-formula",
+    "expectedData": {
+      "discount": 50000,
+      "final": 550000
+    },
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-003",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "domain",
+    "title": "VIP100 hợp lệ",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "VIP100",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "fixed-formula",
+    "expectedData": {
+      "discount": 100000,
+      "final": 400000
+    },
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-004",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "state",
+    "title": "Coupon hết hạn bị từ chối",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "EXPIRED",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-005",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "domain",
+    "title": "Coupon không tồn tại",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "NO_SUCH_CODE",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 404,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 404; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-006",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "Thiếu code",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-007",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "Code rỗng",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-008",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "Code chỉ có khoảng trắng",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "   ",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 404; 1 assertion lỗi: expected response to have status code 400 but got 404",
+    "status": "FAIL",
+    "bugId": "REVIEW"
+  },
+  {
+    "id": "FR-09-TC-009",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "Code sai chữ thường hoa",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "save10",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 404,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 404; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-010",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "security",
+    "title": "Code SQL injection không được thực thi",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "' OR 1=1 --",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 404,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-05"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 404; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-011",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "boundary",
+    "title": "SAVE10 đúng ngưỡng tối thiểu",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 300000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "percent-formula",
+    "expectedData": {
+      "discount": 30000,
+      "final": 270000
+    },
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INVALID",
+    "auditReason": "Bản AI ban đầu suy đoán oracle theo hành vi phổ biến thay vì truy vết SRS.",
+    "correction": "Đã thay oracle bằng status/ràng buộc trong SRS và bổ sung liên kết FR/SEC.",
+    "actualResult": "HTTP 400; 5 assertion lỗi: expected response to have status code 200 but got 400 | expected { Object (error) } to have property 'success' | expected { Object (error) } to have property 'discount_amount' | expected { Object (error) } to have property 'final_amount' | expected undefined to deeply equal 30000",
+    "status": "FAIL",
+    "bugId": "BUG-FR09-02"
+  },
+  {
+    "id": "FR-09-TC-012",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "boundary",
+    "title": "SAVE10 thấp hơn ngưỡng 1 đồng",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 299999,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-013",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "boundary",
+    "title": "SAVE10 cao hơn ngưỡng 1 đồng",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 300001,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "percent-formula",
+    "expectedData": {
+      "discount": 30000,
+      "final": 270001
+    },
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; 1 assertion lỗi: expected -2700009 to deeply equal 30000",
+    "status": "FAIL",
+    "bugId": "BUG-FR09-01"
+  },
+  {
+    "id": "FR-09-TC-014",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "boundary",
+    "title": "BIGBUY đúng ngưỡng tối thiểu",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "fixed-formula",
+    "expectedData": {
+      "discount": 50000,
+      "final": 450000
+    },
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "HTTP 400; 5 assertion lỗi: expected response to have status code 200 but got 400 | expected { Object (error) } to have property 'success' | expected { Object (error) } to have property 'discount_amount' | expected { Object (error) } to have property 'final_amount' | expected undefined to deeply equal 50000",
+    "status": "FAIL",
+    "bugId": "BUG-FR09-02"
+  },
+  {
+    "id": "FR-09-TC-015",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "total_amount âm",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": -1,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-016",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "total_amount bằng 0",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 0,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-017",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "Thiếu total_amount",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-018",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "total_amount null",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": null,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-019",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "total_amount là chuỗi số",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": "500000",
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; 2 assertion lỗi: expected response to have status code 400 but got 200 | expected { success: true, coupon_id: 1, …(3) } to have property 'error'",
+    "status": "FAIL",
+    "bugId": "BUG-FR09-04"
+  },
+  {
+    "id": "FR-09-TC-020",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "total_amount là chuỗi bất kỳ",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": "abc",
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-021",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "boundary",
+    "title": "total_amount số thập phân",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 500000.5,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "HTTP 200; 2 assertion lỗi: expected response to have status code 400 but got 200 | expected { success: true, coupon_id: 1, …(3) } to have property 'error'",
+    "status": "FAIL",
+    "bugId": "BUG-FR09-04"
+  },
+  {
+    "id": "FR-09-TC-022",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "boundary",
+    "title": "total_amount rất lớn",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 9007199254740991,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "fixed-formula",
+    "expectedData": {
+      "discount": 50000,
+      "final": 9007199254690991
+    },
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INVALID",
+    "auditReason": "Bản AI ban đầu suy đoán oracle theo hành vi phổ biến thay vì truy vết SRS.",
+    "correction": "Đã thay oracle bằng status/ràng buộc trong SRS và bổ sung liên kết FR/SEC.",
+    "actualResult": "HTTP 200; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-023",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "security",
+    "title": "Thiếu JWT bị từ chối",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 401,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; 2 assertion lỗi: expected response to have status code 401 but got 200 | expected { success: true, coupon_id: 1, …(3) } to have property 'error'",
+    "status": "FAIL",
+    "bugId": "BUG-FR09-03"
+  },
+  {
+    "id": "FR-09-TC-024",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "security",
+    "title": "JWT không hợp lệ bị từ chối",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "invalid",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 403,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; 2 assertion lỗi: expected response to have status code 403 but got 200 | expected { success: true, coupon_id: 1, …(3) } to have property 'error'",
+    "status": "FAIL",
+    "bugId": "BUG-FR09-03"
+  },
+  {
+    "id": "FR-09-TC-025",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "security",
+    "title": "JWT user hợp lệ được chấp nhận",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 600000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "fixed-formula",
+    "expectedData": {
+      "discount": 50000,
+      "final": 550000
+    },
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-026",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "Thiếu user_id khi đã đăng nhập",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 600000
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "identity-from-token",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-027",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "security",
+    "title": "user_id của người khác bị bỏ qua",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 600000,
+      "user_id": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "identity-from-token",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-028",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "user_id dạng chuỗi bị từ chối",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 600000,
+      "user_id": "2"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "HTTP 200; 2 assertion lỗi: expected response to have status code 400 but got 200 | expected { success: true, coupon_id: 2, …(3) } to have property 'error'",
+    "status": "FAIL",
+    "bugId": "BUG-FR09-04"
+  },
+  {
+    "id": "FR-09-TC-029",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "user_id không tồn tại bị từ chối",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 600000,
+      "user_id": 999999
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; 2 assertion lỗi: expected response to have status code 400 but got 200 | expected { success: true, coupon_id: 2, …(3) } to have property 'error'",
+    "status": "FAIL",
+    "bugId": "BUG-FR09-04"
+  },
+  {
+    "id": "FR-09-TC-030",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "state",
+    "title": "SAVE10 đã dùng hết lượt bị từ chối",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "record-save10-usage",
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-031",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "state",
+    "title": "VIP100 còn lượt thứ hai",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "VIP100",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "fixed-formula",
+    "expectedData": {
+      "discount": 100000,
+      "final": 400000
+    },
+    "setup": "record-vip100-once",
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-032",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "state",
+    "title": "VIP100 hết hai lượt",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "VIP100",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "record-vip100-twice",
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-033",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "schema",
+    "title": "Response thành công dùng đúng kiểu dữ liệu",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 600000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "coupon_id",
+      "discount_amount",
+      "final_amount",
+      "message"
+    ],
+    "expectedRule": "success-types",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INVALID",
+    "auditReason": "Bản AI ban đầu suy đoán oracle theo hành vi phổ biến thay vì truy vết SRS.",
+    "correction": "Đã thay oracle bằng status/ràng buộc trong SRS và bổ sung liên kết FR/SEC.",
+    "actualResult": "HTTP 200; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-034",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "schema",
+    "title": "Response lỗi có trường error",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "MISSING",
+      "total_amount": 600000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 404,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 404; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-035",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "security",
+    "title": "Prototype-shaped code không gây lỗi máy chủ",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "__proto__",
+      "total_amount": 600000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 404,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "HTTP 404; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-036",
+    "fr": "FR-09",
+    "source": "HUMAN",
+    "category": "concurrency",
+    "title": "Hai request đồng thời không vượt max_uses_per_user",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "concurrent-usage",
+    "expectedData": null,
+    "setup": "record-save10-usage",
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-037",
+    "fr": "FR-09",
+    "source": "HUMAN",
+    "category": "boundary",
+    "title": "Fixed discount lớn hơn tổng tiền không tạo final âm",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "VIP100",
+      "total_amount": 50000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "nonnegative-final",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-038",
+    "fr": "FR-09",
+    "source": "HUMAN",
+    "category": "security",
+    "title": "Client giả mạo user_id không chiếm lượt của nạn nhân",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "VIP100",
+      "total_amount": 500000,
+      "user_id": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success"
+    ],
+    "expectedRule": "identity-from-token",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "HTTP 200; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-039",
+    "fr": "FR-09",
+    "source": "HUMAN",
+    "category": "state",
+    "title": "Ghi nhận coupon usage bắt buộc đúng danh tính JWT",
+    "endpoint": "/api/coupon-usage",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "coupon_id": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "HTTP 200; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-040",
+    "fr": "FR-09",
+    "source": "HUMAN",
+    "category": "boundary",
+    "title": "Hạn dùng được đánh giá nhất quán tại ranh giới ngày",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "EXPIRED",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "expiry-boundary",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  }
+]
