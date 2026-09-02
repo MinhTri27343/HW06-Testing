@@ -54,6 +54,6 @@ Các suite riêng: `fr03`, `fr09`, `fr17`, `data`.
 
 - [ ] Ảnh Postman Console/Newman hiển thị hostname và `X-Student-Id: 23127502`.
 - [ ] Ảnh thật cho từng GitHub Issue.
-- [ ] GitHub Actions run passing và failing-demo cùng link/commit SHA.
+- [x] GitHub Actions run passing và failing-demo cùng link/commit SHA.
 - [ ] Sơ đồ Agent Skill do sinh viên tự vẽ.
 - [ ] Video demo YouTube nếu chọn nộp.

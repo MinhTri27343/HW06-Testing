@@ -106,12 +106,16 @@ Issue drafts nằm trong `reports/issues/`. Trạng thái hiện tại là draft
 
 Workflow `.github/workflows/api-tests.yml` cài dependencies, khởi động SUT, chờ readiness, chạy suite được chọn và upload Newman evidence. Push lên `main` mặc định chạy smoke suite. `workflow_dispatch` cho phép chọn `smoke`, `full` hoặc `data`.
 
-Hai evidence run cần hoàn thành tại checkpoint GitHub:
+Hai run thực tế đã được thực hiện ngày 2026-09-02:
 
-- Passing commit/run: **TODO**.
-- Branch/commit `ci-failure-demo` với đúng một assertion minh họa bị fail: **TODO**.
+- [`main` — Actions #1 Success, commit `4395213`](https://github.com/MinhTri27343/HW06-Testing/actions/runs/33656494043): 3 requests, 6 assertions, 0 failures.
+- [`ci-failure-demo` — Actions #2 Failure, commit `e833f6e`](https://github.com/MinhTri27343/HW06-Testing/actions/runs/33656705278): 3 requests, 6 assertions, đúng 1 assertion cố ý thất bại.
 
-Không tạo link hoặc ảnh giả trong báo cáo.
+![Run passing](ci/screenshots/main-passing.png)
+
+![Run failing demo](ci/screenshots/ci-failure-demo.png)
+
+Chi tiết pipeline, commit SHA đầy đủ và cách tạo failure demo được ghi trong `reports/CI_CD_Report.md`.
 
 ## 9. Agent Skill
 
@@ -182,6 +186,5 @@ Công cụ chính: OpenAI Codex. Ngày thực hiện: 2026-09-02, múi giờ Asi
 - AI không tạo hoặc làm giả screenshot, GitHub Actions URL, GitHub Issue URL, sơ đồ tự vẽ hay video.
 - Các mục `TODO` chỉ được cập nhật sau khi có bằng chứng thật.
 - Nhật ký này cần được sinh viên đối chiếu với lịch sử phiên Codex trước khi nộp.
-
 
 

@@ -22,16 +22,21 @@ Push lên `main` và `ci-failure-demo` chạy smoke mặc định. Manual dispat
 
 ## Run A - all passing
 
-- Commit SHA: **TODO sau khi push**
-- Actions URL: **TODO sau khi push**
-- Screenshot: **TODO - sinh viên chụp ảnh thật**
+- Branch: `main`
+- Commit SHA: [`43952135631f0f832682e5ee494377033331c624`](https://github.com/MinhTri27343/HW06-Testing/commit/43952135631f0f832682e5ee494377033331c624)
+- Actions run: [HW06 API Tests #1 — Success](https://github.com/MinhTri27343/HW06-Testing/actions/runs/33656494043)
+- Kết quả: 3 requests, 6 assertions, 0 failures; tổng thời gian pipeline 24 giây.
+
+![GitHub Actions run passing](ci/screenshots/main-passing.png)
 
 ## Run B - exactly one demonstration failure
 
 - Branch: `ci-failure-demo`
-- Commit SHA: **TODO sau checkpoint**
-- Actions URL: **TODO sau checkpoint**
-- Assertion thay đổi: **TODO - chỉ thay một expected value trong smoke collection**
-- Screenshot: **TODO - sinh viên chụp ảnh thật**
+- Commit SHA: [`e833f6e5ec6e5f0eccee1e7aa3b17fa6f2d07a07`](https://github.com/MinhTri27343/HW06-Testing/commit/e833f6e5ec6e5f0eccee1e7aa3b17fa6f2d07a07)
+- Actions run: [HW06 API Tests #2 — Failure](https://github.com/MinhTri27343/HW06-Testing/actions/runs/33656705278)
+- Assertion thay đổi duy nhất: status mong đợi của request FR-03 smoke từ `200` thành `201`, có nhãn `[CI FAILURE DEMO]`.
+- Kết quả log: 3 requests, 6 assertions, đúng 1 assertion failure; artifact Newman vẫn được upload; tổng thời gian pipeline 24 giây.
 
-Sau run B, `main` vẫn giữ phiên bản smoke passing. Run B phải được mô tả rõ là minh họa pipeline, không phải bug của SUT.
+![GitHub Actions run failing demo](ci/screenshots/ci-failure-demo.png)
+
+Sau run B, `main` vẫn giữ phiên bản smoke passing. Run B là minh họa pipeline phát hiện test thất bại, không phải bug của SUT.

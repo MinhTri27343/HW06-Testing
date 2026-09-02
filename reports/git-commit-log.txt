@@ -17,3 +17,5 @@ d68539d | 2026-09-02 23:01:23 +0700 | MinhTri27343 | feat(test): add Postman New
 b2abdc3 | 2026-09-02 23:01:38 +0700 | MinhTri27343 | docs: add verified Excel test workbook
 4547d8f | 2026-09-02 23:01:38 +0700 | MinhTri27343 | feat(skill): add reusable EShop API test generator
 a2609ca | 2026-09-02 23:01:39 +0700 | MinhTri27343 | docs: complete HW06 reports audit and submission checklist
+4395213 | 2026-09-02 23:41:20 +0700 | MinhTri27343 | test: rerun full suite and standardize Newman reports
+e833f6e | 2026-09-02 23:43:43 +0700 | MinhTri27343 | test(ci): add one intentional failure demo [ci-failure-demo]
