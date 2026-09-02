@@ -1,0 +1,19 @@
+b68b128 | 2026-09-02 22:13:48 +0700 | MinhTri27343 | first commit
+4349778 | 2026-09-02 22:27:37 +0700 | MinhTri27343 | chore: import HW06 SUT baseline and specifications
+cf2738f | 2026-09-02 22:36:36 +0700 | MinhTri27343 | test(fr03): generate AI password recovery cases
+2f8cb99 | 2026-09-02 22:36:36 +0700 | MinhTri27343 | test(fr09): generate AI coupon application cases
+7ae185a | 2026-09-02 22:36:36 +0700 | MinhTri27343 | test(fr17): generate AI coupon management cases
+2290dbb | 2026-09-02 22:36:36 +0700 | MinhTri27343 | test(fr03): audit AI-generated cases
+26dbb3d | 2026-09-02 22:36:36 +0700 | MinhTri27343 | test(fr09): audit AI-generated cases
+cc2fd0e | 2026-09-02 22:36:37 +0700 | MinhTri27343 | test(fr17): audit AI-generated cases
+4fe4a07 | 2026-09-02 22:36:37 +0700 | MinhTri27343 | test(fr03): extend with human-reviewed security cases
+c003d4b | 2026-09-02 22:36:37 +0700 | MinhTri27343 | test(fr09): extend with human-reviewed boundary cases
+da2e889 | 2026-09-02 22:36:37 +0700 | MinhTri27343 | test(fr17): extend with human-reviewed admin cases
+d68539d | 2026-09-02 23:01:23 +0700 | MinhTri27343 | feat(test): add Postman Newman suites and CI workflow
+856d1a0 | 2026-09-02 23:01:24 +0700 | MinhTri27343 | test(fr03): execute password recovery suite and draft bugs
+3c158ec | 2026-09-02 23:01:24 +0700 | MinhTri27343 | test(fr09): execute coupon application suite and draft bugs
+80d16bb | 2026-09-02 23:01:24 +0700 | MinhTri27343 | test(fr17): execute coupon management suite and draft bugs
+7f8abfa | 2026-09-02 23:01:24 +0700 | MinhTri27343 | test: consolidate execution evidence and bug traceability
+b2abdc3 | 2026-09-02 23:01:38 +0700 | MinhTri27343 | docs: add verified Excel test workbook
+4547d8f | 2026-09-02 23:01:38 +0700 | MinhTri27343 | feat(skill): add reusable EShop API test generator
+a2609ca | 2026-09-02 23:01:39 +0700 | MinhTri27343 | docs: complete HW06 reports audit and submission checklist
