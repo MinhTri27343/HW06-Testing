@@ -1,0 +1,7 @@
+interface:
+  display_name: "EShop API Test Generator"
+  short_description: "Sinh và kiểm toán ca kiểm thử API EShop"
+  default_prompt: "Use $eshop-api-test-generator to generate and audit EShop API test cases from the supplied specification."
+
+policy:
+  allow_implicit_invocation: true
