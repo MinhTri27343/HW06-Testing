@@ -211,7 +211,7 @@ function setupScript(testCase) {
     { key: "X-Student-Id", value: studentId },
     ...(token ? [{ key: "Authorization", value: `Bearer ${token}` }] : []),
   ];
-  const base = "pm.environment.get('baseUrl') || 'http://127.0.0.1:3000'";
+  const base = "(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')";
   const send = (method, urlExpression, body, tokenExpression = null, callback = "") => {
     const headersExpr = tokenExpression
       ? `[{key:'Content-Type',value:'application/json'},{key:'X-Student-Id',value:'${studentId}'},{key:'Authorization',value:'Bearer '+${tokenExpression}}]`
@@ -227,6 +227,9 @@ function setupScript(testCase) {
   }
   if (testCase.setup === "issue-two-otps") {
     return `pm.sendRequest({url:${base}+'/api/forgot-password',method:'POST',header:${JSON.stringify(header())},body:{mode:'raw',raw:JSON.stringify({email:'test@eshop.com'})}},(e,r)=>{if(e)throw e;pm.collectionVariables.set('oldOtp',r.json().resetToken);pm.sendRequest({url:${base}+'/api/forgot-password',method:'POST',header:${JSON.stringify(header())},body:{mode:'raw',raw:JSON.stringify({email:'test@eshop.com'})}},()=>{});});`;
+  }
+  if (testCase.expectedRule === "rate-limit") {
+    return `let attempts=0;function tryInvalidOtp(){if(attempts++>=5)return;pm.sendRequest({url:${base}+'/api/reset-password',method:'POST',header:${JSON.stringify(header())},body:{mode:'raw',raw:JSON.stringify({email:'test@eshop.com',resetToken:'000000',newPassword:'ValidPass1!'})}},(e)=>{if(e)throw e;tryInvalidOtp();});}tryInvalidOtp();`;
   }
   const usageCount = testCase.setup === "record-vip100-twice" ? 2 : 1;
   const couponId = testCase.setup?.includes("vip100") ? 3 : 1;
@@ -246,14 +249,14 @@ function testScript(testCase) {
   return [
     `pm.test('[${testCase.id}] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('${studentId}'));`,
     `pm.test('[${testCase.id}] HTTP status = ${testCase.expectedStatus}',()=>pm.response.to.have.status(${testCase.expectedStatus}));`,
-    "let data={}; try{data=pm.response.json();}catch(e){}",
-    ...testCase.expectedKeys.map((key) => `pm.test('[${testCase.id}] Có trường ${key}',()=>pm.expect(data).to.have.property('${key}'));`),
-    testCase.expectedRule === "otp-six-digits" ? `pm.test('[${testCase.id}] OTP có đúng 6 chữ số',()=>pm.expect(String(data.resetToken||'')).to.match(/^\\d{6}$/));` : "",
-    testCase.expectedRule === "no-password-field" ? `pm.test('[${testCase.id}] Không lộ password',()=>pm.expect(JSON.stringify(data)).not.to.match(/password/i));` : "",
-    testCase.expectedRule === "array-response" ? `pm.test('[${testCase.id}] Response là array',()=>pm.expect(data).to.be.an('array'));` : "",
-    testCase.expectedRule === "coupon-list-schema" ? `pm.test('[${testCase.id}] Schema coupon list',()=>{pm.expect(data).to.be.an('array');if(data.length){['id','code','type','discount_value','min_order_amount','expired_at','is_active','max_uses_per_user'].forEach(k=>pm.expect(data[0]).to.have.property(k));}});` : "",
-    testCase.expectedRule === "success-types" ? `pm.test('[${testCase.id}] Kiểu dữ liệu success response',()=>{pm.expect(data.success).to.be.a('boolean');pm.expect(data.coupon_id).to.be.a('number');pm.expect(data.discount_amount).to.be.a('number');pm.expect(data.final_amount).to.be.a('number');});` : "",
-    ["percent-formula", "fixed-formula"].includes(testCase.expectedRule) && testCase.expectedData ? `pm.test('[${testCase.id}] Công thức giảm giá đúng',()=>{pm.expect(data.discount_amount).to.eql(${testCase.expectedData.discount});pm.expect(data.final_amount).to.eql(${testCase.expectedData.final});});` : "",
+    "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+    ...testCase.expectedKeys.map((key) => `pm.test('[${testCase.id}] Có trường ${key}',()=>pm.expect(responseJson).to.have.property('${key}'));`),
+    testCase.expectedRule === "otp-six-digits" ? `pm.test('[${testCase.id}] OTP có đúng 6 chữ số',()=>pm.expect(String(responseJson.resetToken||'')).to.match(/^\\d{6}$/));` : "",
+    testCase.expectedRule === "no-password-field" ? `pm.test('[${testCase.id}] Không lộ trường password',()=>{const hasPasswordKey=(v)=>v&&typeof v==='object'&&(Object.keys(v).some(k=>k.toLowerCase()==='password')||Object.values(v).some(hasPasswordKey));pm.expect(hasPasswordKey(responseJson)).to.eql(false);});` : "",
+    testCase.expectedRule === "array-response" ? `pm.test('[${testCase.id}] Response là array',()=>pm.expect(responseJson).to.be.an('array'));` : "",
+    testCase.expectedRule === "coupon-list-schema" ? `pm.test('[${testCase.id}] Schema coupon list',()=>{pm.expect(responseJson).to.be.an('array');if(responseJson.length){['id','code','type','discount_value','min_order_amount','expired_at','is_active','max_uses_per_user'].forEach(k=>pm.expect(responseJson[0]).to.have.property(k));}});` : "",
+    testCase.expectedRule === "success-types" ? `pm.test('[${testCase.id}] Kiểu dữ liệu success response',()=>{pm.expect(responseJson.success).to.be.a('boolean');pm.expect(responseJson.coupon_id).to.be.a('number');pm.expect(responseJson.discount_amount).to.be.a('number');pm.expect(responseJson.final_amount).to.be.a('number');});` : "",
+    ["percent-formula", "fixed-formula"].includes(testCase.expectedRule) && testCase.expectedData ? `pm.test('[${testCase.id}] Công thức giảm giá đúng',()=>{pm.expect(responseJson.discount_amount).to.eql(${testCase.expectedData.discount});pm.expect(responseJson.final_amount).to.eql(${testCase.expectedData.final});});` : "",
   ].filter(Boolean);
 }
 
@@ -400,6 +403,15 @@ for (const fr of Object.keys(counters)) {
   fs.writeFileSync(path.join(root, "test-cases", "final", `${slug}-final.json`), JSON.stringify(finalRows, null, 2) + "\n");
 }
 fs.writeFileSync(path.join(root, "postman", "HW06.postman_collection.json"), JSON.stringify(collection, null, 2) + "\n");
+for (const fr of Object.keys(counters)) {
+  const slug = fr.toLowerCase().replace("-", "");
+  const scoped = {
+    ...collection,
+    info: { ...collection.info, name: `HW06 API Testing - ${fr}` },
+    item: [collection.item[0], collection.item.find((folder) => folder.name === fr)],
+  };
+  fs.writeFileSync(path.join(root, "postman", `HW06-${slug.toUpperCase()}.postman_collection.json`), JSON.stringify(scoped, null, 2) + "\n");
+}
 fs.writeFileSync(path.join(root, "postman", "HW06.postman_environment.json"), JSON.stringify(environment, null, 2) + "\n");
 fs.writeFileSync(path.join(root, "postman", "HW06-CI-Smoke.postman_collection.json"), JSON.stringify(smokeCollection, null, 2) + "\n");
 fs.writeFileSync(path.join(root, "postman", "HW06-FR09-DataDriven.postman_collection.json"), JSON.stringify(dataDrivenCollection, null, 2) + "\n");

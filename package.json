@@ -1,0 +1,20 @@
+{
+  "name": "hw06-api-testing-23127502",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Postman/Newman test suite for EShop FR-03, FR-09 and FR-17",
+  "scripts": {
+    "generate": "node scripts/generate_test_assets.mjs",
+    "test:full": "newman run postman/HW06.postman_collection.json -e postman/HW06.postman_environment.json -r cli,json,htmlextra --reporter-json-export reports/newman/full-results.json --reporter-htmlextra-export reports/newman/full-report.html",
+    "test:fr03": "newman run postman/HW06-FR03.postman_collection.json -e postman/HW06.postman_environment.json -r cli,json,htmlextra --reporter-json-export reports/newman/fr03-results.json --reporter-htmlextra-export reports/newman/fr03-report.html",
+    "test:fr09": "newman run postman/HW06-FR09.postman_collection.json -e postman/HW06.postman_environment.json -r cli,json,htmlextra --reporter-json-export reports/newman/fr09-results.json --reporter-htmlextra-export reports/newman/fr09-report.html",
+    "test:fr17": "newman run postman/HW06-FR17.postman_collection.json -e postman/HW06.postman_environment.json -r cli,json,htmlextra --reporter-json-export reports/newman/fr17-results.json --reporter-htmlextra-export reports/newman/fr17-report.html",
+    "test:smoke": "newman run postman/HW06-CI-Smoke.postman_collection.json -e postman/HW06.postman_environment.json -r cli,json,htmlextra --reporter-json-export reports/newman/smoke-results.json --reporter-htmlextra-export reports/newman/smoke-report.html",
+    "test:data": "newman run postman/HW06-FR09-DataDriven.postman_collection.json -e postman/HW06.postman_environment.json -d postman/data/fr09-boundaries.json -r cli,json,htmlextra --reporter-json-export reports/newman/data-results.json --reporter-htmlextra-export reports/newman/data-report.html",
+    "verify:assets": "node scripts/verify_assets.mjs"
+  },
+  "devDependencies": {
+    "newman": "^6.2.1",
+    "newman-reporter-htmlextra": "^1.23.1"
+  }
+}

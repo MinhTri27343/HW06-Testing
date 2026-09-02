@@ -1,0 +1,33 @@
+{
+  "studentId": "23127502",
+  "generatedAt": "2026-09-02T15:46:21.509Z",
+  "totals": [
+    {
+      "fr": "FR-03",
+      "total": 40,
+      "ai": 35,
+      "human": 5,
+      "valid": 27,
+      "invalid": 3,
+      "incomplete": 5
+    },
+    {
+      "fr": "FR-09",
+      "total": 40,
+      "ai": 35,
+      "human": 5,
+      "valid": 27,
+      "invalid": 3,
+      "incomplete": 5
+    },
+    {
+      "fr": "FR-17",
+      "total": 40,
+      "ai": 35,
+      "human": 5,
+      "valid": 27,
+      "invalid": 3,
+      "incomplete": 5
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "info": {
+    "name": "HW06 CI Smoke",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.request.headers.upsert({key:'X-Student-Id',value:'23127502'});",
+          "console.log('X-Student-Id: 23127502', pm.info.requestName);"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "FR-03 | Forgot password responds",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200',()=>pm.response.to.have.status(200));",
+              "const d=pm.response.json();pm.test('Có message và token',()=>{pm.expect(d.message).to.be.a('string');pm.expect(d.resetToken).to.be.a('string');});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\":\"test@eshop.com\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/forgot-password",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "forgot-password"
+          ]
+        }
+      }
+    },
+    {
+      "name": "FR-09 | BIGBUY fixed calculation",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 200',()=>pm.response.to.have.status(200));",
+              "const d=pm.response.json();pm.test('Fixed formula',()=>{pm.expect(d.discount_amount).to.eql(50000);pm.expect(d.final_amount).to.eql(550000);});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"code\":\"BIGBUY\",\"total_amount\":600000,\"user_id\":2}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/apply-coupon",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "apply-coupon"
+          ]
+        }
+      }
+    },
+    {
+      "name": "FR-17 | Missing token rejected",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status 401',()=>pm.response.to.have.status(401));",
+              "pm.test('Error schema',()=>pm.expect(pm.response.json()).to.have.property('error'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/coupons",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "coupons"
+          ]
+        }
+      }
+    }
+  ]
+}

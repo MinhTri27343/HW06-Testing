@@ -10,9 +10,6 @@ node_modules/
 !.env.example
 
 # Test runtime output
-reports/newman/*.json
-reports/newman/*.xml
-reports/newman/*.html
 reports/newman/*.log
 reports/newman/runtime/
 postman/runtime-environment.json
@@ -25,4 +22,6 @@ postman/runtime-environment.json
 Thumbs.db
 .vscode/
 .idea/
-
+tmp/
+outputs/**/previews/
+outputs/**/*.inspect.ndjson

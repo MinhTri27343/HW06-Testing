@@ -1,0 +1,3876 @@
+[
+  {
+    "id": "FR-03-TC-001",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "domain",
+    "title": "Email user đã đăng ký nhận OTP",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com"
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message",
+      "resetToken"
+    ],
+    "expectedRule": "otp-six-digits",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-002",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "domain",
+    "title": "Email admin đã đăng ký nhận OTP",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "admin@eshop.com"
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message",
+      "resetToken"
+    ],
+    "expectedRule": "otp-six-digits",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-003",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "domain",
+    "title": "Email chưa đăng ký bị từ chối",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "missing@eshop.com"
+    },
+    "rawBody": null,
+    "expectedStatus": 404,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-004",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Email rỗng",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": ""
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-005",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Thiếu trường email",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {},
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-006",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Email null",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": null
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-007",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Email sai định dạng thiếu @",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test.eshop.com"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-008",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Email sai định dạng thiếu domain",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-009",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Email có khoảng trắng đầu cuối",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": " test@eshop.com "
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-010",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "security",
+    "title": "Payload email SQL injection không được thực thi",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "' OR 1=1 --"
+    },
+    "rawBody": null,
+    "expectedStatus": 404,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-05"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-011",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "security",
+    "title": "Email dạng object bị từ chối",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": {
+        "$ne": null
+      }
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-05"
+    ],
+    "aiAudit": "INVALID",
+    "auditReason": "Bản AI ban đầu suy đoán oracle theo hành vi phổ biến thay vì truy vết SRS.",
+    "correction": "Đã thay oracle bằng status/ràng buộc trong SRS và bổ sung liên kết FR/SEC.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-012",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "schema",
+    "title": "Response lấy OTP không lộ password",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com"
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message",
+      "resetToken"
+    ],
+    "expectedRule": "no-password-field",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-01",
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-013",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "boundary",
+    "title": "OTP trả về đúng 6 chữ số",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com"
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message",
+      "resetToken"
+    ],
+    "expectedRule": "otp-six-digits",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-014",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "domain",
+    "title": "Reset với OTP hợp lệ",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-015",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "domain",
+    "title": "Reset với OTP sai",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "999999",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-016",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "security",
+    "title": "OTP của email này không dùng cho email khác",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "admin@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-user-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-017",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Reset thiếu email",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "resetToken": "123456",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-018",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Reset thiếu OTP",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-019",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Reset thiếu mật khẩu mới",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "123456"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-020",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "OTP rỗng",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-021",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "OTP null",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": null,
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-022",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "boundary",
+    "title": "OTP 5 chữ số bị từ chối",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "12345",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "INVALID",
+    "auditReason": "Bản AI ban đầu suy đoán oracle theo hành vi phổ biến thay vì truy vết SRS.",
+    "correction": "Đã thay oracle bằng status/ràng buộc trong SRS và bổ sung liên kết FR/SEC.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-023",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "boundary",
+    "title": "OTP 7 chữ số bị từ chối",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "1234567",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-024",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "OTP chứa chữ bị từ chối",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "12AB56",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-025",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "OTP chứa khoảng trắng bị từ chối",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": " 123456 ",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-026",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "boundary",
+    "title": "Mật khẩu đúng 8 ký tự hợp lệ",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "Abcd12!x"
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-027",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "boundary",
+    "title": "Mật khẩu 7 ký tự bị từ chối",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "Ab1!xyz"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-028",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Mật khẩu thiếu chữ hoa",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "abcdef1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-029",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Mật khẩu thiếu chữ thường",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "ABCDEF1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-030",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Mật khẩu thiếu chữ số",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "Abcdefg!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-031",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Mật khẩu thiếu ký tự đặc biệt",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "Abcdefg1"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-032",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Mật khẩu null bị từ chối",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": null
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-033",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "state",
+    "title": "OTP đã dùng không thể dùng lại",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "Another1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "prepare-used-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "INVALID",
+    "auditReason": "Bản AI ban đầu suy đoán oracle theo hành vi phổ biến thay vì truy vết SRS.",
+    "correction": "Đã thay oracle bằng status/ràng buộc trong SRS và bổ sung liên kết FR/SEC.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-034",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "schema",
+    "title": "Reset thành công chỉ trả message",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "SchemaOk1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message"
+    ],
+    "expectedRule": "no-password-field",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-01",
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-035",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "security",
+    "title": "Reset SQL injection ở email bị từ chối",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "' OR 1=1 --",
+      "resetToken": "123456",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-05"
+    ],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-036",
+    "fr": "FR-03",
+    "source": "HUMAN",
+    "category": "security",
+    "title": "Chống brute-force OTP với nhiều lần thử sai",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "000000",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 429,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "rate-limit",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-037",
+    "fr": "FR-03",
+    "source": "HUMAN",
+    "category": "state",
+    "title": "Hai yêu cầu OTP liên tiếp vô hiệu hóa OTP cũ",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{oldOtp}}",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-two-otps",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-038",
+    "fr": "FR-03",
+    "source": "HUMAN",
+    "category": "security",
+    "title": "OTP hết hạn bị từ chối",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "111111",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-039",
+    "fr": "FR-03",
+    "source": "HUMAN",
+    "category": "security",
+    "title": "Null byte trong email không vượt kiểm tra",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com\u0000.attacker"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-05"
+    ],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-040",
+    "fr": "FR-03",
+    "source": "HUMAN",
+    "category": "state",
+    "title": "Mật khẩu không đổi khi OTP sai",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "999999",
+      "newPassword": "ShouldNot1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "password-unchanged",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-001",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "domain",
+    "title": "SAVE10 hợp lệ trên ngưỡng",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "coupon_id",
+      "discount_amount",
+      "final_amount",
+      "message"
+    ],
+    "expectedRule": "percent-formula",
+    "expectedData": {
+      "discount": 50000,
+      "final": 450000
+    },
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-002",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "domain",
+    "title": "BIGBUY fixed hợp lệ",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 600000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "coupon_id",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "fixed-formula",
+    "expectedData": {
+      "discount": 50000,
+      "final": 550000
+    },
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-003",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "domain",
+    "title": "VIP100 hợp lệ",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "VIP100",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "fixed-formula",
+    "expectedData": {
+      "discount": 100000,
+      "final": 400000
+    },
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-004",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "state",
+    "title": "Coupon hết hạn bị từ chối",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "EXPIRED",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-005",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "domain",
+    "title": "Coupon không tồn tại",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "NO_SUCH_CODE",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 404,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-006",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "Thiếu code",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-007",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "Code rỗng",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-008",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "Code chỉ có khoảng trắng",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "   ",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-009",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "Code sai chữ thường hoa",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "save10",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 404,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-010",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "security",
+    "title": "Code SQL injection không được thực thi",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "' OR 1=1 --",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 404,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-05"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-011",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "boundary",
+    "title": "SAVE10 đúng ngưỡng tối thiểu",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 300000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "percent-formula",
+    "expectedData": {
+      "discount": 30000,
+      "final": 270000
+    },
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INVALID",
+    "auditReason": "Bản AI ban đầu suy đoán oracle theo hành vi phổ biến thay vì truy vết SRS.",
+    "correction": "Đã thay oracle bằng status/ràng buộc trong SRS và bổ sung liên kết FR/SEC.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-012",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "boundary",
+    "title": "SAVE10 thấp hơn ngưỡng 1 đồng",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 299999,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-013",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "boundary",
+    "title": "SAVE10 cao hơn ngưỡng 1 đồng",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 300001,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "percent-formula",
+    "expectedData": {
+      "discount": 30000,
+      "final": 270001
+    },
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-014",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "boundary",
+    "title": "BIGBUY đúng ngưỡng tối thiểu",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "fixed-formula",
+    "expectedData": {
+      "discount": 50000,
+      "final": 450000
+    },
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-015",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "total_amount âm",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": -1,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-016",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "total_amount bằng 0",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 0,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-017",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "Thiếu total_amount",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-018",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "total_amount null",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": null,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-019",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "total_amount là chuỗi số",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": "500000",
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-020",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "total_amount là chuỗi bất kỳ",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": "abc",
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-021",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "boundary",
+    "title": "total_amount số thập phân",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 500000.5,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-022",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "boundary",
+    "title": "total_amount rất lớn",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 9007199254740991,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "fixed-formula",
+    "expectedData": {
+      "discount": 50000,
+      "final": 9007199254690991
+    },
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INVALID",
+    "auditReason": "Bản AI ban đầu suy đoán oracle theo hành vi phổ biến thay vì truy vết SRS.",
+    "correction": "Đã thay oracle bằng status/ràng buộc trong SRS và bổ sung liên kết FR/SEC.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-023",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "security",
+    "title": "Thiếu JWT bị từ chối",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 401,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-024",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "security",
+    "title": "JWT không hợp lệ bị từ chối",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "invalid",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 403,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-025",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "security",
+    "title": "JWT user hợp lệ được chấp nhận",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 600000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "fixed-formula",
+    "expectedData": {
+      "discount": 50000,
+      "final": 550000
+    },
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-026",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "Thiếu user_id khi đã đăng nhập",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 600000
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "identity-from-token",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-027",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "security",
+    "title": "user_id của người khác bị bỏ qua",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 600000,
+      "user_id": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "identity-from-token",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-028",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "user_id dạng chuỗi bị từ chối",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 600000,
+      "user_id": "2"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-029",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "partition",
+    "title": "user_id không tồn tại bị từ chối",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 600000,
+      "user_id": 999999
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-030",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "state",
+    "title": "SAVE10 đã dùng hết lượt bị từ chối",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "record-save10-usage",
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-031",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "state",
+    "title": "VIP100 còn lượt thứ hai",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "VIP100",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "discount_amount",
+      "final_amount"
+    ],
+    "expectedRule": "fixed-formula",
+    "expectedData": {
+      "discount": 100000,
+      "final": 400000
+    },
+    "setup": "record-vip100-once",
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-032",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "state",
+    "title": "VIP100 hết hai lượt",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "VIP100",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "record-vip100-twice",
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-033",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "schema",
+    "title": "Response thành công dùng đúng kiểu dữ liệu",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "BIGBUY",
+      "total_amount": 600000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success",
+      "coupon_id",
+      "discount_amount",
+      "final_amount",
+      "message"
+    ],
+    "expectedRule": "success-types",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INVALID",
+    "auditReason": "Bản AI ban đầu suy đoán oracle theo hành vi phổ biến thay vì truy vết SRS.",
+    "correction": "Đã thay oracle bằng status/ràng buộc trong SRS và bổ sung liên kết FR/SEC.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-034",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "schema",
+    "title": "Response lỗi có trường error",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "MISSING",
+      "total_amount": 600000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 404,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-035",
+    "fr": "FR-09",
+    "source": "AI",
+    "category": "security",
+    "title": "Prototype-shaped code không gây lỗi máy chủ",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "__proto__",
+      "total_amount": 600000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 404,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-036",
+    "fr": "FR-09",
+    "source": "HUMAN",
+    "category": "concurrency",
+    "title": "Hai request đồng thời không vượt max_uses_per_user",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "SAVE10",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "concurrent-usage",
+    "expectedData": null,
+    "setup": "record-save10-usage",
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-037",
+    "fr": "FR-09",
+    "source": "HUMAN",
+    "category": "boundary",
+    "title": "Fixed discount lớn hơn tổng tiền không tạo final âm",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "VIP100",
+      "total_amount": 50000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "nonnegative-final",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-038",
+    "fr": "FR-09",
+    "source": "HUMAN",
+    "category": "security",
+    "title": "Client giả mạo user_id không chiếm lượt của nạn nhân",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "VIP100",
+      "total_amount": 500000,
+      "user_id": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "success"
+    ],
+    "expectedRule": "identity-from-token",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-039",
+    "fr": "FR-09",
+    "source": "HUMAN",
+    "category": "state",
+    "title": "Ghi nhận coupon usage bắt buộc đúng danh tính JWT",
+    "endpoint": "/api/coupon-usage",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "coupon_id": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-09-TC-040",
+    "fr": "FR-09",
+    "source": "HUMAN",
+    "category": "boundary",
+    "title": "Hạn dùng được đánh giá nhất quán tại ranh giới ngày",
+    "endpoint": "/api/apply-coupon",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "EXPIRED",
+      "total_amount": 500000,
+      "user_id": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "expiry-boundary",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-001",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "security",
+    "title": "Admin lấy danh sách coupon",
+    "endpoint": "/api/coupons",
+    "method": "GET",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": null,
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [],
+    "expectedRule": "array-response",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02",
+      "SEC-03"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-002",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "security",
+    "title": "User thường không được xem danh sách admin",
+    "endpoint": "/api/coupons",
+    "method": "GET",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": null,
+    "rawBody": null,
+    "expectedStatus": 403,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02",
+      "SEC-03"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-003",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "security",
+    "title": "Thiếu token không được xem danh sách",
+    "endpoint": "/api/coupons",
+    "method": "GET",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": null,
+    "rawBody": null,
+    "expectedStatus": 401,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-004",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "security",
+    "title": "Token sai không được xem danh sách",
+    "endpoint": "/api/coupons",
+    "method": "GET",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "invalid",
+    "body": null,
+    "rawBody": null,
+    "expectedStatus": 403,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-005",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "schema",
+    "title": "Danh sách coupon không lộ dữ liệu ngoài schema",
+    "endpoint": "/api/coupons",
+    "method": "GET",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": null,
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [],
+    "expectedRule": "coupon-list-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-006",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "domain",
+    "title": "Admin tạo coupon percent hợp lệ",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "NEWPCT01",
+      "type": "percent",
+      "discount_value": 15,
+      "min_order_amount": 200000,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message",
+      "id"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-007",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "domain",
+    "title": "Admin tạo coupon fixed hợp lệ",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "NEWFIX01",
+      "type": "fixed",
+      "discount_value": 50000,
+      "min_order_amount": 200000,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 2
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message",
+      "id"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-008",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "security",
+    "title": "User thường không được tạo coupon",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "USERCREATE",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 403,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-03"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-009",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "security",
+    "title": "Thiếu token không được tạo coupon",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "code": "NOAUTH",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 401,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-010",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "security",
+    "title": "Token sai không được tạo coupon",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "invalid",
+    "body": {
+      "code": "BADTOKEN",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 403,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-011",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "partition",
+    "title": "Thiếu code",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INVALID",
+    "auditReason": "Bản AI ban đầu suy đoán oracle theo hành vi phổ biến thay vì truy vết SRS.",
+    "correction": "Đã thay oracle bằng status/ràng buộc trong SRS và bổ sung liên kết FR/SEC.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-012",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "partition",
+    "title": "Code rỗng",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-013",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "partition",
+    "title": "Code chỉ khoảng trắng",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "   ",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-014",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "state",
+    "title": "Code trùng bị từ chối",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "DUPLICATE01",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 409,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "create-duplicate-coupon",
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-015",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "partition",
+    "title": "Thiếu type",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "NOTYPE",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-016",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "partition",
+    "title": "Type ngoài percent/fixed",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "BADTYPE",
+      "type": "ratio",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-017",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "partition",
+    "title": "Thiếu discount_value",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "NOVALUE",
+      "type": "fixed",
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-018",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "boundary",
+    "title": "discount_value bằng 0 bị từ chối",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "ZEROVALUE",
+      "type": "fixed",
+      "discount_value": 0,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-019",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "boundary",
+    "title": "discount_value âm bị từ chối",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "NEGATIVE",
+      "type": "fixed",
+      "discount_value": -1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-020",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "partition",
+    "title": "discount_value dạng chuỗi bị từ chối",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "STRINGVALUE",
+      "type": "fixed",
+      "discount_value": "10",
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-021",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "boundary",
+    "title": "min_order_amount bằng 0 hợp lệ",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "MINZERO",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message",
+      "id"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-022",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "boundary",
+    "title": "min_order_amount âm bị từ chối",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "MINNEG",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": -1,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INVALID",
+    "auditReason": "Bản AI ban đầu suy đoán oracle theo hành vi phổ biến thay vì truy vết SRS.",
+    "correction": "Đã thay oracle bằng status/ràng buộc trong SRS và bổ sung liên kết FR/SEC.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-023",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "partition",
+    "title": "Thiếu expired_at",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "NOEXP",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-024",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "partition",
+    "title": "expired_at sai định dạng",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "BADEXP",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "not-a-date",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-025",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "boundary",
+    "title": "max_uses_per_user bằng 1 hợp lệ",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "MAXONE",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message",
+      "id"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-026",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "boundary",
+    "title": "max_uses_per_user bằng 0 bị từ chối",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "MAXZERO",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 0
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-027",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "boundary",
+    "title": "max_uses_per_user âm bị từ chối",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "MAXNEG",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": -1
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-028",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "security",
+    "title": "Code SQL injection được lưu như dữ liệu",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "SQL'; DROP TABLE coupons;--",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message",
+      "id"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-05"
+    ],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-029",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "security",
+    "title": "Code XSS không được thực thi",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "<script>alert(1)</script>",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message",
+      "id"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-030",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "domain",
+    "title": "Admin xóa coupon tồn tại",
+    "endpoint": "/api/admin/coupons/{{createdCouponId}}",
+    "method": "DELETE",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": null,
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "create-coupon-for-delete",
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-031",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "security",
+    "title": "User thường không được xóa coupon",
+    "endpoint": "/api/admin/coupons/{{createdCouponId}}",
+    "method": "DELETE",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": null,
+    "rawBody": null,
+    "expectedStatus": 403,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "create-coupon-for-delete",
+    "secRefs": [
+      "SEC-03"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-032",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "security",
+    "title": "Thiếu token không được xóa coupon",
+    "endpoint": "/api/admin/coupons/1",
+    "method": "DELETE",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": null,
+    "rawBody": null,
+    "expectedStatus": 401,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-033",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "security",
+    "title": "Token sai không được xóa coupon",
+    "endpoint": "/api/admin/coupons/1",
+    "method": "DELETE",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "invalid",
+    "body": null,
+    "rawBody": null,
+    "expectedStatus": 403,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-02"
+    ],
+    "aiAudit": "INVALID",
+    "auditReason": "Bản AI ban đầu suy đoán oracle theo hành vi phổ biến thay vì truy vết SRS.",
+    "correction": "Đã thay oracle bằng status/ràng buộc trong SRS và bổ sung liên kết FR/SEC.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-034",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "domain",
+    "title": "Xóa coupon không tồn tại trả 404",
+    "endpoint": "/api/admin/coupons/999999",
+    "method": "DELETE",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": null,
+    "rawBody": null,
+    "expectedStatus": 404,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-035",
+    "fr": "FR-17",
+    "source": "AI",
+    "category": "partition",
+    "title": "ID xóa không phải số bị từ chối",
+    "endpoint": "/api/admin/coupons/not-a-number",
+    "method": "DELETE",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": null,
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-036",
+    "fr": "FR-17",
+    "source": "HUMAN",
+    "category": "security",
+    "title": "JWT user có claim role giả trong body vẫn không có quyền",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "user",
+    "body": {
+      "code": "ROLEBODY",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1,
+      "role": "admin"
+    },
+    "rawBody": null,
+    "expectedStatus": 403,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-03"
+    ],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-037",
+    "fr": "FR-17",
+    "source": "HUMAN",
+    "category": "concurrency",
+    "title": "Hai request tạo cùng code chỉ một request thành công",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "RACECODE",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 409,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "concurrent-duplicate",
+    "expectedData": null,
+    "setup": "create-duplicate-coupon",
+    "secRefs": [
+      "SEC-05"
+    ],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-038",
+    "fr": "FR-17",
+    "source": "HUMAN",
+    "category": "state",
+    "title": "Xóa coupon đã có usage không để lại trạng thái sai",
+    "endpoint": "/api/admin/coupons/1",
+    "method": "DELETE",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": null,
+    "rawBody": null,
+    "expectedStatus": 409,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "referential-integrity",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-039",
+    "fr": "FR-17",
+    "source": "HUMAN",
+    "category": "partition",
+    "title": "Code Unicode gần giống không bị đồng nhất ngoài ý muốn",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "SАVE10",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message",
+      "id"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  },
+  {
+    "id": "FR-17-TC-040",
+    "fr": "FR-17",
+    "source": "HUMAN",
+    "category": "security",
+    "title": "Mass assignment is_active bị bỏ qua hoặc kiểm soát",
+    "endpoint": "/api/admin/coupons",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "admin",
+    "body": {
+      "code": "MASSACTIVE",
+      "type": "fixed",
+      "discount_value": 1,
+      "min_order_amount": 0,
+      "expired_at": "2099-12-31",
+      "max_uses_per_user": 1,
+      "is_active": 0
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message",
+      "id"
+    ],
+    "expectedRule": "mass-assignment",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "Chưa thực thi",
+    "status": "NOT_RUN",
+    "bugId": ""
+  }
+]

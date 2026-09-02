@@ -1,0 +1,57 @@
+{
+  "info": {
+    "name": "HW06 FR-09 Data Driven",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.request.headers.upsert({key:'X-Student-Id',value:'23127502'});",
+          "console.log('X-Student-Id: 23127502', pm.info.requestName);"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "FR-09 boundary from data file",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status theo data',()=>pm.expect(pm.response.code).to.eql(Number(pm.iterationData.get('expectedStatus'))));",
+              "if(pm.response.code===200){const d=pm.response.json();pm.test('Có discount/final',()=>{pm.expect(d).to.have.property('discount_amount');pm.expect(d).to.have.property('final_amount');});}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"code\": \"{{code}}\",\n  \"total_amount\": {{total_amount}},\n  \"user_id\": 2\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/apply-coupon",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "apply-coupon"
+          ]
+        }
+      }
+    }
+  ]
+}

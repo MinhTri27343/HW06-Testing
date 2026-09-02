@@ -1,0 +1,2044 @@
+{
+  "info": {
+    "name": "HW06 API Testing - FR-03",
+    "description": "Bộ kiểm thử theo SRS cho MSSV 23127502. Assertion nghiêm ngặt giữ nguyên các failure do bug thật.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "adminToken",
+      "value": ""
+    },
+    {
+      "key": "userToken",
+      "value": ""
+    },
+    {
+      "key": "activeOtp",
+      "value": ""
+    },
+    {
+      "key": "oldOtp",
+      "value": ""
+    },
+    {
+      "key": "createdCouponId",
+      "value": ""
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.request.headers.upsert({key:'X-Student-Id',value:'23127502'});",
+          "console.log('X-Student-Id: 23127502', pm.info.requestName);"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "00 - Setup authentication",
+      "item": [
+        {
+          "name": "SETUP | Login admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Admin login thành công',()=>pm.response.to.have.status(200));",
+                  "pm.collectionVariables.set('adminToken',pm.response.json().token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"admin@eshop.com\",\"password\":\"Admin123!\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "SETUP | Login user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('User login thành công',()=>pm.response.to.have.status(200));",
+                  "pm.collectionVariables.set('userToken',pm.response.json().token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"test@eshop.com\",\"password\":\"Test1234!\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "FR-03",
+      "item": [
+        {
+          "name": "FR-03-TC-001 | Email user đã đăng ký nhận OTP",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-001] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-001] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-001] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));",
+                  "pm.test('[FR-03-TC-001] Có trường resetToken',()=>pm.expect(responseJson).to.have.property('resetToken'));",
+                  "pm.test('[FR-03-TC-001] OTP có đúng 6 chữ số',()=>pm.expect(String(responseJson.resetToken||'')).to.match(/^\\d{6}$/));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "forgot-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-002 | Email admin đã đăng ký nhận OTP",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-002] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-002] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-002] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));",
+                  "pm.test('[FR-03-TC-002] Có trường resetToken',()=>pm.expect(responseJson).to.have.property('resetToken'));",
+                  "pm.test('[FR-03-TC-002] OTP có đúng 6 chữ số',()=>pm.expect(String(responseJson.resetToken||'')).to.match(/^\\d{6}$/));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "forgot-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@eshop.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-003 | Email chưa đăng ký bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-003] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-003] HTTP status = 404',()=>pm.response.to.have.status(404));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-003] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "forgot-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"missing@eshop.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-004 | Email rỗng",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-004] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-004] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-004] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "forgot-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-005 | Thiếu trường email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-005] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-005] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-005] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "forgot-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-006 | Email null",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-006] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-006] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-006] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "forgot-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-007 | Email sai định dạng thiếu @",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-007] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-007] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-007] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "forgot-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test.eshop.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-008 | Email sai định dạng thiếu domain",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-008] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-008] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-008] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "forgot-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-009 | Email có khoảng trắng đầu cuối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-009] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-009] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-009] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "forgot-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \" test@eshop.com \"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-010 | Payload email SQL injection không được thực thi",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-010] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-010] HTTP status = 404',()=>pm.response.to.have.status(404));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-010] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "forgot-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"' OR 1=1 --\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-011 | Email dạng object bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-011] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-011] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-011] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "forgot-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": {\n    \"$ne\": null\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-012 | Response lấy OTP không lộ password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-012] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-012] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-012] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));",
+                  "pm.test('[FR-03-TC-012] Có trường resetToken',()=>pm.expect(responseJson).to.have.property('resetToken'));",
+                  "pm.test('[FR-03-TC-012] Không lộ trường password',()=>{const hasPasswordKey=(v)=>v&&typeof v==='object'&&(Object.keys(v).some(k=>k.toLowerCase()==='password')||Object.values(v).some(hasPasswordKey));pm.expect(hasPasswordKey(responseJson)).to.eql(false);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "forgot-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-013 | OTP trả về đúng 6 chữ số",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-013] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-013] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-013] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));",
+                  "pm.test('[FR-03-TC-013] Có trường resetToken',()=>pm.expect(responseJson).to.have.property('resetToken'));",
+                  "pm.test('[FR-03-TC-013] OTP có đúng 6 chữ số',()=>pm.expect(String(responseJson.resetToken||'')).to.match(/^\\d{6}$/));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "forgot-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-014 | Reset với OTP hợp lệ",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/forgot-password',method:'POST',header:[{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-Student-Id\",\"value\":\"23127502\"}],body:{mode:'raw',raw:\"{\\\"email\\\":\\\"test@eshop.com\\\"}\"}},(err,res)=>{if(err){throw err;}pm.collectionVariables.set('activeOtp',res.json().resetToken);});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-014] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-014] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-014] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"{{activeOtp}}\",\n  \"newPassword\": \"ValidPass1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-015 | Reset với OTP sai",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-015] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-015] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-015] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"999999\",\n  \"newPassword\": \"ValidPass1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-016 | OTP của email này không dùng cho email khác",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/forgot-password',method:'POST',header:[{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-Student-Id\",\"value\":\"23127502\"}],body:{mode:'raw',raw:\"{\\\"email\\\":\\\"test@eshop.com\\\"}\"}},(err,res)=>{if(err){throw err;}pm.collectionVariables.set('activeOtp',res.json().resetToken);});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-016] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-016] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-016] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@eshop.com\",\n  \"resetToken\": \"{{activeOtp}}\",\n  \"newPassword\": \"ValidPass1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-017 | Reset thiếu email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-017] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-017] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-017] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resetToken\": \"123456\",\n  \"newPassword\": \"ValidPass1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-018 | Reset thiếu OTP",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-018] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-018] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-018] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"newPassword\": \"ValidPass1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-019 | Reset thiếu mật khẩu mới",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-019] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-019] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-019] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-020 | OTP rỗng",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-020] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-020] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-020] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"\",\n  \"newPassword\": \"ValidPass1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-021 | OTP null",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-021] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-021] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-021] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": null,\n  \"newPassword\": \"ValidPass1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-022 | OTP 5 chữ số bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-022] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-022] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-022] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"12345\",\n  \"newPassword\": \"ValidPass1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-023 | OTP 7 chữ số bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-023] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-023] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-023] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"1234567\",\n  \"newPassword\": \"ValidPass1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-024 | OTP chứa chữ bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-024] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-024] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-024] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"12AB56\",\n  \"newPassword\": \"ValidPass1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-025 | OTP chứa khoảng trắng bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-025] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-025] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-025] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \" 123456 \",\n  \"newPassword\": \"ValidPass1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-026 | Mật khẩu đúng 8 ký tự hợp lệ",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/forgot-password',method:'POST',header:[{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-Student-Id\",\"value\":\"23127502\"}],body:{mode:'raw',raw:\"{\\\"email\\\":\\\"test@eshop.com\\\"}\"}},(err,res)=>{if(err){throw err;}pm.collectionVariables.set('activeOtp',res.json().resetToken);});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-026] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-026] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-026] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"{{activeOtp}}\",\n  \"newPassword\": \"Abcd12!x\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-027 | Mật khẩu 7 ký tự bị từ chối",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/forgot-password',method:'POST',header:[{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-Student-Id\",\"value\":\"23127502\"}],body:{mode:'raw',raw:\"{\\\"email\\\":\\\"test@eshop.com\\\"}\"}},(err,res)=>{if(err){throw err;}pm.collectionVariables.set('activeOtp',res.json().resetToken);});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-027] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-027] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-027] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"{{activeOtp}}\",\n  \"newPassword\": \"Ab1!xyz\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-028 | Mật khẩu thiếu chữ hoa",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/forgot-password',method:'POST',header:[{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-Student-Id\",\"value\":\"23127502\"}],body:{mode:'raw',raw:\"{\\\"email\\\":\\\"test@eshop.com\\\"}\"}},(err,res)=>{if(err){throw err;}pm.collectionVariables.set('activeOtp',res.json().resetToken);});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-028] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-028] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-028] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"{{activeOtp}}\",\n  \"newPassword\": \"abcdef1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-029 | Mật khẩu thiếu chữ thường",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/forgot-password',method:'POST',header:[{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-Student-Id\",\"value\":\"23127502\"}],body:{mode:'raw',raw:\"{\\\"email\\\":\\\"test@eshop.com\\\"}\"}},(err,res)=>{if(err){throw err;}pm.collectionVariables.set('activeOtp',res.json().resetToken);});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-029] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-029] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-029] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"{{activeOtp}}\",\n  \"newPassword\": \"ABCDEF1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-030 | Mật khẩu thiếu chữ số",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/forgot-password',method:'POST',header:[{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-Student-Id\",\"value\":\"23127502\"}],body:{mode:'raw',raw:\"{\\\"email\\\":\\\"test@eshop.com\\\"}\"}},(err,res)=>{if(err){throw err;}pm.collectionVariables.set('activeOtp',res.json().resetToken);});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-030] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-030] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-030] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"{{activeOtp}}\",\n  \"newPassword\": \"Abcdefg!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-031 | Mật khẩu thiếu ký tự đặc biệt",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/forgot-password',method:'POST',header:[{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-Student-Id\",\"value\":\"23127502\"}],body:{mode:'raw',raw:\"{\\\"email\\\":\\\"test@eshop.com\\\"}\"}},(err,res)=>{if(err){throw err;}pm.collectionVariables.set('activeOtp',res.json().resetToken);});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-031] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-031] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-031] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"{{activeOtp}}\",\n  \"newPassword\": \"Abcdefg1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-032 | Mật khẩu null bị từ chối",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/forgot-password',method:'POST',header:[{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-Student-Id\",\"value\":\"23127502\"}],body:{mode:'raw',raw:\"{\\\"email\\\":\\\"test@eshop.com\\\"}\"}},(err,res)=>{if(err){throw err;}pm.collectionVariables.set('activeOtp',res.json().resetToken);});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-032] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-032] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-032] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"{{activeOtp}}\",\n  \"newPassword\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-033 | OTP đã dùng không thể dùng lại",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/forgot-password',method:'POST',header:[{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-Student-Id\",\"value\":\"23127502\"}],body:{mode:'raw',raw:JSON.stringify({email:'test@eshop.com'})}},(e,r)=>{if(e)throw e;const otp=r.json().resetToken;pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/reset-password',method:'POST',header:[{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-Student-Id\",\"value\":\"23127502\"}],body:{mode:'raw',raw:JSON.stringify({email:'test@eshop.com',resetToken:otp,newPassword:'UsedOtp1!'})}},(e2)=>{if(e2)throw e2;pm.collectionVariables.set('activeOtp',otp);});});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-033] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-033] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-033] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"{{activeOtp}}\",\n  \"newPassword\": \"Another1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-034 | Reset thành công chỉ trả message",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/forgot-password',method:'POST',header:[{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-Student-Id\",\"value\":\"23127502\"}],body:{mode:'raw',raw:\"{\\\"email\\\":\\\"test@eshop.com\\\"}\"}},(err,res)=>{if(err){throw err;}pm.collectionVariables.set('activeOtp',res.json().resetToken);});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-034] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-034] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-034] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));",
+                  "pm.test('[FR-03-TC-034] Không lộ trường password',()=>{const hasPasswordKey=(v)=>v&&typeof v==='object'&&(Object.keys(v).some(k=>k.toLowerCase()==='password')||Object.values(v).some(hasPasswordKey));pm.expect(hasPasswordKey(responseJson)).to.eql(false);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"{{activeOtp}}\",\n  \"newPassword\": \"SchemaOk1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-035 | Reset SQL injection ở email bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-035] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-035] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-035] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"' OR 1=1 --\",\n  \"resetToken\": \"123456\",\n  \"newPassword\": \"ValidPass1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-036 | Chống brute-force OTP với nhiều lần thử sai",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-036] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-036] HTTP status = 429',()=>pm.response.to.have.status(429));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-036] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"000000\",\n  \"newPassword\": \"ValidPass1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-037 | Hai yêu cầu OTP liên tiếp vô hiệu hóa OTP cũ",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/forgot-password',method:'POST',header:[{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-Student-Id\",\"value\":\"23127502\"}],body:{mode:'raw',raw:JSON.stringify({email:'test@eshop.com'})}},(e,r)=>{if(e)throw e;pm.collectionVariables.set('oldOtp',r.json().resetToken);pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/forgot-password',method:'POST',header:[{\"key\":\"Content-Type\",\"value\":\"application/json\"},{\"key\":\"X-Student-Id\",\"value\":\"23127502\"}],body:{mode:'raw',raw:JSON.stringify({email:'test@eshop.com'})}},()=>{});});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-037] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-037] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-037] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"{{oldOtp}}\",\n  \"newPassword\": \"ValidPass1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-038 | OTP hết hạn bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-038] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-038] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-038] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"111111\",\n  \"newPassword\": \"ValidPass1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-039 | Null byte trong email không vượt kiểm tra",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-039] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-039] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-039] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "forgot-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\\u0000.attacker\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-03-TC-040 | Mật khẩu không đổi khi OTP sai",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-03-TC-040] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-03-TC-040] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-03-TC-040] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@eshop.com\",\n  \"resetToken\": \"999999\",\n  \"newPassword\": \"ShouldNot1!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

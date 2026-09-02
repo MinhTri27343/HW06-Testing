@@ -1,0 +1,42 @@
+[
+  {
+    "code": "SAVE10",
+    "total_amount": 299999,
+    "expectedStatus": 400
+  },
+  {
+    "code": "SAVE10",
+    "total_amount": 300000,
+    "expectedStatus": 200
+  },
+  {
+    "code": "SAVE10",
+    "total_amount": 300001,
+    "expectedStatus": 200
+  },
+  {
+    "code": "BIGBUY",
+    "total_amount": 499999,
+    "expectedStatus": 400
+  },
+  {
+    "code": "BIGBUY",
+    "total_amount": 500000,
+    "expectedStatus": 200
+  },
+  {
+    "code": "BIGBUY",
+    "total_amount": 500001,
+    "expectedStatus": 200
+  },
+  {
+    "code": "EXPIRED",
+    "total_amount": 500000,
+    "expectedStatus": 400
+  },
+  {
+    "code": "UNKNOWN",
+    "total_amount": 500000,
+    "expectedStatus": 404
+  }
+]

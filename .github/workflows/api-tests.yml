@@ -1,0 +1,63 @@
+name: HW06 API Tests
+
+on:
+  push:
+    branches: [main, ci-failure-demo]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: Newman suite to execute
+        required: true
+        default: smoke
+        type: choice
+        options:
+          - smoke
+          - full
+          - data
+
+jobs:
+  newman:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Newman and backend dependencies
+        run: |
+          npm ci
+          npm ci --prefix backend
+
+      - name: Start EShop backend
+        run: |
+          mkdir -p reports/newman
+          node backend/server.js > reports/newman/server.log 2>&1 &
+          echo $! > reports/newman/server.pid
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:3000/api/products > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat reports/newman/server.log
+          exit 1
+
+      - name: Run selected Newman suite
+        shell: bash
+        run: |
+          SUITE="${{ github.event.inputs.suite || 'smoke' }}"
+          npm run "test:${SUITE}"
+
+      - name: Upload Newman evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-${{ github.run_id }}
+          path: reports/newman/
+          if-no-files-found: warn

@@ -1,0 +1,2158 @@
+{
+  "info": {
+    "name": "HW06 API Testing - FR-09",
+    "description": "Bộ kiểm thử theo SRS cho MSSV 23127502. Assertion nghiêm ngặt giữ nguyên các failure do bug thật.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "adminToken",
+      "value": ""
+    },
+    {
+      "key": "userToken",
+      "value": ""
+    },
+    {
+      "key": "activeOtp",
+      "value": ""
+    },
+    {
+      "key": "oldOtp",
+      "value": ""
+    },
+    {
+      "key": "createdCouponId",
+      "value": ""
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.request.headers.upsert({key:'X-Student-Id',value:'23127502'});",
+          "console.log('X-Student-Id: 23127502', pm.info.requestName);"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "00 - Setup authentication",
+      "item": [
+        {
+          "name": "SETUP | Login admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Admin login thành công',()=>pm.response.to.have.status(200));",
+                  "pm.collectionVariables.set('adminToken',pm.response.json().token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"admin@eshop.com\",\"password\":\"Admin123!\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "SETUP | Login user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('User login thành công',()=>pm.response.to.have.status(200));",
+                  "pm.collectionVariables.set('userToken',pm.response.json().token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"test@eshop.com\",\"password\":\"Test1234!\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "FR-09",
+      "item": [
+        {
+          "name": "FR-09-TC-001 | SAVE10 hợp lệ trên ngưỡng",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-001] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-001] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-001] Có trường success',()=>pm.expect(responseJson).to.have.property('success'));",
+                  "pm.test('[FR-09-TC-001] Có trường coupon_id',()=>pm.expect(responseJson).to.have.property('coupon_id'));",
+                  "pm.test('[FR-09-TC-001] Có trường discount_amount',()=>pm.expect(responseJson).to.have.property('discount_amount'));",
+                  "pm.test('[FR-09-TC-001] Có trường final_amount',()=>pm.expect(responseJson).to.have.property('final_amount'));",
+                  "pm.test('[FR-09-TC-001] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));",
+                  "pm.test('[FR-09-TC-001] Công thức giảm giá đúng',()=>{pm.expect(responseJson.discount_amount).to.eql(50000);pm.expect(responseJson.final_amount).to.eql(450000);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SAVE10\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-002 | BIGBUY fixed hợp lệ",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-002] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-002] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-002] Có trường success',()=>pm.expect(responseJson).to.have.property('success'));",
+                  "pm.test('[FR-09-TC-002] Có trường coupon_id',()=>pm.expect(responseJson).to.have.property('coupon_id'));",
+                  "pm.test('[FR-09-TC-002] Có trường discount_amount',()=>pm.expect(responseJson).to.have.property('discount_amount'));",
+                  "pm.test('[FR-09-TC-002] Có trường final_amount',()=>pm.expect(responseJson).to.have.property('final_amount'));",
+                  "pm.test('[FR-09-TC-002] Công thức giảm giá đúng',()=>{pm.expect(responseJson.discount_amount).to.eql(50000);pm.expect(responseJson.final_amount).to.eql(550000);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"BIGBUY\",\n  \"total_amount\": 600000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-003 | VIP100 hợp lệ",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-003] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-003] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-003] Có trường success',()=>pm.expect(responseJson).to.have.property('success'));",
+                  "pm.test('[FR-09-TC-003] Có trường discount_amount',()=>pm.expect(responseJson).to.have.property('discount_amount'));",
+                  "pm.test('[FR-09-TC-003] Có trường final_amount',()=>pm.expect(responseJson).to.have.property('final_amount'));",
+                  "pm.test('[FR-09-TC-003] Công thức giảm giá đúng',()=>{pm.expect(responseJson.discount_amount).to.eql(100000);pm.expect(responseJson.final_amount).to.eql(400000);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"VIP100\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-004 | Coupon hết hạn bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-004] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-004] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-004] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"EXPIRED\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-005 | Coupon không tồn tại",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-005] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-005] HTTP status = 404',()=>pm.response.to.have.status(404));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-005] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"NO_SUCH_CODE\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-006 | Thiếu code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-006] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-006] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-006] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-007 | Code rỗng",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-007] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-007] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-007] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-008 | Code chỉ có khoảng trắng",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-008] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-008] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-008] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"   \",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-009 | Code sai chữ thường hoa",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-009] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-009] HTTP status = 404',()=>pm.response.to.have.status(404));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-009] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"save10\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-010 | Code SQL injection không được thực thi",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-010] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-010] HTTP status = 404',()=>pm.response.to.have.status(404));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-010] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"' OR 1=1 --\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-011 | SAVE10 đúng ngưỡng tối thiểu",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-011] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-011] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-011] Có trường success',()=>pm.expect(responseJson).to.have.property('success'));",
+                  "pm.test('[FR-09-TC-011] Có trường discount_amount',()=>pm.expect(responseJson).to.have.property('discount_amount'));",
+                  "pm.test('[FR-09-TC-011] Có trường final_amount',()=>pm.expect(responseJson).to.have.property('final_amount'));",
+                  "pm.test('[FR-09-TC-011] Công thức giảm giá đúng',()=>{pm.expect(responseJson.discount_amount).to.eql(30000);pm.expect(responseJson.final_amount).to.eql(270000);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SAVE10\",\n  \"total_amount\": 300000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-012 | SAVE10 thấp hơn ngưỡng 1 đồng",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-012] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-012] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-012] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SAVE10\",\n  \"total_amount\": 299999,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-013 | SAVE10 cao hơn ngưỡng 1 đồng",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-013] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-013] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-013] Có trường success',()=>pm.expect(responseJson).to.have.property('success'));",
+                  "pm.test('[FR-09-TC-013] Có trường discount_amount',()=>pm.expect(responseJson).to.have.property('discount_amount'));",
+                  "pm.test('[FR-09-TC-013] Có trường final_amount',()=>pm.expect(responseJson).to.have.property('final_amount'));",
+                  "pm.test('[FR-09-TC-013] Công thức giảm giá đúng',()=>{pm.expect(responseJson.discount_amount).to.eql(30000);pm.expect(responseJson.final_amount).to.eql(270001);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SAVE10\",\n  \"total_amount\": 300001,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-014 | BIGBUY đúng ngưỡng tối thiểu",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-014] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-014] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-014] Có trường success',()=>pm.expect(responseJson).to.have.property('success'));",
+                  "pm.test('[FR-09-TC-014] Có trường discount_amount',()=>pm.expect(responseJson).to.have.property('discount_amount'));",
+                  "pm.test('[FR-09-TC-014] Có trường final_amount',()=>pm.expect(responseJson).to.have.property('final_amount'));",
+                  "pm.test('[FR-09-TC-014] Công thức giảm giá đúng',()=>{pm.expect(responseJson.discount_amount).to.eql(50000);pm.expect(responseJson.final_amount).to.eql(450000);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"BIGBUY\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-015 | total_amount âm",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-015] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-015] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-015] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SAVE10\",\n  \"total_amount\": -1,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-016 | total_amount bằng 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-016] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-016] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-016] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SAVE10\",\n  \"total_amount\": 0,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-017 | Thiếu total_amount",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-017] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-017] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-017] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SAVE10\",\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-018 | total_amount null",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-018] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-018] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-018] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SAVE10\",\n  \"total_amount\": null,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-019 | total_amount là chuỗi số",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-019] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-019] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-019] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SAVE10\",\n  \"total_amount\": \"500000\",\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-020 | total_amount là chuỗi bất kỳ",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-020] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-020] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-020] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SAVE10\",\n  \"total_amount\": \"abc\",\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-021 | total_amount số thập phân",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-021] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-021] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-021] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SAVE10\",\n  \"total_amount\": 500000.5,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-022 | total_amount rất lớn",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-022] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-022] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-022] Có trường success',()=>pm.expect(responseJson).to.have.property('success'));",
+                  "pm.test('[FR-09-TC-022] Có trường discount_amount',()=>pm.expect(responseJson).to.have.property('discount_amount'));",
+                  "pm.test('[FR-09-TC-022] Có trường final_amount',()=>pm.expect(responseJson).to.have.property('final_amount'));",
+                  "pm.test('[FR-09-TC-022] Công thức giảm giá đúng',()=>{pm.expect(responseJson.discount_amount).to.eql(50000);pm.expect(responseJson.final_amount).to.eql(9007199254690991);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"BIGBUY\",\n  \"total_amount\": 9007199254740991,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-023 | Thiếu JWT bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-023] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-023] HTTP status = 401',()=>pm.response.to.have.status(401));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-023] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SAVE10\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-024 | JWT không hợp lệ bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-024] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-024] HTTP status = 403',()=>pm.response.to.have.status(403));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-024] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer invalid.token.value"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SAVE10\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-025 | JWT user hợp lệ được chấp nhận",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-025] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-025] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-025] Có trường success',()=>pm.expect(responseJson).to.have.property('success'));",
+                  "pm.test('[FR-09-TC-025] Có trường discount_amount',()=>pm.expect(responseJson).to.have.property('discount_amount'));",
+                  "pm.test('[FR-09-TC-025] Có trường final_amount',()=>pm.expect(responseJson).to.have.property('final_amount'));",
+                  "pm.test('[FR-09-TC-025] Công thức giảm giá đúng',()=>{pm.expect(responseJson.discount_amount).to.eql(50000);pm.expect(responseJson.final_amount).to.eql(550000);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"BIGBUY\",\n  \"total_amount\": 600000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-026 | Thiếu user_id khi đã đăng nhập",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-026] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-026] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-026] Có trường success',()=>pm.expect(responseJson).to.have.property('success'));",
+                  "pm.test('[FR-09-TC-026] Có trường discount_amount',()=>pm.expect(responseJson).to.have.property('discount_amount'));",
+                  "pm.test('[FR-09-TC-026] Có trường final_amount',()=>pm.expect(responseJson).to.have.property('final_amount'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"BIGBUY\",\n  \"total_amount\": 600000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-027 | user_id của người khác bị bỏ qua",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-027] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-027] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-027] Có trường success',()=>pm.expect(responseJson).to.have.property('success'));",
+                  "pm.test('[FR-09-TC-027] Có trường discount_amount',()=>pm.expect(responseJson).to.have.property('discount_amount'));",
+                  "pm.test('[FR-09-TC-027] Có trường final_amount',()=>pm.expect(responseJson).to.have.property('final_amount'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"BIGBUY\",\n  \"total_amount\": 600000,\n  \"user_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-028 | user_id dạng chuỗi bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-028] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-028] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-028] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"BIGBUY\",\n  \"total_amount\": 600000,\n  \"user_id\": \"2\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-029 | user_id không tồn tại bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-029] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-029] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-029] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"BIGBUY\",\n  \"total_amount\": 600000,\n  \"user_id\": 999999\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-030 | SAVE10 đã dùng hết lượt bị từ chối",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/coupon-usage',method:'POST',header:[{key:'Content-Type',value:'application/json'},{key:'X-Student-Id',value:'23127502'},{key:'Authorization',value:'Bearer '+pm.collectionVariables.get('userToken')}],body:{mode:'raw',raw:\"{\\\"coupon_id\\\":1}\"}},(err,res)=>{if(err){throw err;}});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-030] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-030] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-030] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SAVE10\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-031 | VIP100 còn lượt thứ hai",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/coupon-usage',method:'POST',header:[{key:'Content-Type',value:'application/json'},{key:'X-Student-Id',value:'23127502'},{key:'Authorization',value:'Bearer '+pm.collectionVariables.get('userToken')}],body:{mode:'raw',raw:\"{\\\"coupon_id\\\":3}\"}},(err,res)=>{if(err){throw err;}});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-031] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-031] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-031] Có trường success',()=>pm.expect(responseJson).to.have.property('success'));",
+                  "pm.test('[FR-09-TC-031] Có trường discount_amount',()=>pm.expect(responseJson).to.have.property('discount_amount'));",
+                  "pm.test('[FR-09-TC-031] Có trường final_amount',()=>pm.expect(responseJson).to.have.property('final_amount'));",
+                  "pm.test('[FR-09-TC-031] Công thức giảm giá đúng',()=>{pm.expect(responseJson.discount_amount).to.eql(100000);pm.expect(responseJson.final_amount).to.eql(400000);});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"VIP100\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-032 | VIP100 hết hai lượt",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/coupon-usage',method:'POST',header:[{key:'Content-Type',value:'application/json'},{key:'X-Student-Id',value:'23127502'},{key:'Authorization',value:'Bearer '+pm.collectionVariables.get('userToken')}],body:{mode:'raw',raw:\"{\\\"coupon_id\\\":3}\"}},(err,res)=>{if(err){throw err;}});\npm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/coupon-usage',method:'POST',header:[{key:'Content-Type',value:'application/json'},{key:'X-Student-Id',value:'23127502'},{key:'Authorization',value:'Bearer '+pm.collectionVariables.get('userToken')}],body:{mode:'raw',raw:\"{\\\"coupon_id\\\":3}\"}},(err,res)=>{if(err){throw err;}});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-032] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-032] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-032] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"VIP100\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-033 | Response thành công dùng đúng kiểu dữ liệu",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-033] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-033] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-033] Có trường success',()=>pm.expect(responseJson).to.have.property('success'));",
+                  "pm.test('[FR-09-TC-033] Có trường coupon_id',()=>pm.expect(responseJson).to.have.property('coupon_id'));",
+                  "pm.test('[FR-09-TC-033] Có trường discount_amount',()=>pm.expect(responseJson).to.have.property('discount_amount'));",
+                  "pm.test('[FR-09-TC-033] Có trường final_amount',()=>pm.expect(responseJson).to.have.property('final_amount'));",
+                  "pm.test('[FR-09-TC-033] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));",
+                  "pm.test('[FR-09-TC-033] Kiểu dữ liệu success response',()=>{pm.expect(responseJson.success).to.be.a('boolean');pm.expect(responseJson.coupon_id).to.be.a('number');pm.expect(responseJson.discount_amount).to.be.a('number');pm.expect(responseJson.final_amount).to.be.a('number');});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"BIGBUY\",\n  \"total_amount\": 600000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-034 | Response lỗi có trường error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-034] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-034] HTTP status = 404',()=>pm.response.to.have.status(404));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-034] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"MISSING\",\n  \"total_amount\": 600000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-035 | Prototype-shaped code không gây lỗi máy chủ",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-035] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-035] HTTP status = 404',()=>pm.response.to.have.status(404));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-035] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"__proto__\",\n  \"total_amount\": 600000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-036 | Hai request đồng thời không vượt max_uses_per_user",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/coupon-usage',method:'POST',header:[{key:'Content-Type',value:'application/json'},{key:'X-Student-Id',value:'23127502'},{key:'Authorization',value:'Bearer '+pm.collectionVariables.get('userToken')}],body:{mode:'raw',raw:\"{\\\"coupon_id\\\":1}\"}},(err,res)=>{if(err){throw err;}});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-036] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-036] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-036] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SAVE10\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-037 | Fixed discount lớn hơn tổng tiền không tạo final âm",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-037] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-037] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-037] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"VIP100\",\n  \"total_amount\": 50000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-038 | Client giả mạo user_id không chiếm lượt của nạn nhân",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-038] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-038] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-038] Có trường success',()=>pm.expect(responseJson).to.have.property('success'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"VIP100\",\n  \"total_amount\": 500000,\n  \"user_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-039 | Ghi nhận coupon usage bắt buộc đúng danh tính JWT",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-039] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-039] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-039] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/coupon-usage",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "coupon-usage"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"coupon_id\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-09-TC-040 | Hạn dùng được đánh giá nhất quán tại ranh giới ngày",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-09-TC-040] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-09-TC-040] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-09-TC-040] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-coupon",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-coupon"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"EXPIRED\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

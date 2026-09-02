@@ -1,0 +1,2053 @@
+{
+  "info": {
+    "name": "HW06 API Testing - FR-17",
+    "description": "Bộ kiểm thử theo SRS cho MSSV 23127502. Assertion nghiêm ngặt giữ nguyên các failure do bug thật.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "adminToken",
+      "value": ""
+    },
+    {
+      "key": "userToken",
+      "value": ""
+    },
+    {
+      "key": "activeOtp",
+      "value": ""
+    },
+    {
+      "key": "oldOtp",
+      "value": ""
+    },
+    {
+      "key": "createdCouponId",
+      "value": ""
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.request.headers.upsert({key:'X-Student-Id',value:'23127502'});",
+          "console.log('X-Student-Id: 23127502', pm.info.requestName);"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "00 - Setup authentication",
+      "item": [
+        {
+          "name": "SETUP | Login admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Admin login thành công',()=>pm.response.to.have.status(200));",
+                  "pm.collectionVariables.set('adminToken',pm.response.json().token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"admin@eshop.com\",\"password\":\"Admin123!\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "SETUP | Login user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('User login thành công',()=>pm.response.to.have.status(200));",
+                  "pm.collectionVariables.set('userToken',pm.response.json().token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"test@eshop.com\",\"password\":\"Test1234!\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "FR-17",
+      "item": [
+        {
+          "name": "FR-17-TC-001 | Admin lấy danh sách coupon",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-001] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-001] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-001] Response là array',()=>pm.expect(responseJson).to.be.an('array'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "coupons"
+              ]
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-002 | User thường không được xem danh sách admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-002] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-002] HTTP status = 403',()=>pm.response.to.have.status(403));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-002] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "coupons"
+              ]
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-003 | Thiếu token không được xem danh sách",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-003] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-003] HTTP status = 401',()=>pm.response.to.have.status(401));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-003] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "coupons"
+              ]
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-004 | Token sai không được xem danh sách",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-004] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-004] HTTP status = 403',()=>pm.response.to.have.status(403));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-004] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer invalid.token.value"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "coupons"
+              ]
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-005 | Danh sách coupon không lộ dữ liệu ngoài schema",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-005] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-005] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-005] Schema coupon list',()=>{pm.expect(responseJson).to.be.an('array');if(responseJson.length){['id','code','type','discount_value','min_order_amount','expired_at','is_active','max_uses_per_user'].forEach(k=>pm.expect(responseJson[0]).to.have.property(k));}});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "coupons"
+              ]
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-006 | Admin tạo coupon percent hợp lệ",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-006] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-006] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-006] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));",
+                  "pm.test('[FR-17-TC-006] Có trường id',()=>pm.expect(responseJson).to.have.property('id'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"NEWPCT01\",\n  \"type\": \"percent\",\n  \"discount_value\": 15,\n  \"min_order_amount\": 200000,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-007 | Admin tạo coupon fixed hợp lệ",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-007] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-007] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-007] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));",
+                  "pm.test('[FR-17-TC-007] Có trường id',()=>pm.expect(responseJson).to.have.property('id'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"NEWFIX01\",\n  \"type\": \"fixed\",\n  \"discount_value\": 50000,\n  \"min_order_amount\": 200000,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-008 | User thường không được tạo coupon",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-008] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-008] HTTP status = 403',()=>pm.response.to.have.status(403));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-008] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"USERCREATE\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-009 | Thiếu token không được tạo coupon",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-009] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-009] HTTP status = 401',()=>pm.response.to.have.status(401));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-009] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"NOAUTH\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-010 | Token sai không được tạo coupon",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-010] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-010] HTTP status = 403',()=>pm.response.to.have.status(403));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-010] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer invalid.token.value"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"BADTOKEN\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-011 | Thiếu code",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-011] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-011] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-011] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-012 | Code rỗng",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-012] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-012] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-012] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-013 | Code chỉ khoảng trắng",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-013] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-013] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-013] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"   \",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-014 | Code trùng bị từ chối",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/admin/coupons',method:'POST',header:[{key:'Content-Type',value:'application/json'},{key:'X-Student-Id',value:'23127502'},{key:'Authorization',value:'Bearer '+pm.collectionVariables.get('adminToken')}],body:{mode:'raw',raw:\"{\\\"code\\\":\\\"DUPLICATE01\\\",\\\"type\\\":\\\"fixed\\\",\\\"discount_value\\\":1,\\\"min_order_amount\\\":0,\\\"expired_at\\\":\\\"2099-12-31\\\",\\\"max_uses_per_user\\\":1}\"}},(err,res)=>{if(err){throw err;}});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-014] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-014] HTTP status = 409',()=>pm.response.to.have.status(409));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-014] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"DUPLICATE01\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-015 | Thiếu type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-015] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-015] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-015] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"NOTYPE\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-016 | Type ngoài percent/fixed",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-016] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-016] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-016] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"BADTYPE\",\n  \"type\": \"ratio\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-017 | Thiếu discount_value",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-017] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-017] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-017] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"NOVALUE\",\n  \"type\": \"fixed\",\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-018 | discount_value bằng 0 bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-018] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-018] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-018] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"ZEROVALUE\",\n  \"type\": \"fixed\",\n  \"discount_value\": 0,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-019 | discount_value âm bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-019] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-019] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-019] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"NEGATIVE\",\n  \"type\": \"fixed\",\n  \"discount_value\": -1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-020 | discount_value dạng chuỗi bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-020] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-020] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-020] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"STRINGVALUE\",\n  \"type\": \"fixed\",\n  \"discount_value\": \"10\",\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-021 | min_order_amount bằng 0 hợp lệ",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-021] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-021] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-021] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));",
+                  "pm.test('[FR-17-TC-021] Có trường id',()=>pm.expect(responseJson).to.have.property('id'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"MINZERO\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-022 | min_order_amount âm bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-022] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-022] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-022] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"MINNEG\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": -1,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-023 | Thiếu expired_at",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-023] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-023] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-023] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"NOEXP\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-024 | expired_at sai định dạng",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-024] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-024] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-024] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"BADEXP\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"not-a-date\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-025 | max_uses_per_user bằng 1 hợp lệ",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-025] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-025] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-025] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));",
+                  "pm.test('[FR-17-TC-025] Có trường id',()=>pm.expect(responseJson).to.have.property('id'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"MAXONE\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-026 | max_uses_per_user bằng 0 bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-026] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-026] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-026] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"MAXZERO\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-027 | max_uses_per_user âm bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-027] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-027] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-027] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"MAXNEG\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": -1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-028 | Code SQL injection được lưu như dữ liệu",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-028] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-028] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-028] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));",
+                  "pm.test('[FR-17-TC-028] Có trường id',()=>pm.expect(responseJson).to.have.property('id'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SQL'; DROP TABLE coupons;--\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-029 | Code XSS không được thực thi",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-029] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-029] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-029] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));",
+                  "pm.test('[FR-17-TC-029] Có trường id',()=>pm.expect(responseJson).to.have.property('id'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"<script>alert(1)</script>\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-030 | Admin xóa coupon tồn tại",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/admin/coupons',method:'POST',header:[{key:'Content-Type',value:'application/json'},{key:'X-Student-Id',value:'23127502'},{key:'Authorization',value:'Bearer '+pm.collectionVariables.get('adminToken')}],body:{mode:'raw',raw:JSON.stringify({code:'DEL'+Date.now(),type:'fixed',discount_value:1,min_order_amount:0,expired_at:'2099-12-31',max_uses_per_user:1})}},(e,r)=>{if(e)throw e;pm.collectionVariables.set('createdCouponId',r.json().id);});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-030] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-030] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-030] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons/{{createdCouponId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons",
+                "{{createdCouponId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-031 | User thường không được xóa coupon",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/admin/coupons',method:'POST',header:[{key:'Content-Type',value:'application/json'},{key:'X-Student-Id',value:'23127502'},{key:'Authorization',value:'Bearer '+pm.collectionVariables.get('adminToken')}],body:{mode:'raw',raw:JSON.stringify({code:'DEL'+Date.now(),type:'fixed',discount_value:1,min_order_amount:0,expired_at:'2099-12-31',max_uses_per_user:1})}},(e,r)=>{if(e)throw e;pm.collectionVariables.set('createdCouponId',r.json().id);});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-031] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-031] HTTP status = 403',()=>pm.response.to.have.status(403));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-031] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons/{{createdCouponId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons",
+                "{{createdCouponId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-032 | Thiếu token không được xóa coupon",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-032] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-032] HTTP status = 401',()=>pm.response.to.have.status(401));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-032] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-033 | Token sai không được xóa coupon",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-033] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-033] HTTP status = 403',()=>pm.response.to.have.status(403));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-033] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer invalid.token.value"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-034 | Xóa coupon không tồn tại trả 404",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-034] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-034] HTTP status = 404',()=>pm.response.to.have.status(404));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-034] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons/999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons",
+                "999999"
+              ]
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-035 | ID xóa không phải số bị từ chối",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-035] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-035] HTTP status = 400',()=>pm.response.to.have.status(400));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-035] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons/not-a-number",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons",
+                "not-a-number"
+              ]
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-036 | JWT user có claim role giả trong body vẫn không có quyền",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-036] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-036] HTTP status = 403',()=>pm.response.to.have.status(403));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-036] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"ROLEBODY\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1,\n  \"role\": \"admin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-037 | Hai request tạo cùng code chỉ một request thành công",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.sendRequest({url:(pm.environment.get('baseUrl') || 'http://127.0.0.1:3000')+'/api/admin/coupons',method:'POST',header:[{key:'Content-Type',value:'application/json'},{key:'X-Student-Id',value:'23127502'},{key:'Authorization',value:'Bearer '+pm.collectionVariables.get('adminToken')}],body:{mode:'raw',raw:\"{\\\"code\\\":\\\"RACECODE\\\",\\\"type\\\":\\\"fixed\\\",\\\"discount_value\\\":1,\\\"min_order_amount\\\":0,\\\"expired_at\\\":\\\"2099-12-31\\\",\\\"max_uses_per_user\\\":1}\"}},(err,res)=>{if(err){throw err;}});"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-037] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-037] HTTP status = 409',()=>pm.response.to.have.status(409));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-037] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"RACECODE\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-038 | Xóa coupon đã có usage không để lại trạng thái sai",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-038] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-038] HTTP status = 409',()=>pm.response.to.have.status(409));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-038] Có trường error',()=>pm.expect(responseJson).to.have.property('error'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-039 | Code Unicode gần giống không bị đồng nhất ngoài ý muốn",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-039] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-039] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-039] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));",
+                  "pm.test('[FR-17-TC-039] Có trường id',()=>pm.expect(responseJson).to.have.property('id'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SАVE10\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "FR-17-TC-040 | Mass assignment is_active bị bỏ qua hoặc kiểm soát",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('[FR-17-TC-040] X-Student-Id được gắn',()=>pm.expect(pm.request.headers.get('X-Student-Id')).to.eql('23127502'));",
+                  "pm.test('[FR-17-TC-040] HTTP status = 200',()=>pm.response.to.have.status(200));",
+                  "var responseJson={}; try{responseJson=pm.response.json();}catch(e){}",
+                  "pm.test('[FR-17-TC-040] Có trường message',()=>pm.expect(responseJson).to.have.property('message'));",
+                  "pm.test('[FR-17-TC-040] Có trường id',()=>pm.expect(responseJson).to.have.property('id'));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/coupons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "coupons"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"MASSACTIVE\",\n  \"type\": \"fixed\",\n  \"discount_value\": 1,\n  \"min_order_amount\": 0,\n  \"expired_at\": \"2099-12-31\",\n  \"max_uses_per_user\": 1,\n  \"is_active\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
