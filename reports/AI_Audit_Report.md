@@ -58,7 +58,6 @@ Công cụ chính: OpenAI Codex. Ngày thực hiện: 2026-09-02, múi giờ Asi
 
 ## Khai báo giới hạn
 
-- AI không tạo hoặc làm giả screenshot, GitHub Actions URL, GitHub Issue URL, sơ đồ tự vẽ hay video.
+- Screenshot evidence được chụp từ các run thật; AI không tạo hoặc làm giả kết quả Newman/GitHub Actions.
 - Các mục `TODO` chỉ được cập nhật sau khi có bằng chứng thật.
 - Nhật ký này cần được sinh viên đối chiếu với lịch sử phiên Codex trước khi nộp.
-

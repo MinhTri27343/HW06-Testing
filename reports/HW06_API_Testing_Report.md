@@ -100,7 +100,7 @@ Hai ca đang mang `bugId = REVIEW` không được tính là bug vì SRS chưa q
 | BUG-FR17-03 | Medium | Duplicate code trả 500 thay vì lỗi kiểm soát |
 | BUG-FR17-04 | Medium | Xóa ID sai/không tồn tại vẫn báo thành công |
 
-Issue drafts nằm trong `reports/issues/`. Trạng thái hiện tại là draft; chưa có issue URL và screenshot nên không trình bày như đã đăng.
+Toàn bộ 12 bug được trình bày trong `reports/bug-report.md`; mỗi bug có ảnh evidence chụp trực tiếp từ Newman HTML report trong `reports/bug-evidence/`. Không sử dụng các file issue rời.
 
 ## 8. CI/CD
 
@@ -183,8 +183,7 @@ Công cụ chính: OpenAI Codex. Ngày thực hiện: 2026-09-02, múi giờ Asi
 
 ## Khai báo giới hạn
 
-- AI không tạo hoặc làm giả screenshot, GitHub Actions URL, GitHub Issue URL, sơ đồ tự vẽ hay video.
+- Screenshot evidence được chụp từ các run thật; không tạo hoặc làm giả kết quả Newman/GitHub Actions.
 - Các mục `TODO` chỉ được cập nhật sau khi có bằng chứng thật.
 - Nhật ký này cần được sinh viên đối chiếu với lịch sử phiên Codex trước khi nộp.
-
 

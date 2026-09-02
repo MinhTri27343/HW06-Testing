@@ -15,7 +15,7 @@
 | 4 | Agent Skill - API test generator | 10 | 9 |
 | | **Tổng** | **100** | **90** |
 
-Điểm tự đánh giá hiện là tạm thời. Chỉ nâng điểm sau khi bổ sung ảnh thật, GitHub Issue links, hai GitHub Actions runs và sơ đồ tự vẽ.
+Điểm tự đánh giá hiện là tạm thời. Hai GitHub Actions runs và evidence cho bug đã có; phần còn lại là rà soát điểm và sơ đồ theo yêu cầu nộp.
 
 ## Test summary
 
@@ -45,7 +45,7 @@ Các suite riêng: `fr03`, `fr09`, `fr17`, `data`.
 - Báo cáo chính: `reports/HW06_API_Testing_Report.md`
 - Test cases: `test-cases/` và workbook trong `outputs/01a062a2-0daf-7a21-841e-a6f6eeeca81e/`
 - Postman/Newman: `postman/`, `reports/Newman_Report/`
-- Bug drafts: `reports/issues/`
+- Báo cáo 12 bug hợp nhất và evidence: `reports/bug-report.md`, `reports/bug-evidence/`
 - Agent Skill: `skills/eshop-api-test-generator/`
 - CI/CD: `.github/workflows/api-tests.yml`
 - AI Audit và Critique: `reports/AI_Audit_Report.md`, `reports/AI_Critique.md`
@@ -53,7 +53,7 @@ Các suite riêng: `fr03`, `fr09`, `fr17`, `data`.
 ## Evidence còn do sinh viên thực hiện
 
 - [ ] Ảnh Postman Console/Newman hiển thị hostname và `X-Student-Id: 23127502`.
-- [ ] Ảnh thật cho từng GitHub Issue.
+- [x] Ảnh Newman evidence cho từng bug trong báo cáo hợp nhất.
 - [x] GitHub Actions run passing và failing-demo cùng link/commit SHA.
 - [ ] Sơ đồ Agent Skill do sinh viên tự vẽ.
 - [ ] Video demo YouTube nếu chọn nộp.

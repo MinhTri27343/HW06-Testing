@@ -12,7 +12,7 @@ Tên ZIP dự kiến: `23127502_HW06_AI_API_090.zip`
 - [x] Newman full, per-FR, smoke, data JSON/HTML reports.
 - [x] Excel test cases và summary.
 - [x] CI workflow và CI/CD draft report.
-- [x] 12 bug issue drafts.
+- [x] Một báo cáo hợp nhất gồm 12 bug và 12 ảnh Newman evidence.
 - [x] AI Audit Report và AI Critique.
 - [x] Agent Skill, pseudocode, validator, exporter và FR-03 demo.
 - [x] Git commit log.
@@ -25,7 +25,6 @@ Tên ZIP dự kiến: `23127502_HW06_AI_API_090.zip`
 - [ ] Cho phép tạo/push branch `ci-failure-demo`, chờ run failing và lưu link/ảnh.
 - [ ] Tự vẽ sơ đồ Agent Skill và xuất PNG.
 - [ ] Thêm link video YouTube nếu có.
-- [ ] Cập nhật GitHub Issue links, Actions links và self-assessed grade.
+- [ ] Rà soát self-assessed grade và cấu trúc ZIP cuối.
 - [ ] Tạo bản PDF nếu Moodle vẫn yêu cầu ngoài phạm vi triển khai hiện tại.
 - [ ] Đóng gói ZIP sau khi mọi TODO đã được thay thế.
-
