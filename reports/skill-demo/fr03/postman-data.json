@@ -1,0 +1,322 @@
+[
+  {
+    "id": "FR-03-TC-001",
+    "method": "POST",
+    "endpoint": "/api/forgot-password",
+    "body": "{\"email\": \"test@eshop.com\"}",
+    "expectedStatus": 200,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-002",
+    "method": "POST",
+    "endpoint": "/api/forgot-password",
+    "body": "{\"email\": \"admin@eshop.com\"}",
+    "expectedStatus": 200,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-003",
+    "method": "POST",
+    "endpoint": "/api/forgot-password",
+    "body": "{\"email\": \"missing@eshop.com\"}",
+    "expectedStatus": 404,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-004",
+    "method": "POST",
+    "endpoint": "/api/forgot-password",
+    "body": "{\"email\": \"\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-005",
+    "method": "POST",
+    "endpoint": "/api/forgot-password",
+    "body": "{}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-006",
+    "method": "POST",
+    "endpoint": "/api/forgot-password",
+    "body": "{\"email\": null}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-007",
+    "method": "POST",
+    "endpoint": "/api/forgot-password",
+    "body": "{\"email\": \"test.eshop.com\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-008",
+    "method": "POST",
+    "endpoint": "/api/forgot-password",
+    "body": "{\"email\": \"test@\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-009",
+    "method": "POST",
+    "endpoint": "/api/forgot-password",
+    "body": "{\"email\": \" test@eshop.com \"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-010",
+    "method": "POST",
+    "endpoint": "/api/forgot-password",
+    "body": "{\"email\": \"' OR 1=1 --\"}",
+    "expectedStatus": 404,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-011",
+    "method": "POST",
+    "endpoint": "/api/forgot-password",
+    "body": "{\"email\": {\"$ne\": null}}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-012",
+    "method": "POST",
+    "endpoint": "/api/forgot-password",
+    "body": "{\"email\": \"test@eshop.com\"}",
+    "expectedStatus": 200,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-013",
+    "method": "POST",
+    "endpoint": "/api/forgot-password",
+    "body": "{\"email\": \"test@eshop.com\"}",
+    "expectedStatus": 200,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-014",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"{{activeOtp}}\", \"newPassword\": \"ValidPass1!\"}",
+    "expectedStatus": 200,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-015",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"999999\", \"newPassword\": \"ValidPass1!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-016",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"admin@eshop.com\", \"resetToken\": \"{{activeOtp}}\", \"newPassword\": \"ValidPass1!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-017",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"resetToken\": \"123456\", \"newPassword\": \"ValidPass1!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-018",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"newPassword\": \"ValidPass1!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-019",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"123456\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-020",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"\", \"newPassword\": \"ValidPass1!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-021",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": null, \"newPassword\": \"ValidPass1!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-022",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"12345\", \"newPassword\": \"ValidPass1!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-023",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"1234567\", \"newPassword\": \"ValidPass1!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-024",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"12AB56\", \"newPassword\": \"ValidPass1!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-025",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \" 123456 \", \"newPassword\": \"ValidPass1!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-026",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"{{activeOtp}}\", \"newPassword\": \"Abcd12!x\"}",
+    "expectedStatus": 200,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-027",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"{{activeOtp}}\", \"newPassword\": \"Ab1!xyz\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-028",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"{{activeOtp}}\", \"newPassword\": \"abcdef1!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-029",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"{{activeOtp}}\", \"newPassword\": \"ABCDEF1!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-030",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"{{activeOtp}}\", \"newPassword\": \"Abcdefg!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-031",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"{{activeOtp}}\", \"newPassword\": \"Abcdefg1\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-032",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"{{activeOtp}}\", \"newPassword\": null}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-033",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"{{activeOtp}}\", \"newPassword\": \"Another1!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-034",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"{{activeOtp}}\", \"newPassword\": \"SchemaOk1!\"}",
+    "expectedStatus": 200,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-035",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"' OR 1=1 --\", \"resetToken\": \"123456\", \"newPassword\": \"ValidPass1!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-036",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"000000\", \"newPassword\": \"ValidPass1!\"}",
+    "expectedStatus": 429,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-037",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"{{oldOtp}}\", \"newPassword\": \"ValidPass1!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-038",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"111111\", \"newPassword\": \"ValidPass1!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-039",
+    "method": "POST",
+    "endpoint": "/api/forgot-password",
+    "body": "{\"email\": \"test@eshop.com\\u0000.attacker\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  },
+  {
+    "id": "FR-03-TC-040",
+    "method": "POST",
+    "endpoint": "/api/reset-password",
+    "body": "{\"email\": \"test@eshop.com\", \"resetToken\": \"999999\", \"newPassword\": \"ShouldNot1!\"}",
+    "expectedStatus": 400,
+    "studentId": "23127502"
+  }
+]

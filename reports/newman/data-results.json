@@ -1,0 +1,2698 @@
+{
+  "collection": {
+    "item": [
+      {
+        "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+        "name": "FR-09 boundary from data file",
+        "request": {
+          "url": {
+            "path": [
+              "api",
+              "apply-coupon"
+            ],
+            "host": [
+              "{{baseUrl}}"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"code\": \"{{code}}\",\n  \"total_amount\": {{total_amount}},\n  \"user_id\": 2\n}"
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "3e499bf8-7262-49d9-b2dd-97d1a94c893a",
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status theo data',()=>pm.expect(pm.response.code).to.eql(Number(pm.iterationData.get('expectedStatus'))));",
+                "if(pm.response.code===200){const d=pm.response.json();pm.test('Có discount/final',()=>{pm.expect(d).to.have.property('discount_amount');pm.expect(d).to.have.property('final_amount');});}"
+              ],
+              "_lastExecutionId": "bb7e6a54-d085-48c8-8502-e33eebff4fcc"
+            }
+          }
+        ]
+      }
+    ],
+    "event": [
+      {
+        "listen": "prerequest",
+        "script": {
+          "id": "973efacd-e5e8-41b1-91f0-78de3f3970f9",
+          "type": "text/javascript",
+          "exec": [
+            "pm.request.headers.upsert({key:'X-Student-Id',value:'23127502'});",
+            "console.log('X-Student-Id: 23127502', pm.info.requestName);"
+          ],
+          "_lastExecutionId": "f799a21f-def7-4c1b-a53d-9cdb2470d44d"
+        }
+      }
+    ],
+    "variable": [],
+    "info": {
+      "_postman_id": "daa62e7b-db88-4601-82dd-f5a0ce7d0bdd",
+      "name": "HW06 FR-09 Data Driven",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    }
+  },
+  "environment": {
+    "_": {
+      "postman_variable_scope": "environment",
+      "postman_exported_using": "Codex HW06 builder"
+    },
+    "id": "hw06-local-23127502",
+    "name": "HW06 Local - 23127502",
+    "values": [
+      {
+        "type": "any",
+        "value": "http://127.0.0.1:3000",
+        "key": "baseUrl"
+      }
+    ]
+  },
+  "globals": {
+    "id": "a7460168-674b-44f9-a251-6d95f3e9b9df",
+    "values": []
+  },
+  "run": {
+    "stats": {
+      "iterations": {
+        "total": 8,
+        "pending": 0,
+        "failed": 0
+      },
+      "items": {
+        "total": 8,
+        "pending": 0,
+        "failed": 0
+      },
+      "scripts": {
+        "total": 16,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequests": {
+        "total": 8,
+        "pending": 0,
+        "failed": 0
+      },
+      "requests": {
+        "total": 8,
+        "pending": 0,
+        "failed": 0
+      },
+      "tests": {
+        "total": 8,
+        "pending": 0,
+        "failed": 0
+      },
+      "assertions": {
+        "total": 10,
+        "pending": 0,
+        "failed": 2
+      },
+      "testScripts": {
+        "total": 8,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequestScripts": {
+        "total": 8,
+        "pending": 0,
+        "failed": 0
+      }
+    },
+    "timings": {
+      "responseAverage": 7.874999999999999,
+      "responseMin": 2,
+      "responseMax": 38,
+      "responseSd": 11.537303627797963,
+      "dnsAverage": 0,
+      "dnsMin": 0,
+      "dnsMax": 0,
+      "dnsSd": 0,
+      "firstByteAverage": 0,
+      "firstByteMin": 0,
+      "firstByteMax": 0,
+      "firstByteSd": 0,
+      "started": 1788363607885,
+      "completed": 1788363608672
+    },
+    "executions": [
+      {
+        "cursor": {
+          "position": 0,
+          "iteration": 0,
+          "length": 1,
+          "cycles": 8,
+          "empty": false,
+          "eof": false,
+          "bof": true,
+          "cr": false,
+          "ref": "422e7aaf-4869-45f8-8bc4-05b3b7d8181f",
+          "httpRequestId": "5d547d11-6f17-4911-91d6-28d137716a7f"
+        },
+        "item": {
+          "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+          "name": "FR-09 boundary from data file",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "apply-coupon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{code}}\",\n  \"total_amount\": {{total_amount}},\n  \"user_id\": 2\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "3e499bf8-7262-49d9-b2dd-97d1a94c893a",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status theo data',()=>pm.expect(pm.response.code).to.eql(Number(pm.iterationData.get('expectedStatus'))));",
+                  "if(pm.response.code===200){const d=pm.response.json();pm.test('Có discount/final',()=>{pm.expect(d).to.have.property('discount_amount');pm.expect(d).to.have.property('final_amount');});}"
+                ],
+                "_lastExecutionId": "bb7e6a54-d085-48c8-8502-e33eebff4fcc"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "api",
+              "apply-coupon"
+            ],
+            "host": [
+              "127",
+              "0",
+              "0",
+              "1"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "X-Student-Id",
+              "value": "23127502"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "93835ba7-8137-4912-ad01-daeb94f39e86",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "127.0.0.1:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "64",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"code\": \"SAVE10\",\n  \"total_amount\": 299999,\n  \"user_id\": 2\n}"
+          }
+        },
+        "response": {
+          "id": "798aa2f2-02bd-403e-85d9-89668b8ea693",
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "98"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"62-zdDGIVV8U4NM1Wd7cz+6q0pgXVo\""
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 02 Sep 2026 15:40:07 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              101,
+              114,
+              114,
+              111,
+              114,
+              34,
+              58,
+              34,
+              196,
+              144,
+              198,
+              161,
+              110,
+              32,
+              104,
+              195,
+              160,
+              110,
+              103,
+              32,
+              99,
+              104,
+              198,
+              176,
+              97,
+              32,
+              196,
+              145,
+              225,
+              187,
+              167,
+              32,
+              103,
+              105,
+              195,
+              161,
+              32,
+              116,
+              114,
+              225,
+              187,
+              139,
+              32,
+              116,
+              225,
+              187,
+              145,
+              105,
+              32,
+              116,
+              104,
+              105,
+              225,
+              187,
+              131,
+              117,
+              32,
+              51,
+              48,
+              48,
+              44,
+              48,
+              48,
+              48,
+              32,
+              226,
+              130,
+              171,
+              32,
+              196,
+              145,
+              225,
+              187,
+              131,
+              32,
+              195,
+              161,
+              112,
+              32,
+              100,
+              225,
+              187,
+              165,
+              110,
+              103,
+              32,
+              109,
+              195,
+              163,
+              32,
+              110,
+              195,
+              160,
+              121,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 38,
+          "responseSize": 98
+        },
+        "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+        "assertions": [
+          {
+            "assertion": "Status theo data",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "8763e95c-a888-49de-9d7b-a506c42c7bff",
+          "length": 1,
+          "cycles": 8,
+          "position": 0,
+          "iteration": 1,
+          "cr": true,
+          "httpRequestId": "3ab72a9f-0867-437b-8697-11a40fbdb5ed"
+        },
+        "item": {
+          "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+          "name": "FR-09 boundary from data file",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "apply-coupon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{code}}\",\n  \"total_amount\": {{total_amount}},\n  \"user_id\": 2\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "3e499bf8-7262-49d9-b2dd-97d1a94c893a",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status theo data',()=>pm.expect(pm.response.code).to.eql(Number(pm.iterationData.get('expectedStatus'))));",
+                  "if(pm.response.code===200){const d=pm.response.json();pm.test('Có discount/final',()=>{pm.expect(d).to.have.property('discount_amount');pm.expect(d).to.have.property('final_amount');});}"
+                ],
+                "_lastExecutionId": "bb7e6a54-d085-48c8-8502-e33eebff4fcc"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "api",
+              "apply-coupon"
+            ],
+            "host": [
+              "127",
+              "0",
+              "0",
+              "1"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "X-Student-Id",
+              "value": "23127502"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "ea9bd37a-e60f-4a7e-9fd6-0bdb6bcafd5e",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "127.0.0.1:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "64",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"code\": \"SAVE10\",\n  \"total_amount\": 300000,\n  \"user_id\": 2\n}"
+          }
+        },
+        "response": {
+          "id": "dceb7ef6-4c17-48d1-be48-2a4c35d34684",
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "98"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"62-zdDGIVV8U4NM1Wd7cz+6q0pgXVo\""
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 02 Sep 2026 15:40:08 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              101,
+              114,
+              114,
+              111,
+              114,
+              34,
+              58,
+              34,
+              196,
+              144,
+              198,
+              161,
+              110,
+              32,
+              104,
+              195,
+              160,
+              110,
+              103,
+              32,
+              99,
+              104,
+              198,
+              176,
+              97,
+              32,
+              196,
+              145,
+              225,
+              187,
+              167,
+              32,
+              103,
+              105,
+              195,
+              161,
+              32,
+              116,
+              114,
+              225,
+              187,
+              139,
+              32,
+              116,
+              225,
+              187,
+              145,
+              105,
+              32,
+              116,
+              104,
+              105,
+              225,
+              187,
+              131,
+              117,
+              32,
+              51,
+              48,
+              48,
+              44,
+              48,
+              48,
+              48,
+              32,
+              226,
+              130,
+              171,
+              32,
+              196,
+              145,
+              225,
+              187,
+              131,
+              32,
+              195,
+              161,
+              112,
+              32,
+              100,
+              225,
+              187,
+              165,
+              110,
+              103,
+              32,
+              109,
+              195,
+              163,
+              32,
+              110,
+              195,
+              160,
+              121,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 4,
+          "responseSize": 98
+        },
+        "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+        "assertions": [
+          {
+            "assertion": "Status theo data",
+            "skipped": false,
+            "error": {
+              "name": "AssertionError",
+              "index": 0,
+              "test": "Status theo data",
+              "message": "expected 400 to deeply equal 200",
+              "stack": "AssertionError: expected 400 to deeply equal 200\n   at Object.eval sandbox-script.js:1:1)"
+            }
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "bc830383-ef4c-4bde-b915-f62f61cc4b05",
+          "length": 1,
+          "cycles": 8,
+          "position": 0,
+          "iteration": 2,
+          "cr": true,
+          "httpRequestId": "45768d62-1a06-45fc-a462-8c1e72d8ab6b"
+        },
+        "item": {
+          "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+          "name": "FR-09 boundary from data file",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "apply-coupon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{code}}\",\n  \"total_amount\": {{total_amount}},\n  \"user_id\": 2\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "3e499bf8-7262-49d9-b2dd-97d1a94c893a",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status theo data',()=>pm.expect(pm.response.code).to.eql(Number(pm.iterationData.get('expectedStatus'))));",
+                  "if(pm.response.code===200){const d=pm.response.json();pm.test('Có discount/final',()=>{pm.expect(d).to.have.property('discount_amount');pm.expect(d).to.have.property('final_amount');});}"
+                ],
+                "_lastExecutionId": "bb7e6a54-d085-48c8-8502-e33eebff4fcc"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "api",
+              "apply-coupon"
+            ],
+            "host": [
+              "127",
+              "0",
+              "0",
+              "1"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "X-Student-Id",
+              "value": "23127502"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "c2073b7f-96d4-4b98-808b-bdde746a5024",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "127.0.0.1:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "64",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"code\": \"SAVE10\",\n  \"total_amount\": 300001,\n  \"user_id\": 2\n}"
+          }
+        },
+        "response": {
+          "id": "72e037b5-0787-49d8-8124-dbe77add8c60",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "128"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"80-b5awhgBEFh6YBpQRUKO7Rss8vjw\""
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 02 Sep 2026 15:40:08 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              115,
+              117,
+              99,
+              99,
+              101,
+              115,
+              115,
+              34,
+              58,
+              116,
+              114,
+              117,
+              101,
+              44,
+              34,
+              99,
+              111,
+              117,
+              112,
+              111,
+              110,
+              95,
+              105,
+              100,
+              34,
+              58,
+              49,
+              44,
+              34,
+              100,
+              105,
+              115,
+              99,
+              111,
+              117,
+              110,
+              116,
+              95,
+              97,
+              109,
+              111,
+              117,
+              110,
+              116,
+              34,
+              58,
+              45,
+              50,
+              55,
+              48,
+              48,
+              48,
+              48,
+              57,
+              44,
+              34,
+              102,
+              105,
+              110,
+              97,
+              108,
+              95,
+              97,
+              109,
+              111,
+              117,
+              110,
+              116,
+              34,
+              58,
+              51,
+              48,
+              48,
+              48,
+              48,
+              49,
+              48,
+              44,
+              34,
+              109,
+              101,
+              115,
+              115,
+              97,
+              103,
+              101,
+              34,
+              58,
+              34,
+              195,
+              129,
+              112,
+              32,
+              100,
+              225,
+              187,
+              165,
+              110,
+              103,
+              32,
+              116,
+              104,
+              195,
+              160,
+              110,
+              104,
+              32,
+              99,
+              195,
+              180,
+              110,
+              103,
+              33,
+              32,
+              71,
+              105,
+              225,
+              186,
+              163,
+              109,
+              32,
+              49,
+              48,
+              37,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 3,
+          "responseSize": 128
+        },
+        "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+        "assertions": [
+          {
+            "assertion": "Status theo data",
+            "skipped": false
+          },
+          {
+            "assertion": "Có discount/final",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "b8f4978b-dbba-4c2f-8072-024e7c5771c3",
+          "length": 1,
+          "cycles": 8,
+          "position": 0,
+          "iteration": 3,
+          "cr": true,
+          "httpRequestId": "fd48a6f4-0bc4-4150-b1eb-cf328c552665"
+        },
+        "item": {
+          "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+          "name": "FR-09 boundary from data file",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "apply-coupon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{code}}\",\n  \"total_amount\": {{total_amount}},\n  \"user_id\": 2\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "3e499bf8-7262-49d9-b2dd-97d1a94c893a",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status theo data',()=>pm.expect(pm.response.code).to.eql(Number(pm.iterationData.get('expectedStatus'))));",
+                  "if(pm.response.code===200){const d=pm.response.json();pm.test('Có discount/final',()=>{pm.expect(d).to.have.property('discount_amount');pm.expect(d).to.have.property('final_amount');});}"
+                ],
+                "_lastExecutionId": "bb7e6a54-d085-48c8-8502-e33eebff4fcc"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "api",
+              "apply-coupon"
+            ],
+            "host": [
+              "127",
+              "0",
+              "0",
+              "1"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "X-Student-Id",
+              "value": "23127502"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "b6576c64-ef3b-4290-9388-72de502e84e0",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "127.0.0.1:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "64",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"code\": \"BIGBUY\",\n  \"total_amount\": 499999,\n  \"user_id\": 2\n}"
+          }
+        },
+        "response": {
+          "id": "5cbcbdc0-440b-413c-8fc3-c86e2c35faf2",
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "98"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"62-pLZexjaFYt6HGA2CQ4AHgRPIlu0\""
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 02 Sep 2026 15:40:08 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              101,
+              114,
+              114,
+              111,
+              114,
+              34,
+              58,
+              34,
+              196,
+              144,
+              198,
+              161,
+              110,
+              32,
+              104,
+              195,
+              160,
+              110,
+              103,
+              32,
+              99,
+              104,
+              198,
+              176,
+              97,
+              32,
+              196,
+              145,
+              225,
+              187,
+              167,
+              32,
+              103,
+              105,
+              195,
+              161,
+              32,
+              116,
+              114,
+              225,
+              187,
+              139,
+              32,
+              116,
+              225,
+              187,
+              145,
+              105,
+              32,
+              116,
+              104,
+              105,
+              225,
+              187,
+              131,
+              117,
+              32,
+              53,
+              48,
+              48,
+              44,
+              48,
+              48,
+              48,
+              32,
+              226,
+              130,
+              171,
+              32,
+              196,
+              145,
+              225,
+              187,
+              131,
+              32,
+              195,
+              161,
+              112,
+              32,
+              100,
+              225,
+              187,
+              165,
+              110,
+              103,
+              32,
+              109,
+              195,
+              163,
+              32,
+              110,
+              195,
+              160,
+              121,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 8,
+          "responseSize": 98
+        },
+        "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+        "assertions": [
+          {
+            "assertion": "Status theo data",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "9e251fec-1ebe-4ffc-9433-55a49bb251a3",
+          "length": 1,
+          "cycles": 8,
+          "position": 0,
+          "iteration": 4,
+          "cr": true,
+          "httpRequestId": "6deaf29a-27dd-4a02-b17a-948ffd2f1db6"
+        },
+        "item": {
+          "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+          "name": "FR-09 boundary from data file",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "apply-coupon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{code}}\",\n  \"total_amount\": {{total_amount}},\n  \"user_id\": 2\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "3e499bf8-7262-49d9-b2dd-97d1a94c893a",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status theo data',()=>pm.expect(pm.response.code).to.eql(Number(pm.iterationData.get('expectedStatus'))));",
+                  "if(pm.response.code===200){const d=pm.response.json();pm.test('Có discount/final',()=>{pm.expect(d).to.have.property('discount_amount');pm.expect(d).to.have.property('final_amount');});}"
+                ],
+                "_lastExecutionId": "bb7e6a54-d085-48c8-8502-e33eebff4fcc"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "api",
+              "apply-coupon"
+            ],
+            "host": [
+              "127",
+              "0",
+              "0",
+              "1"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "X-Student-Id",
+              "value": "23127502"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "eb2edce9-23b1-4922-b9c2-507a898e9de9",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "127.0.0.1:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "64",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"code\": \"BIGBUY\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}"
+          }
+        },
+        "response": {
+          "id": "a4b91c29-4baf-4dd3-b05f-c4c979258b76",
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "98"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"62-pLZexjaFYt6HGA2CQ4AHgRPIlu0\""
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 02 Sep 2026 15:40:08 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              101,
+              114,
+              114,
+              111,
+              114,
+              34,
+              58,
+              34,
+              196,
+              144,
+              198,
+              161,
+              110,
+              32,
+              104,
+              195,
+              160,
+              110,
+              103,
+              32,
+              99,
+              104,
+              198,
+              176,
+              97,
+              32,
+              196,
+              145,
+              225,
+              187,
+              167,
+              32,
+              103,
+              105,
+              195,
+              161,
+              32,
+              116,
+              114,
+              225,
+              187,
+              139,
+              32,
+              116,
+              225,
+              187,
+              145,
+              105,
+              32,
+              116,
+              104,
+              105,
+              225,
+              187,
+              131,
+              117,
+              32,
+              53,
+              48,
+              48,
+              44,
+              48,
+              48,
+              48,
+              32,
+              226,
+              130,
+              171,
+              32,
+              196,
+              145,
+              225,
+              187,
+              131,
+              32,
+              195,
+              161,
+              112,
+              32,
+              100,
+              225,
+              187,
+              165,
+              110,
+              103,
+              32,
+              109,
+              195,
+              163,
+              32,
+              110,
+              195,
+              160,
+              121,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 4,
+          "responseSize": 98
+        },
+        "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+        "assertions": [
+          {
+            "assertion": "Status theo data",
+            "skipped": false,
+            "error": {
+              "name": "AssertionError",
+              "index": 0,
+              "test": "Status theo data",
+              "message": "expected 400 to deeply equal 200",
+              "stack": "AssertionError: expected 400 to deeply equal 200\n   at Object.eval sandbox-script.js:1:1)"
+            }
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "d3ebb3c2-77cc-4f30-879f-52add52726f1",
+          "length": 1,
+          "cycles": 8,
+          "position": 0,
+          "iteration": 5,
+          "cr": true,
+          "httpRequestId": "a29aa24d-0273-4853-99c1-0b705a33242d"
+        },
+        "item": {
+          "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+          "name": "FR-09 boundary from data file",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "apply-coupon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{code}}\",\n  \"total_amount\": {{total_amount}},\n  \"user_id\": 2\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "3e499bf8-7262-49d9-b2dd-97d1a94c893a",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status theo data',()=>pm.expect(pm.response.code).to.eql(Number(pm.iterationData.get('expectedStatus'))));",
+                  "if(pm.response.code===200){const d=pm.response.json();pm.test('Có discount/final',()=>{pm.expect(d).to.have.property('discount_amount');pm.expect(d).to.have.property('final_amount');});}"
+                ],
+                "_lastExecutionId": "bb7e6a54-d085-48c8-8502-e33eebff4fcc"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "api",
+              "apply-coupon"
+            ],
+            "host": [
+              "127",
+              "0",
+              "0",
+              "1"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "X-Student-Id",
+              "value": "23127502"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "fa584e35-6163-4b26-90cc-76c840b0af5b",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "127.0.0.1:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "64",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"code\": \"BIGBUY\",\n  \"total_amount\": 500001,\n  \"user_id\": 2\n}"
+          }
+        },
+        "response": {
+          "id": "5cc8f793-9530-499c-ba4d-4f27cb4b4be3",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "131"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"83-uAcZDN26UaSayg9KzybB+baqE7Q\""
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 02 Sep 2026 15:40:08 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              115,
+              117,
+              99,
+              99,
+              101,
+              115,
+              115,
+              34,
+              58,
+              116,
+              114,
+              117,
+              101,
+              44,
+              34,
+              99,
+              111,
+              117,
+              112,
+              111,
+              110,
+              95,
+              105,
+              100,
+              34,
+              58,
+              50,
+              44,
+              34,
+              100,
+              105,
+              115,
+              99,
+              111,
+              117,
+              110,
+              116,
+              95,
+              97,
+              109,
+              111,
+              117,
+              110,
+              116,
+              34,
+              58,
+              53,
+              48,
+              48,
+              48,
+              48,
+              44,
+              34,
+              102,
+              105,
+              110,
+              97,
+              108,
+              95,
+              97,
+              109,
+              111,
+              117,
+              110,
+              116,
+              34,
+              58,
+              52,
+              53,
+              48,
+              48,
+              48,
+              49,
+              44,
+              34,
+              109,
+              101,
+              115,
+              115,
+              97,
+              103,
+              101,
+              34,
+              58,
+              34,
+              195,
+              129,
+              112,
+              32,
+              100,
+              225,
+              187,
+              165,
+              110,
+              103,
+              32,
+              116,
+              104,
+              195,
+              160,
+              110,
+              104,
+              32,
+              99,
+              195,
+              180,
+              110,
+              103,
+              33,
+              32,
+              71,
+              105,
+              225,
+              186,
+              163,
+              109,
+              32,
+              53,
+              48,
+              44,
+              48,
+              48,
+              48,
+              32,
+              226,
+              130,
+              171,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 2,
+          "responseSize": 131
+        },
+        "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+        "assertions": [
+          {
+            "assertion": "Status theo data",
+            "skipped": false
+          },
+          {
+            "assertion": "Có discount/final",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "b476dad9-b396-4a4e-9f23-b5432f37c489",
+          "length": 1,
+          "cycles": 8,
+          "position": 0,
+          "iteration": 6,
+          "cr": true,
+          "httpRequestId": "6d63962a-60c1-46eb-9dbf-d1f079f945fe"
+        },
+        "item": {
+          "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+          "name": "FR-09 boundary from data file",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "apply-coupon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{code}}\",\n  \"total_amount\": {{total_amount}},\n  \"user_id\": 2\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "3e499bf8-7262-49d9-b2dd-97d1a94c893a",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status theo data',()=>pm.expect(pm.response.code).to.eql(Number(pm.iterationData.get('expectedStatus'))));",
+                  "if(pm.response.code===200){const d=pm.response.json();pm.test('Có discount/final',()=>{pm.expect(d).to.have.property('discount_amount');pm.expect(d).to.have.property('final_amount');});}"
+                ],
+                "_lastExecutionId": "bb7e6a54-d085-48c8-8502-e33eebff4fcc"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "api",
+              "apply-coupon"
+            ],
+            "host": [
+              "127",
+              "0",
+              "0",
+              "1"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "X-Student-Id",
+              "value": "23127502"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "903c7142-ba33-4426-b495-ae9d116ede49",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "127.0.0.1:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "65",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"code\": \"EXPIRED\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}"
+          }
+        },
+        "response": {
+          "id": "2b84c897-7519-440a-91ee-1295b01af358",
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "44"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"2c-TEKYjb/x8uUMAcqo6Q+gnvTyj+w\""
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 02 Sep 2026 15:40:08 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              101,
+              114,
+              114,
+              111,
+              114,
+              34,
+              58,
+              34,
+              77,
+              195,
+              163,
+              32,
+              103,
+              105,
+              225,
+              186,
+              163,
+              109,
+              32,
+              103,
+              105,
+              195,
+              161,
+              32,
+              196,
+              145,
+              195,
+              163,
+              32,
+              104,
+              225,
+              186,
+              191,
+              116,
+              32,
+              104,
+              225,
+              186,
+              161,
+              110,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 2,
+          "responseSize": 44
+        },
+        "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+        "assertions": [
+          {
+            "assertion": "Status theo data",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "d6134769-01a0-4e70-8ce6-982a9d2b99b5",
+          "length": 1,
+          "cycles": 8,
+          "position": 0,
+          "iteration": 7,
+          "cr": true,
+          "httpRequestId": "3fdc4e9f-e2e1-40e6-9949-8957ca7d58c1"
+        },
+        "item": {
+          "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+          "name": "FR-09 boundary from data file",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "apply-coupon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{code}}\",\n  \"total_amount\": {{total_amount}},\n  \"user_id\": 2\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "3e499bf8-7262-49d9-b2dd-97d1a94c893a",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status theo data',()=>pm.expect(pm.response.code).to.eql(Number(pm.iterationData.get('expectedStatus'))));",
+                  "if(pm.response.code===200){const d=pm.response.json();pm.test('Có discount/final',()=>{pm.expect(d).to.have.property('discount_amount');pm.expect(d).to.have.property('final_amount');});}"
+                ],
+                "_lastExecutionId": "bb7e6a54-d085-48c8-8502-e33eebff4fcc"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "api",
+              "apply-coupon"
+            ],
+            "host": [
+              "127",
+              "0",
+              "0",
+              "1"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "X-Student-Id",
+              "value": "23127502"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "3b00d7e7-ab80-4e66-b45f-c6f741b7171e",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "127.0.0.1:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "65",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"code\": \"UNKNOWN\",\n  \"total_amount\": 500000,\n  \"user_id\": 2\n}"
+          }
+        },
+        "response": {
+          "id": "5e9c3837-f778-4761-9465-0049459fe445",
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "79"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"4f-Zi25GXkQG92bS4EOxPGgD4Fb01I\""
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 02 Sep 2026 15:40:08 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              101,
+              114,
+              114,
+              111,
+              114,
+              34,
+              58,
+              34,
+              77,
+              195,
+              163,
+              32,
+              103,
+              105,
+              225,
+              186,
+              163,
+              109,
+              32,
+              103,
+              105,
+              195,
+              161,
+              32,
+              107,
+              104,
+              195,
+              180,
+              110,
+              103,
+              32,
+              116,
+              225,
+              187,
+              147,
+              110,
+              32,
+              116,
+              225,
+              186,
+              161,
+              105,
+              32,
+              104,
+              111,
+              225,
+              186,
+              183,
+              99,
+              32,
+              196,
+              145,
+              195,
+              163,
+              32,
+              98,
+              225,
+              187,
+              139,
+              32,
+              118,
+              195,
+              180,
+              32,
+              104,
+              105,
+              225,
+              187,
+              135,
+              117,
+              32,
+              104,
+              195,
+              179,
+              97,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 2,
+          "responseSize": 79
+        },
+        "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+        "assertions": [
+          {
+            "assertion": "Status theo data",
+            "skipped": false
+          }
+        ]
+      }
+    ],
+    "transfers": {
+      "responseTotal": 774
+    },
+    "failures": [
+      {
+        "error": {
+          "name": "AssertionError",
+          "index": 0,
+          "test": "Status theo data",
+          "message": "expected 400 to deeply equal 200",
+          "stack": "AssertionError: expected 400 to deeply equal 200\n   at Object.eval sandbox-script.js:1:1)",
+          "checksum": "fbf8afc1a8578b35d2637a2d868e7466",
+          "id": "c6068585-720a-4ece-a736-5202ac44d717",
+          "timestamp": 1788363608083,
+          "stacktrace": [
+            {
+              "fileName": "sandbox-script.js",
+              "lineNumber": 1,
+              "functionName": "Object.eval",
+              "typeName": "Object",
+              "methodName": "eval",
+              "columnNumber": 1,
+              "native": false
+            }
+          ]
+        },
+        "at": "assertion:0 in test-script",
+        "source": {
+          "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+          "name": "FR-09 boundary from data file",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "apply-coupon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{code}}\",\n  \"total_amount\": {{total_amount}},\n  \"user_id\": 2\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "3e499bf8-7262-49d9-b2dd-97d1a94c893a",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status theo data',()=>pm.expect(pm.response.code).to.eql(Number(pm.iterationData.get('expectedStatus'))));",
+                  "if(pm.response.code===200){const d=pm.response.json();pm.test('Có discount/final',()=>{pm.expect(d).to.have.property('discount_amount');pm.expect(d).to.have.property('final_amount');});}"
+                ],
+                "_lastExecutionId": "bb7e6a54-d085-48c8-8502-e33eebff4fcc"
+              }
+            }
+          ]
+        },
+        "parent": {
+          "item": [
+            {
+              "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+              "name": "FR-09 boundary from data file",
+              "request": {
+                "url": {
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"code\": \"{{code}}\",\n  \"total_amount\": {{total_amount}},\n  \"user_id\": 2\n}"
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "3e499bf8-7262-49d9-b2dd-97d1a94c893a",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status theo data',()=>pm.expect(pm.response.code).to.eql(Number(pm.iterationData.get('expectedStatus'))));",
+                      "if(pm.response.code===200){const d=pm.response.json();pm.test('Có discount/final',()=>{pm.expect(d).to.have.property('discount_amount');pm.expect(d).to.have.property('final_amount');});}"
+                    ],
+                    "_lastExecutionId": "bb7e6a54-d085-48c8-8502-e33eebff4fcc"
+                  }
+                }
+              ]
+            }
+          ],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "973efacd-e5e8-41b1-91f0-78de3f3970f9",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.request.headers.upsert({key:'X-Student-Id',value:'23127502'});",
+                  "console.log('X-Student-Id: 23127502', pm.info.requestName);"
+                ],
+                "_lastExecutionId": "f799a21f-def7-4c1b-a53d-9cdb2470d44d"
+              }
+            }
+          ],
+          "variable": [],
+          "info": {
+            "_postman_id": "daa62e7b-db88-4601-82dd-f5a0ce7d0bdd",
+            "name": "HW06 FR-09 Data Driven",
+            "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+          }
+        },
+        "cursor": {
+          "ref": "8763e95c-a888-49de-9d7b-a506c42c7bff",
+          "length": 1,
+          "cycles": 8,
+          "position": 0,
+          "iteration": 1,
+          "cr": true,
+          "httpRequestId": "3ab72a9f-0867-437b-8697-11a40fbdb5ed",
+          "scriptId": "3e499bf8-7262-49d9-b2dd-97d1a94c893a",
+          "execution": "b65515d2-f954-4651-b91e-55ab67db018d"
+        }
+      },
+      {
+        "error": {
+          "name": "AssertionError",
+          "index": 0,
+          "test": "Status theo data",
+          "message": "expected 400 to deeply equal 200",
+          "stack": "AssertionError: expected 400 to deeply equal 200\n   at Object.eval sandbox-script.js:1:1)",
+          "checksum": "fbf8afc1a8578b35d2637a2d868e7466",
+          "id": "411d004b-439a-4168-87e7-25f8b4ec3863",
+          "timestamp": 1788363608362,
+          "stacktrace": [
+            {
+              "fileName": "sandbox-script.js",
+              "lineNumber": 1,
+              "functionName": "Object.eval",
+              "typeName": "Object",
+              "methodName": "eval",
+              "columnNumber": 1,
+              "native": false
+            }
+          ]
+        },
+        "at": "assertion:0 in test-script",
+        "source": {
+          "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+          "name": "FR-09 boundary from data file",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "apply-coupon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{code}}\",\n  \"total_amount\": {{total_amount}},\n  \"user_id\": 2\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "3e499bf8-7262-49d9-b2dd-97d1a94c893a",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status theo data',()=>pm.expect(pm.response.code).to.eql(Number(pm.iterationData.get('expectedStatus'))));",
+                  "if(pm.response.code===200){const d=pm.response.json();pm.test('Có discount/final',()=>{pm.expect(d).to.have.property('discount_amount');pm.expect(d).to.have.property('final_amount');});}"
+                ],
+                "_lastExecutionId": "bb7e6a54-d085-48c8-8502-e33eebff4fcc"
+              }
+            }
+          ]
+        },
+        "parent": {
+          "item": [
+            {
+              "id": "cadc4374-33bc-4f03-97c9-a01b8202cbcf",
+              "name": "FR-09 boundary from data file",
+              "request": {
+                "url": {
+                  "path": [
+                    "api",
+                    "apply-coupon"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"code\": \"{{code}}\",\n  \"total_amount\": {{total_amount}},\n  \"user_id\": 2\n}"
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "3e499bf8-7262-49d9-b2dd-97d1a94c893a",
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Status theo data',()=>pm.expect(pm.response.code).to.eql(Number(pm.iterationData.get('expectedStatus'))));",
+                      "if(pm.response.code===200){const d=pm.response.json();pm.test('Có discount/final',()=>{pm.expect(d).to.have.property('discount_amount');pm.expect(d).to.have.property('final_amount');});}"
+                    ],
+                    "_lastExecutionId": "bb7e6a54-d085-48c8-8502-e33eebff4fcc"
+                  }
+                }
+              ]
+            }
+          ],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "973efacd-e5e8-41b1-91f0-78de3f3970f9",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.request.headers.upsert({key:'X-Student-Id',value:'23127502'});",
+                  "console.log('X-Student-Id: 23127502', pm.info.requestName);"
+                ],
+                "_lastExecutionId": "f799a21f-def7-4c1b-a53d-9cdb2470d44d"
+              }
+            }
+          ],
+          "variable": [],
+          "info": {
+            "_postman_id": "daa62e7b-db88-4601-82dd-f5a0ce7d0bdd",
+            "name": "HW06 FR-09 Data Driven",
+            "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+          }
+        },
+        "cursor": {
+          "ref": "9e251fec-1ebe-4ffc-9433-55a49bb251a3",
+          "length": 1,
+          "cycles": 8,
+          "position": 0,
+          "iteration": 4,
+          "cr": true,
+          "httpRequestId": "6deaf29a-27dd-4a02-b17a-948ffd2f1db6",
+          "scriptId": "3e499bf8-7262-49d9-b2dd-97d1a94c893a",
+          "execution": "ded5f326-1182-4448-a831-826b5e393639"
+        }
+      }
+    ],
+    "error": null
+  }
+}

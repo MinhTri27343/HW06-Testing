@@ -1,0 +1,1007 @@
+{
+  "collection": {
+    "item": [
+      {
+        "id": "9433823b-07fd-41a5-8dda-95fb58a72099",
+        "name": "FR-03 | Forgot password responds",
+        "request": {
+          "url": {
+            "path": [
+              "api",
+              "forgot-password"
+            ],
+            "host": [
+              "{{baseUrl}}"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\"email\":\"test@eshop.com\"}"
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "49a3fab2-1feb-419d-88e1-9cd4c6327e9c",
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status 200',()=>pm.response.to.have.status(200));",
+                "const d=pm.response.json();pm.test('Có message và token',()=>{pm.expect(d.message).to.be.a('string');pm.expect(d.resetToken).to.be.a('string');});"
+              ],
+              "_lastExecutionId": "f3d05372-cb82-49f6-8d2b-9681ad9280d8"
+            }
+          }
+        ]
+      },
+      {
+        "id": "a0e0e13d-13eb-4739-9dd8-69d26248995a",
+        "name": "FR-09 | BIGBUY fixed calculation",
+        "request": {
+          "url": {
+            "path": [
+              "api",
+              "apply-coupon"
+            ],
+            "host": [
+              "{{baseUrl}}"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\"code\":\"BIGBUY\",\"total_amount\":600000,\"user_id\":2}"
+          }
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "004b0dda-86c1-4f80-833e-d649835b519c",
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status 200',()=>pm.response.to.have.status(200));",
+                "const d=pm.response.json();pm.test('Fixed formula',()=>{pm.expect(d.discount_amount).to.eql(50000);pm.expect(d.final_amount).to.eql(550000);});"
+              ],
+              "_lastExecutionId": "9a7fa1b6-9612-4751-9492-4947936a35b9"
+            }
+          }
+        ]
+      },
+      {
+        "id": "c258b5b5-cac7-4128-9726-02025ca3c30e",
+        "name": "FR-17 | Missing token rejected",
+        "request": {
+          "url": {
+            "path": [
+              "api",
+              "coupons"
+            ],
+            "host": [
+              "{{baseUrl}}"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "method": "GET"
+        },
+        "response": [],
+        "event": [
+          {
+            "listen": "test",
+            "script": {
+              "id": "b13fde5b-a795-43f1-95e7-26f3d3ad6802",
+              "type": "text/javascript",
+              "exec": [
+                "pm.test('Status 401',()=>pm.response.to.have.status(401));",
+                "pm.test('Error schema',()=>pm.expect(pm.response.json()).to.have.property('error'));"
+              ],
+              "_lastExecutionId": "93fba0a2-f6e9-4045-a8f4-b24ec6b6c4ab"
+            }
+          }
+        ]
+      }
+    ],
+    "event": [
+      {
+        "listen": "prerequest",
+        "script": {
+          "id": "6a955cf0-ed29-49d7-beb6-3f88820fe550",
+          "type": "text/javascript",
+          "exec": [
+            "pm.request.headers.upsert({key:'X-Student-Id',value:'23127502'});",
+            "console.log('X-Student-Id: 23127502', pm.info.requestName);"
+          ],
+          "_lastExecutionId": "327383fe-063b-4604-9ff2-24430bbf7353"
+        }
+      }
+    ],
+    "variable": [],
+    "info": {
+      "_postman_id": "2bb02b89-143a-429f-8041-2372426557d8",
+      "name": "HW06 CI Smoke",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    }
+  },
+  "environment": {
+    "_": {
+      "postman_variable_scope": "environment",
+      "postman_exported_using": "Codex HW06 builder"
+    },
+    "id": "hw06-local-23127502",
+    "name": "HW06 Local - 23127502",
+    "values": [
+      {
+        "type": "any",
+        "value": "http://127.0.0.1:3000",
+        "key": "baseUrl"
+      }
+    ]
+  },
+  "globals": {
+    "id": "2acc31c5-bd4d-4b46-ad77-6ca0c9ec6687",
+    "values": []
+  },
+  "run": {
+    "stats": {
+      "iterations": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "items": {
+        "total": 3,
+        "pending": 0,
+        "failed": 0
+      },
+      "scripts": {
+        "total": 6,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequests": {
+        "total": 3,
+        "pending": 0,
+        "failed": 0
+      },
+      "requests": {
+        "total": 3,
+        "pending": 0,
+        "failed": 0
+      },
+      "tests": {
+        "total": 3,
+        "pending": 0,
+        "failed": 0
+      },
+      "assertions": {
+        "total": 6,
+        "pending": 0,
+        "failed": 0
+      },
+      "testScripts": {
+        "total": 3,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequestScripts": {
+        "total": 3,
+        "pending": 0,
+        "failed": 0
+      }
+    },
+    "timings": {
+      "responseAverage": 18.666666666666668,
+      "responseMin": 3,
+      "responseMax": 35,
+      "responseSd": 13.07244770075172,
+      "dnsAverage": 0,
+      "dnsMin": 0,
+      "dnsMax": 0,
+      "dnsSd": 0,
+      "firstByteAverage": 0,
+      "firstByteMin": 0,
+      "firstByteMax": 0,
+      "firstByteSd": 0,
+      "started": 1788363596857,
+      "completed": 1788363597167
+    },
+    "executions": [
+      {
+        "cursor": {
+          "position": 0,
+          "iteration": 0,
+          "length": 3,
+          "cycles": 1,
+          "empty": false,
+          "eof": false,
+          "bof": true,
+          "cr": false,
+          "ref": "75033f22-dd05-4d23-8eae-da123655742d",
+          "httpRequestId": "e890be9f-f8eb-4a86-af9c-ea2f7934d3e5"
+        },
+        "item": {
+          "id": "9433823b-07fd-41a5-8dda-95fb58a72099",
+          "name": "FR-03 | Forgot password responds",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "forgot-password"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\":\"test@eshop.com\"}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "49a3fab2-1feb-419d-88e1-9cd4c6327e9c",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200',()=>pm.response.to.have.status(200));",
+                  "const d=pm.response.json();pm.test('Có message và token',()=>{pm.expect(d.message).to.be.a('string');pm.expect(d.resetToken).to.be.a('string');});"
+                ],
+                "_lastExecutionId": "f3d05372-cb82-49f6-8d2b-9681ad9280d8"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "api",
+              "forgot-password"
+            ],
+            "host": [
+              "127",
+              "0",
+              "0",
+              "1"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "X-Student-Id",
+              "value": "23127502"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "c291d112-fac3-43e0-a1ca-5f9eae3928c6",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "127.0.0.1:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "26",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\"email\":\"test@eshop.com\"}"
+          }
+        },
+        "response": {
+          "id": "3e6e6c68-a35d-4d08-9d3e-507199db7116",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "83"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"53-jO0kQnto31fHtuR0jwhNRgLUQGQ\""
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 02 Sep 2026 15:39:56 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              109,
+              101,
+              115,
+              115,
+              97,
+              103,
+              101,
+              34,
+              58,
+              34,
+              77,
+              195,
+              163,
+              32,
+              196,
+              145,
+              225,
+              186,
+              183,
+              116,
+              32,
+              108,
+              225,
+              186,
+              161,
+              105,
+              32,
+              109,
+              225,
+              186,
+              173,
+              116,
+              32,
+              107,
+              104,
+              225,
+              186,
+              169,
+              117,
+              32,
+              196,
+              145,
+              195,
+              163,
+              32,
+              196,
+              145,
+              198,
+              176,
+              225,
+              187,
+              163,
+              99,
+              32,
+              116,
+              225,
+              186,
+              161,
+              111,
+              34,
+              44,
+              34,
+              114,
+              101,
+              115,
+              101,
+              116,
+              84,
+              111,
+              107,
+              101,
+              110,
+              34,
+              58,
+              34,
+              53,
+              49,
+              52,
+              54,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 35,
+          "responseSize": 83
+        },
+        "id": "9433823b-07fd-41a5-8dda-95fb58a72099",
+        "assertions": [
+          {
+            "assertion": "Status 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Có message và token",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "e461e0ee-d833-48dc-a657-cb8a49c6bc79",
+          "length": 3,
+          "cycles": 1,
+          "position": 1,
+          "iteration": 0,
+          "httpRequestId": "c75fd3ac-d124-4271-860b-0e7ccffa49ba"
+        },
+        "item": {
+          "id": "a0e0e13d-13eb-4739-9dd8-69d26248995a",
+          "name": "FR-09 | BIGBUY fixed calculation",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "apply-coupon"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"code\":\"BIGBUY\",\"total_amount\":600000,\"user_id\":2}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "004b0dda-86c1-4f80-833e-d649835b519c",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 200',()=>pm.response.to.have.status(200));",
+                  "const d=pm.response.json();pm.test('Fixed formula',()=>{pm.expect(d.discount_amount).to.eql(50000);pm.expect(d.final_amount).to.eql(550000);});"
+                ],
+                "_lastExecutionId": "9a7fa1b6-9612-4751-9492-4947936a35b9"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "api",
+              "apply-coupon"
+            ],
+            "host": [
+              "127",
+              "0",
+              "0",
+              "1"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "X-Student-Id",
+              "value": "23127502"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "eb8953fc-9fb5-4747-8f39-476597d81dc7",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "127.0.0.1:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "51",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\"code\":\"BIGBUY\",\"total_amount\":600000,\"user_id\":2}"
+          }
+        },
+        "response": {
+          "id": "2dccf9c0-98f3-49cd-b055-08115dc180a3",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "131"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"83-MT4iEnJg08g3cM9uqrd6zeEU02I\""
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 02 Sep 2026 15:39:57 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              115,
+              117,
+              99,
+              99,
+              101,
+              115,
+              115,
+              34,
+              58,
+              116,
+              114,
+              117,
+              101,
+              44,
+              34,
+              99,
+              111,
+              117,
+              112,
+              111,
+              110,
+              95,
+              105,
+              100,
+              34,
+              58,
+              50,
+              44,
+              34,
+              100,
+              105,
+              115,
+              99,
+              111,
+              117,
+              110,
+              116,
+              95,
+              97,
+              109,
+              111,
+              117,
+              110,
+              116,
+              34,
+              58,
+              53,
+              48,
+              48,
+              48,
+              48,
+              44,
+              34,
+              102,
+              105,
+              110,
+              97,
+              108,
+              95,
+              97,
+              109,
+              111,
+              117,
+              110,
+              116,
+              34,
+              58,
+              53,
+              53,
+              48,
+              48,
+              48,
+              48,
+              44,
+              34,
+              109,
+              101,
+              115,
+              115,
+              97,
+              103,
+              101,
+              34,
+              58,
+              34,
+              195,
+              129,
+              112,
+              32,
+              100,
+              225,
+              187,
+              165,
+              110,
+              103,
+              32,
+              116,
+              104,
+              195,
+              160,
+              110,
+              104,
+              32,
+              99,
+              195,
+              180,
+              110,
+              103,
+              33,
+              32,
+              71,
+              105,
+              225,
+              186,
+              163,
+              109,
+              32,
+              53,
+              48,
+              44,
+              48,
+              48,
+              48,
+              32,
+              226,
+              130,
+              171,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 18,
+          "responseSize": 131
+        },
+        "id": "a0e0e13d-13eb-4739-9dd8-69d26248995a",
+        "assertions": [
+          {
+            "assertion": "Status 200",
+            "skipped": false
+          },
+          {
+            "assertion": "Fixed formula",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "3164a4d4-3ea4-4eb2-a1e9-c226a1609f7a",
+          "length": 3,
+          "cycles": 1,
+          "position": 2,
+          "iteration": 0,
+          "httpRequestId": "a03d9a47-c1fc-40e7-aeee-dacb0dfa22e2"
+        },
+        "item": {
+          "id": "c258b5b5-cac7-4128-9726-02025ca3c30e",
+          "name": "FR-17 | Missing token rejected",
+          "request": {
+            "url": {
+              "path": [
+                "api",
+                "coupons"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "b13fde5b-a795-43f1-95e7-26f3d3ad6802",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status 401',()=>pm.response.to.have.status(401));",
+                  "pm.test('Error schema',()=>pm.expect(pm.response.json()).to.have.property('error'));"
+                ],
+                "_lastExecutionId": "93fba0a2-f6e9-4045-a8f4-b24ec6b6c4ab"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "3000",
+            "path": [
+              "api",
+              "coupons"
+            ],
+            "host": [
+              "127",
+              "0",
+              "0",
+              "1"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "X-Student-Id",
+              "value": "23127502"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "ea8b583a-3132-4e17-93d9-28b93fb89de7",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "127.0.0.1:3000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET"
+        },
+        "response": {
+          "id": "0af796de-3ac3-444c-9bbb-1c2edf4441f2",
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "24"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"18-XPDV80vbMk4yY1/PADG4jYM4rSI\""
+            },
+            {
+              "key": "Date",
+              "value": "Wed, 02 Sep 2026 15:39:57 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              101,
+              114,
+              114,
+              111,
+              114,
+              34,
+              58,
+              34,
+              85,
+              110,
+              97,
+              117,
+              116,
+              104,
+              111,
+              114,
+              105,
+              122,
+              101,
+              100,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 3,
+          "responseSize": 24
+        },
+        "id": "c258b5b5-cac7-4128-9726-02025ca3c30e",
+        "assertions": [
+          {
+            "assertion": "Status 401",
+            "skipped": false
+          },
+          {
+            "assertion": "Error schema",
+            "skipped": false
+          }
+        ]
+      }
+    ],
+    "transfers": {
+      "responseTotal": 238
+    },
+    "failures": [],
+    "error": null
+  }
+}

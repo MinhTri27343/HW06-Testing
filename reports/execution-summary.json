@@ -1,0 +1,36 @@
+{
+  "studentId": "23127502",
+  "executedAt": 1788363816290,
+  "baseUrl": "http://127.0.0.1:3000",
+  "total": 120,
+  "passed": 68,
+  "failed": 52,
+  "assertionFailures": 93,
+  "confirmedBugGroups": 12,
+  "perFr": [
+    {
+      "fr": "FR-03",
+      "total": 40,
+      "passed": 22,
+      "failed": 18,
+      "bugs": 4,
+      "review": 0
+    },
+    {
+      "fr": "FR-09",
+      "total": 40,
+      "passed": 29,
+      "failed": 11,
+      "bugs": 4,
+      "review": 1
+    },
+    {
+      "fr": "FR-17",
+      "total": 40,
+      "passed": 17,
+      "failed": 23,
+      "bugs": 4,
+      "review": 1
+    }
+  ]
+}
