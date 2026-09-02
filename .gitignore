@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Runtime databases and secrets
+*.sqlite
+*.sqlite3
+.env
+.env.*
+!.env.example
+
+# Test runtime output
+reports/newman/*.json
+reports/newman/*.xml
+reports/newman/*.html
+reports/newman/*.log
+reports/newman/runtime/
+postman/runtime-environment.json
+
+# Generated submission archives
+*.zip
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
