@@ -2,7 +2,7 @@
   "collection": {
     "item": [
       {
-        "id": "9433823b-07fd-41a5-8dda-95fb58a72099",
+        "id": "61dded0a-896b-49ed-9995-e5a1263f2120",
         "name": "FR-03 | Forgot password responds",
         "request": {
           "url": {
@@ -33,19 +33,19 @@
           {
             "listen": "test",
             "script": {
-              "id": "49a3fab2-1feb-419d-88e1-9cd4c6327e9c",
+              "id": "5bc4e1e6-dd4c-4c3f-a5cd-5cd3a7cb8a53",
               "type": "text/javascript",
               "exec": [
                 "pm.test('Status 200',()=>pm.response.to.have.status(200));",
                 "const d=pm.response.json();pm.test('Có message và token',()=>{pm.expect(d.message).to.be.a('string');pm.expect(d.resetToken).to.be.a('string');});"
               ],
-              "_lastExecutionId": "f3d05372-cb82-49f6-8d2b-9681ad9280d8"
+              "_lastExecutionId": "ef9e9e47-d755-48db-acaa-835fb37649fd"
             }
           }
         ]
       },
       {
-        "id": "a0e0e13d-13eb-4739-9dd8-69d26248995a",
+        "id": "abeb164e-ee1e-47ff-9f79-3017e1457c93",
         "name": "FR-09 | BIGBUY fixed calculation",
         "request": {
           "url": {
@@ -76,19 +76,19 @@
           {
             "listen": "test",
             "script": {
-              "id": "004b0dda-86c1-4f80-833e-d649835b519c",
+              "id": "7edbb7a7-6412-4998-a7c5-9fa56d2fe16e",
               "type": "text/javascript",
               "exec": [
                 "pm.test('Status 200',()=>pm.response.to.have.status(200));",
                 "const d=pm.response.json();pm.test('Fixed formula',()=>{pm.expect(d.discount_amount).to.eql(50000);pm.expect(d.final_amount).to.eql(550000);});"
               ],
-              "_lastExecutionId": "9a7fa1b6-9612-4751-9492-4947936a35b9"
+              "_lastExecutionId": "53ba14c4-4eeb-43eb-a6c5-238a1a7a1f36"
             }
           }
         ]
       },
       {
-        "id": "c258b5b5-cac7-4128-9726-02025ca3c30e",
+        "id": "914a5a98-4836-48a9-a8b3-ddcdcab33da3",
         "name": "FR-17 | Missing token rejected",
         "request": {
           "url": {
@@ -109,13 +109,13 @@
           {
             "listen": "test",
             "script": {
-              "id": "b13fde5b-a795-43f1-95e7-26f3d3ad6802",
+              "id": "5d2c3ac9-c952-414c-a764-ac0e5fa751f9",
               "type": "text/javascript",
               "exec": [
                 "pm.test('Status 401',()=>pm.response.to.have.status(401));",
                 "pm.test('Error schema',()=>pm.expect(pm.response.json()).to.have.property('error'));"
               ],
-              "_lastExecutionId": "93fba0a2-f6e9-4045-a8f4-b24ec6b6c4ab"
+              "_lastExecutionId": "0355cb22-d9d6-41d5-8beb-a87c38c9a6cc"
             }
           }
         ]
@@ -125,19 +125,19 @@
       {
         "listen": "prerequest",
         "script": {
-          "id": "6a955cf0-ed29-49d7-beb6-3f88820fe550",
+          "id": "dc4b4aa6-8203-4871-9d03-0be728274a7b",
           "type": "text/javascript",
           "exec": [
             "pm.request.headers.upsert({key:'X-Student-Id',value:'23127502'});",
             "console.log('X-Student-Id: 23127502', pm.info.requestName);"
           ],
-          "_lastExecutionId": "327383fe-063b-4604-9ff2-24430bbf7353"
+          "_lastExecutionId": "d6319a95-df70-4c2e-bfe9-bd0f1f4369d7"
         }
       }
     ],
     "variable": [],
     "info": {
-      "_postman_id": "2bb02b89-143a-429f-8041-2372426557d8",
+      "_postman_id": "feb27743-21fd-4e2c-8b62-dfa22fe255f6",
       "name": "HW06 CI Smoke",
       "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     }
@@ -158,7 +158,7 @@
     ]
   },
   "globals": {
-    "id": "2acc31c5-bd4d-4b46-ad77-6ca0c9ec6687",
+    "id": "9654a280-f160-4f7f-82e7-36cd9f9ed33c",
     "values": []
   },
   "run": {
@@ -210,10 +210,10 @@
       }
     },
     "timings": {
-      "responseAverage": 18.666666666666668,
+      "responseAverage": 18,
       "responseMin": 3,
-      "responseMax": 35,
-      "responseSd": 13.07244770075172,
+      "responseMax": 33,
+      "responseSd": 12.24744871391589,
       "dnsAverage": 0,
       "dnsMin": 0,
       "dnsMax": 0,
@@ -222,8 +222,8 @@
       "firstByteMin": 0,
       "firstByteMax": 0,
       "firstByteSd": 0,
-      "started": 1788363596857,
-      "completed": 1788363597167
+      "started": 1788367194966,
+      "completed": 1788367195273
     },
     "executions": [
       {
@@ -236,11 +236,11 @@
           "eof": false,
           "bof": true,
           "cr": false,
-          "ref": "75033f22-dd05-4d23-8eae-da123655742d",
-          "httpRequestId": "e890be9f-f8eb-4a86-af9c-ea2f7934d3e5"
+          "ref": "a94ceeed-4c95-4311-96d1-d5bf6c80a965",
+          "httpRequestId": "43dd946a-b90c-4b8d-852c-ad9824b6748d"
         },
         "item": {
-          "id": "9433823b-07fd-41a5-8dda-95fb58a72099",
+          "id": "61dded0a-896b-49ed-9995-e5a1263f2120",
           "name": "FR-03 | Forgot password responds",
           "request": {
             "url": {
@@ -271,13 +271,13 @@
             {
               "listen": "test",
               "script": {
-                "id": "49a3fab2-1feb-419d-88e1-9cd4c6327e9c",
+                "id": "5bc4e1e6-dd4c-4c3f-a5cd-5cd3a7cb8a53",
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200',()=>pm.response.to.have.status(200));",
                   "const d=pm.response.json();pm.test('Có message và token',()=>{pm.expect(d.message).to.be.a('string');pm.expect(d.resetToken).to.be.a('string');});"
                 ],
-                "_lastExecutionId": "f3d05372-cb82-49f6-8d2b-9681ad9280d8"
+                "_lastExecutionId": "ef9e9e47-d755-48db-acaa-835fb37649fd"
               }
             }
           ]
@@ -325,7 +325,7 @@
             },
             {
               "key": "Postman-Token",
-              "value": "c291d112-fac3-43e0-a1ca-5f9eae3928c6",
+              "value": "83641fbf-964e-4ab8-873c-783326099739",
               "system": true
             },
             {
@@ -356,7 +356,7 @@
           }
         },
         "response": {
-          "id": "3e6e6c68-a35d-4d08-9d3e-507199db7116",
+          "id": "2f4bf0c4-a295-446f-ab00-8f88db63f151",
           "status": "OK",
           "code": 200,
           "header": [
@@ -378,11 +378,11 @@
             },
             {
               "key": "ETag",
-              "value": "W/\"53-jO0kQnto31fHtuR0jwhNRgLUQGQ\""
+              "value": "W/\"53-F2N6APg/RqR4qjXiN3cHZo45eVU\""
             },
             {
               "key": "Date",
-              "value": "Wed, 02 Sep 2026 15:39:56 GMT"
+              "value": "Wed, 02 Sep 2026 16:39:55 GMT"
             },
             {
               "key": "Connection",
@@ -473,19 +473,19 @@
               34,
               58,
               34,
-              53,
+              50,
               49,
               52,
-              54,
+              56,
               34,
               125
             ]
           },
           "cookie": [],
-          "responseTime": 35,
+          "responseTime": 33,
           "responseSize": 83
         },
-        "id": "9433823b-07fd-41a5-8dda-95fb58a72099",
+        "id": "61dded0a-896b-49ed-9995-e5a1263f2120",
         "assertions": [
           {
             "assertion": "Status 200",
@@ -499,15 +499,15 @@
       },
       {
         "cursor": {
-          "ref": "e461e0ee-d833-48dc-a657-cb8a49c6bc79",
+          "ref": "23dc1bc1-4206-417a-99ce-5c715193f87f",
           "length": 3,
           "cycles": 1,
           "position": 1,
           "iteration": 0,
-          "httpRequestId": "c75fd3ac-d124-4271-860b-0e7ccffa49ba"
+          "httpRequestId": "0850ef6f-7b3c-41fe-b717-894005d90bb6"
         },
         "item": {
-          "id": "a0e0e13d-13eb-4739-9dd8-69d26248995a",
+          "id": "abeb164e-ee1e-47ff-9f79-3017e1457c93",
           "name": "FR-09 | BIGBUY fixed calculation",
           "request": {
             "url": {
@@ -538,13 +538,13 @@
             {
               "listen": "test",
               "script": {
-                "id": "004b0dda-86c1-4f80-833e-d649835b519c",
+                "id": "7edbb7a7-6412-4998-a7c5-9fa56d2fe16e",
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 200',()=>pm.response.to.have.status(200));",
                   "const d=pm.response.json();pm.test('Fixed formula',()=>{pm.expect(d.discount_amount).to.eql(50000);pm.expect(d.final_amount).to.eql(550000);});"
                 ],
-                "_lastExecutionId": "9a7fa1b6-9612-4751-9492-4947936a35b9"
+                "_lastExecutionId": "53ba14c4-4eeb-43eb-a6c5-238a1a7a1f36"
               }
             }
           ]
@@ -592,7 +592,7 @@
             },
             {
               "key": "Postman-Token",
-              "value": "eb8953fc-9fb5-4747-8f39-476597d81dc7",
+              "value": "50400c34-ed49-4c8c-b0e3-4ddb9c070eb1",
               "system": true
             },
             {
@@ -623,7 +623,7 @@
           }
         },
         "response": {
-          "id": "2dccf9c0-98f3-49cd-b055-08115dc180a3",
+          "id": "a3d6bcec-eeda-436e-bae1-5d620ade4e93",
           "status": "OK",
           "code": 200,
           "header": [
@@ -649,7 +649,7 @@
             },
             {
               "key": "Date",
-              "value": "Wed, 02 Sep 2026 15:39:57 GMT"
+              "value": "Wed, 02 Sep 2026 16:39:55 GMT"
             },
             {
               "key": "Connection",
@@ -800,7 +800,7 @@
           "responseTime": 18,
           "responseSize": 131
         },
-        "id": "a0e0e13d-13eb-4739-9dd8-69d26248995a",
+        "id": "abeb164e-ee1e-47ff-9f79-3017e1457c93",
         "assertions": [
           {
             "assertion": "Status 200",
@@ -814,15 +814,15 @@
       },
       {
         "cursor": {
-          "ref": "3164a4d4-3ea4-4eb2-a1e9-c226a1609f7a",
+          "ref": "0edb013c-37fe-4885-9b61-d324df15d242",
           "length": 3,
           "cycles": 1,
           "position": 2,
           "iteration": 0,
-          "httpRequestId": "a03d9a47-c1fc-40e7-aeee-dacb0dfa22e2"
+          "httpRequestId": "b04d667b-ec38-45d8-8e2e-fca3310b7ba0"
         },
         "item": {
-          "id": "c258b5b5-cac7-4128-9726-02025ca3c30e",
+          "id": "914a5a98-4836-48a9-a8b3-ddcdcab33da3",
           "name": "FR-17 | Missing token rejected",
           "request": {
             "url": {
@@ -843,13 +843,13 @@
             {
               "listen": "test",
               "script": {
-                "id": "b13fde5b-a795-43f1-95e7-26f3d3ad6802",
+                "id": "5d2c3ac9-c952-414c-a764-ac0e5fa751f9",
                 "type": "text/javascript",
                 "exec": [
                   "pm.test('Status 401',()=>pm.response.to.have.status(401));",
                   "pm.test('Error schema',()=>pm.expect(pm.response.json()).to.have.property('error'));"
                 ],
-                "_lastExecutionId": "93fba0a2-f6e9-4045-a8f4-b24ec6b6c4ab"
+                "_lastExecutionId": "0355cb22-d9d6-41d5-8beb-a87c38c9a6cc"
               }
             }
           ]
@@ -893,7 +893,7 @@
             },
             {
               "key": "Postman-Token",
-              "value": "ea8b583a-3132-4e17-93d9-28b93fb89de7",
+              "value": "ac8eea3b-62f3-4adf-b1bb-caa1bd94a195",
               "system": true
             },
             {
@@ -915,7 +915,7 @@
           "method": "GET"
         },
         "response": {
-          "id": "0af796de-3ac3-444c-9bbb-1c2edf4441f2",
+          "id": "b443dacc-0a89-4059-81e9-ca431da1baef",
           "status": "Unauthorized",
           "code": 401,
           "header": [
@@ -941,7 +941,7 @@
             },
             {
               "key": "Date",
-              "value": "Wed, 02 Sep 2026 15:39:57 GMT"
+              "value": "Wed, 02 Sep 2026 16:39:55 GMT"
             },
             {
               "key": "Connection",
@@ -985,7 +985,7 @@
           "responseTime": 3,
           "responseSize": 24
         },
-        "id": "c258b5b5-cac7-4128-9726-02025ca3c30e",
+        "id": "914a5a98-4836-48a9-a8b3-ddcdcab33da3",
         "assertions": [
           {
             "assertion": "Status 401",

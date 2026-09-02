@@ -5,7 +5,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$reportDir = Join-Path $repoRoot "reports\newman"
+$reportDir = Join-Path $repoRoot "reports\Newman_Report"
 New-Item -ItemType Directory -Force -Path $reportDir | Out-Null
 
 $stdoutLog = Join-Path $reportDir "server.log"

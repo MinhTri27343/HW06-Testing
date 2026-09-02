@@ -36,16 +36,16 @@ jobs:
 
       - name: Start EShop backend
         run: |
-          mkdir -p reports/newman
-          node backend/server.js > reports/newman/server.log 2>&1 &
-          echo $! > reports/newman/server.pid
+          mkdir -p reports/Newman_Report
+          node backend/server.js > reports/Newman_Report/server.log 2>&1 &
+          echo $! > reports/Newman_Report/server.pid
           for attempt in $(seq 1 30); do
             if curl --fail --silent http://127.0.0.1:3000/api/products > /dev/null; then
               exit 0
             fi
             sleep 1
           done
-          cat reports/newman/server.log
+          cat reports/Newman_Report/server.log
           exit 1
 
       - name: Run selected Newman suite
@@ -59,5 +59,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: newman-${{ github.run_id }}
-          path: reports/newman/
+          path: reports/Newman_Report/
           if-no-files-found: warn

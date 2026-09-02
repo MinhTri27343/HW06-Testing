@@ -44,7 +44,7 @@ Các suite riêng: `fr03`, `fr09`, `fr17`, `data`.
 
 - Báo cáo chính: `reports/HW06_API_Testing_Report.md`
 - Test cases: `test-cases/` và workbook trong `outputs/01a062a2-0daf-7a21-841e-a6f6eeeca81e/`
-- Postman/Newman: `postman/`, `reports/newman/`
+- Postman/Newman: `postman/`, `reports/Newman_Report/`
 - Bug drafts: `reports/issues/`
 - Agent Skill: `skills/eshop-api-test-generator/`
 - CI/CD: `.github/workflows/api-tests.yml`
@@ -57,4 +57,3 @@ Các suite riêng: `fr03`, `fr09`, `fr17`, `data`.
 - [ ] GitHub Actions run passing và failing-demo cùng link/commit SHA.
 - [ ] Sơ đồ Agent Skill do sinh viên tự vẽ.
 - [ ] Video demo YouTube nếu chọn nộp.
-

@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = path.resolve(import.meta.dirname, "..");
-const reportPath = path.join(root, "reports", "newman", "full-results.json");
+const reportPath = path.join(root, "reports", "Newman_Report", "full-results.json");
 if (!fs.existsSync(reportPath)) throw new Error("Run npm run test:full before analysis.");
 
 const cases = JSON.parse(fs.readFileSync(path.join(root, "test-cases", "test-cases.json"), "utf8"));

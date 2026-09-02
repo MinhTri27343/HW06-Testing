@@ -25,7 +25,7 @@
     "aiAudit": "VALID",
     "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
     "correction": "Không cần chỉnh sửa.",
-    "actualResult": "HTTP 200; 1 assertion lỗi: expected '1264' to match /^\\d{6}$/",
+    "actualResult": "HTTP 200; 1 assertion lỗi: expected '9381' to match /^\\d{6}$/",
     "status": "FAIL",
     "bugId": "BUG-FR03-01"
   },
@@ -55,7 +55,7 @@
     "aiAudit": "VALID",
     "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
     "correction": "Không cần chỉnh sửa.",
-    "actualResult": "HTTP 200; 1 assertion lỗi: expected '1915' to match /^\\d{6}$/",
+    "actualResult": "HTTP 200; 1 assertion lỗi: expected '2849' to match /^\\d{6}$/",
     "status": "FAIL",
     "bugId": "BUG-FR03-01"
   },
@@ -385,7 +385,7 @@
     "aiAudit": "VALID",
     "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
     "correction": "Không cần chỉnh sửa.",
-    "actualResult": "HTTP 200; 1 assertion lỗi: expected '3508' to match /^\\d{6}$/",
+    "actualResult": "HTTP 200; 1 assertion lỗi: expected '2084' to match /^\\d{6}$/",
     "status": "FAIL",
     "bugId": "BUG-FR03-01"
   },

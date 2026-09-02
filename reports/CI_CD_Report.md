@@ -10,7 +10,7 @@ Workflow: `.github/workflows/api-tests.yml`
 4. Khởi động backend tại `127.0.0.1:3000`.
 5. Poll `/api/products` tối đa 30 giây.
 6. Chạy Newman suite được chọn.
-7. Upload thư mục `reports/newman/` kể cả khi job thất bại.
+7. Upload thư mục `reports/Newman_Report/` kể cả khi job thất bại.
 
 Push lên `main` và `ci-failure-demo` chạy smoke mặc định. Manual dispatch có thể chọn `smoke`, `full` hoặc `data`.
 
@@ -35,4 +35,3 @@ Push lên `main` và `ci-failure-demo` chạy smoke mặc định. Manual dispat
 - Screenshot: **TODO - sinh viên chụp ảnh thật**
 
 Sau run B, `main` vẫn giữ phiên bản smoke passing. Run B phải được mô tả rõ là minh họa pipeline, không phải bug của SUT.
-

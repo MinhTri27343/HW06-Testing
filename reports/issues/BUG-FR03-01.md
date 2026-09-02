@@ -19,9 +19,9 @@ SUT tuân thủ SRS/SEC được truy vết trong từng test case.
 
 ## Kết quả thực tế
 
-- **FR-03-TC-001:** HTTP 200; 1 assertion lỗi: expected '1264' to match /^\d{6}$/
-- **FR-03-TC-002:** HTTP 200; 1 assertion lỗi: expected '1915' to match /^\d{6}$/
-- **FR-03-TC-013:** HTTP 200; 1 assertion lỗi: expected '3508' to match /^\d{6}$/
+- **FR-03-TC-001:** HTTP 200; 1 assertion lỗi: expected '9381' to match /^\d{6}$/
+- **FR-03-TC-002:** HTTP 200; 1 assertion lỗi: expected '2849' to match /^\d{6}$/
+- **FR-03-TC-013:** HTTP 200; 1 assertion lỗi: expected '2084' to match /^\d{6}$/
 
 ## Bằng chứng cần sinh viên đính kèm
 

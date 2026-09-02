@@ -386,7 +386,7 @@ const dataRows = [
   { code: "UNKNOWN", total_amount: 500000, expectedStatus: 404 },
 ];
 
-const dirs = ["test-cases", "test-cases/generated", "test-cases/audited", "test-cases/final", "postman", "postman/data", "reports", "reports/newman"];
+const dirs = ["test-cases", "test-cases/generated", "test-cases/audited", "test-cases/final", "postman", "postman/data", "reports", "reports/Newman_Report"];
 dirs.forEach((dir) => fs.mkdirSync(path.join(root, dir), { recursive: true }));
 fs.writeFileSync(path.join(root, "test-cases", "test-cases.json"), JSON.stringify(cases, null, 2) + "\n");
 for (const fr of Object.keys(counters)) {
