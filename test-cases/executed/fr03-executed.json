@@ -1,0 +1,1261 @@
+[
+  {
+    "id": "FR-03-TC-001",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "domain",
+    "title": "Email user đã đăng ký nhận OTP",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com"
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message",
+      "resetToken"
+    ],
+    "expectedRule": "otp-six-digits",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; 1 assertion lỗi: expected '1264' to match /^\\d{6}$/",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-01"
+  },
+  {
+    "id": "FR-03-TC-002",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "domain",
+    "title": "Email admin đã đăng ký nhận OTP",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "admin@eshop.com"
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message",
+      "resetToken"
+    ],
+    "expectedRule": "otp-six-digits",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; 1 assertion lỗi: expected '1915' to match /^\\d{6}$/",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-01"
+  },
+  {
+    "id": "FR-03-TC-003",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "domain",
+    "title": "Email chưa đăng ký bị từ chối",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "missing@eshop.com"
+    },
+    "rawBody": null,
+    "expectedStatus": 404,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 404; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-004",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Email rỗng",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": ""
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 404; 1 assertion lỗi: expected response to have status code 400 but got 404",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-02"
+  },
+  {
+    "id": "FR-03-TC-005",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Thiếu trường email",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {},
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 404; 1 assertion lỗi: expected response to have status code 400 but got 404",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-02"
+  },
+  {
+    "id": "FR-03-TC-006",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Email null",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": null
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 404; 1 assertion lỗi: expected response to have status code 400 but got 404",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-02"
+  },
+  {
+    "id": "FR-03-TC-007",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Email sai định dạng thiếu @",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test.eshop.com"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "HTTP 404; 1 assertion lỗi: expected response to have status code 400 but got 404",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-02"
+  },
+  {
+    "id": "FR-03-TC-008",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Email sai định dạng thiếu domain",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 404; 1 assertion lỗi: expected response to have status code 400 but got 404",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-02"
+  },
+  {
+    "id": "FR-03-TC-009",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Email có khoảng trắng đầu cuối",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": " test@eshop.com "
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 404; 1 assertion lỗi: expected response to have status code 400 but got 404",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-02"
+  },
+  {
+    "id": "FR-03-TC-010",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "security",
+    "title": "Payload email SQL injection không được thực thi",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "' OR 1=1 --"
+    },
+    "rawBody": null,
+    "expectedStatus": 404,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-05"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 404; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-011",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "security",
+    "title": "Email dạng object bị từ chối",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": {
+        "$ne": null
+      }
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-05"
+    ],
+    "aiAudit": "INVALID",
+    "auditReason": "Bản AI ban đầu suy đoán oracle theo hành vi phổ biến thay vì truy vết SRS.",
+    "correction": "Đã thay oracle bằng status/ràng buộc trong SRS và bổ sung liên kết FR/SEC.",
+    "actualResult": "HTTP 404; 1 assertion lỗi: expected response to have status code 400 but got 404",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-02"
+  },
+  {
+    "id": "FR-03-TC-012",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "schema",
+    "title": "Response lấy OTP không lộ password",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com"
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message",
+      "resetToken"
+    ],
+    "expectedRule": "no-password-field",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-01",
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-013",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "boundary",
+    "title": "OTP trả về đúng 6 chữ số",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com"
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message",
+      "resetToken"
+    ],
+    "expectedRule": "otp-six-digits",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; 1 assertion lỗi: expected '3508' to match /^\\d{6}$/",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-01"
+  },
+  {
+    "id": "FR-03-TC-014",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "domain",
+    "title": "Reset với OTP hợp lệ",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "HTTP 200; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-015",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "domain",
+    "title": "Reset với OTP sai",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "999999",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-016",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "security",
+    "title": "OTP của email này không dùng cho email khác",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "admin@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-user-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-017",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Reset thiếu email",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "resetToken": "123456",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-018",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Reset thiếu OTP",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-019",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Reset thiếu mật khẩu mới",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "123456"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-020",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "OTP rỗng",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-021",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "OTP null",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": null,
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-022",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "boundary",
+    "title": "OTP 5 chữ số bị từ chối",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "12345",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "INVALID",
+    "auditReason": "Bản AI ban đầu suy đoán oracle theo hành vi phổ biến thay vì truy vết SRS.",
+    "correction": "Đã thay oracle bằng status/ràng buộc trong SRS và bổ sung liên kết FR/SEC.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-023",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "boundary",
+    "title": "OTP 7 chữ số bị từ chối",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "1234567",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-024",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "OTP chứa chữ bị từ chối",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "12AB56",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-025",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "OTP chứa khoảng trắng bị từ chối",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": " 123456 ",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-026",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "boundary",
+    "title": "Mật khẩu đúng 8 ký tự hợp lệ",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "Abcd12!x"
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-027",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "boundary",
+    "title": "Mật khẩu 7 ký tự bị từ chối",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "Ab1!xyz"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; 2 assertion lỗi: expected response to have status code 400 but got 200 | expected { Object (message) } to have property 'error'",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-03"
+  },
+  {
+    "id": "FR-03-TC-028",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Mật khẩu thiếu chữ hoa",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "abcdef1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "HTTP 200; 2 assertion lỗi: expected response to have status code 400 but got 200 | expected { Object (message) } to have property 'error'",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-03"
+  },
+  {
+    "id": "FR-03-TC-029",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Mật khẩu thiếu chữ thường",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "ABCDEF1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; 2 assertion lỗi: expected response to have status code 400 but got 200 | expected { Object (message) } to have property 'error'",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-03"
+  },
+  {
+    "id": "FR-03-TC-030",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Mật khẩu thiếu chữ số",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "Abcdefg!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; 2 assertion lỗi: expected response to have status code 400 but got 200 | expected { Object (message) } to have property 'error'",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-03"
+  },
+  {
+    "id": "FR-03-TC-031",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Mật khẩu thiếu ký tự đặc biệt",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "Abcdefg1"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; 2 assertion lỗi: expected response to have status code 400 but got 200 | expected { Object (message) } to have property 'error'",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-03"
+  },
+  {
+    "id": "FR-03-TC-032",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "partition",
+    "title": "Mật khẩu null bị từ chối",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": null
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; 2 assertion lỗi: expected response to have status code 400 but got 200 | expected { Object (message) } to have property 'error'",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-03"
+  },
+  {
+    "id": "FR-03-TC-033",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "state",
+    "title": "OTP đã dùng không thể dùng lại",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "Another1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "prepare-used-otp",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "INVALID",
+    "auditReason": "Bản AI ban đầu suy đoán oracle theo hành vi phổ biến thay vì truy vết SRS.",
+    "correction": "Đã thay oracle bằng status/ràng buộc trong SRS và bổ sung liên kết FR/SEC.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-034",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "schema",
+    "title": "Reset thành công chỉ trả message",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{activeOtp}}",
+      "newPassword": "SchemaOk1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 200,
+    "expectedKeys": [
+      "message"
+    ],
+    "expectedRule": "no-password-field",
+    "expectedData": null,
+    "setup": "issue-otp",
+    "secRefs": [
+      "SEC-01",
+      "SEC-07"
+    ],
+    "aiAudit": "VALID",
+    "auditReason": "Ca kiểm thử bám đúng đặc tả, có dữ liệu và oracle kiểm tra được.",
+    "correction": "Không cần chỉnh sửa.",
+    "actualResult": "HTTP 200; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-035",
+    "fr": "FR-03",
+    "source": "AI",
+    "category": "security",
+    "title": "Reset SQL injection ở email bị từ chối",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "' OR 1=1 --",
+      "resetToken": "123456",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-05"
+    ],
+    "aiAudit": "INCOMPLETE",
+    "auditReason": "Bản AI ban đầu thiếu assertion schema hoặc hậu điều kiện có thể quan sát.",
+    "correction": "Đã bổ sung expected keys và assertion nghiệp vụ tương ứng.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-036",
+    "fr": "FR-03",
+    "source": "HUMAN",
+    "category": "security",
+    "title": "Chống brute-force OTP với nhiều lần thử sai",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "000000",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 429,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "rate-limit",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "HTTP 400; 1 assertion lỗi: expected response to have status code 429 but got 400",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-04"
+  },
+  {
+    "id": "FR-03-TC-037",
+    "fr": "FR-03",
+    "source": "HUMAN",
+    "category": "state",
+    "title": "Hai yêu cầu OTP liên tiếp vô hiệu hóa OTP cũ",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "{{oldOtp}}",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": "issue-two-otps",
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-038",
+    "fr": "FR-03",
+    "source": "HUMAN",
+    "category": "security",
+    "title": "OTP hết hạn bị từ chối",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "111111",
+      "newPassword": "ValidPass1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  },
+  {
+    "id": "FR-03-TC-039",
+    "fr": "FR-03",
+    "source": "HUMAN",
+    "category": "security",
+    "title": "Null byte trong email không vượt kiểm tra",
+    "endpoint": "/api/forgot-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com\u0000.attacker"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "status-and-schema",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-05"
+    ],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "HTTP 404; 1 assertion lỗi: expected response to have status code 400 but got 404",
+    "status": "FAIL",
+    "bugId": "BUG-FR03-02"
+  },
+  {
+    "id": "FR-03-TC-040",
+    "fr": "FR-03",
+    "source": "HUMAN",
+    "category": "state",
+    "title": "Mật khẩu không đổi khi OTP sai",
+    "endpoint": "/api/reset-password",
+    "method": "POST",
+    "preconditions": "Backend được reset và seed; baseUrl khả dụng.",
+    "auth": "none",
+    "body": {
+      "email": "test@eshop.com",
+      "resetToken": "999999",
+      "newPassword": "ShouldNot1!"
+    },
+    "rawBody": null,
+    "expectedStatus": 400,
+    "expectedKeys": [
+      "error"
+    ],
+    "expectedRule": "password-unchanged",
+    "expectedData": null,
+    "setup": null,
+    "secRefs": [
+      "SEC-07"
+    ],
+    "aiAudit": "N/A",
+    "auditReason": "Ca kiểm thử do sinh viên bổ sung sau audit.",
+    "correction": "Không áp dụng.",
+    "actualResult": "HTTP 400; tất cả assertion đạt.",
+    "status": "PASS",
+    "bugId": ""
+  }
+]
