@@ -11,24 +11,28 @@
 
 ![Tổng quan lần chạy Newman](bug-evidence/execution-summary.png)
 
+- **Danh sách GitHub Issues:** [MinhTri27343/HW06-Testing - Issues](https://github.com/MinhTri27343/HW06-Testing/issues)
+
+![Tổng quan 12 GitHub Issues](bug-evidence/github-issues-overview.png)
+
 Có 12 nhóm lỗi được xác nhận từ execution evidence. Hai test case ngoài các nhóm dưới đây vẫn giữ trạng thái `REVIEW` và không được công bố là bug.
 
 ## Danh sách lỗi
 
-| ID | FR | SEC | Severity | Tiêu đề |
-|---|---|---|---|---|
-| BUG-FR03-01 | FR-03 | SEC-07 | High | OTP đặt lại mật khẩu chỉ có 4 chữ số thay vì tối thiểu 6 |
-| BUG-FR03-02 | FR-03 | SEC-05 | Medium | API forgot-password không validation định dạng email |
-| BUG-FR03-03 | FR-03 | SEC-07 | High | API reset-password chấp nhận mật khẩu yếu hoặc null |
-| BUG-FR03-04 | FR-03 | SEC-07 | High | Không giới hạn số lần thử OTP sai |
-| BUG-FR09-01 | FR-09 | - | Critical | Công thức giảm giá phần trăm tính sai |
-| BUG-FR09-02 | FR-09 | - | High | Coupon bị từ chối khi tổng tiền đúng bằng ngưỡng tối thiểu |
-| BUG-FR09-03 | FR-09 | SEC-02 | Critical | API apply-coupon không yêu cầu JWT hợp lệ |
-| BUG-FR09-04 | FR-09 | SEC-05 | High | API apply-coupon không validation kiểu total_amount và user_id |
-| BUG-FR17-01 | FR-17 | SEC-02, SEC-03 | Critical | API quản lý coupon không kiểm tra role Admin |
-| BUG-FR17-02 | FR-17 | SEC-05 | High | API tạo coupon thiếu validation các trường bắt buộc |
-| BUG-FR17-03 | FR-17 | SEC-05 | Medium | Tạo coupon trùng trả 500 thay vì lỗi xung đột được kiểm soát |
-| BUG-FR17-04 | FR-17 | SEC-05 | Medium | Xóa coupon với ID không tồn tại hoặc sai định dạng vẫn báo thành công |
+| ID | FR | SEC | Severity | Tiêu đề | GitHub Issue |
+|---|---|---|---|---|---|
+| BUG-FR03-01 | FR-03 | SEC-07 | High | OTP đặt lại mật khẩu chỉ có 4 chữ số thay vì tối thiểu 6 | [#4](https://github.com/MinhTri27343/HW06-Testing/issues/4) |
+| BUG-FR03-02 | FR-03 | SEC-05 | Medium | API forgot-password không validation định dạng email | [#1](https://github.com/MinhTri27343/HW06-Testing/issues/1) |
+| BUG-FR03-03 | FR-03 | SEC-07 | High | API reset-password chấp nhận mật khẩu yếu hoặc null | [#2](https://github.com/MinhTri27343/HW06-Testing/issues/2) |
+| BUG-FR03-04 | FR-03 | SEC-07 | High | Không giới hạn số lần thử OTP sai | [#3](https://github.com/MinhTri27343/HW06-Testing/issues/3) |
+| BUG-FR09-01 | FR-09 | - | Critical | Công thức giảm giá phần trăm tính sai | [#5](https://github.com/MinhTri27343/HW06-Testing/issues/5) |
+| BUG-FR09-02 | FR-09 | - | High | Coupon bị từ chối khi tổng tiền đúng bằng ngưỡng tối thiểu | [#6](https://github.com/MinhTri27343/HW06-Testing/issues/6) |
+| BUG-FR09-03 | FR-09 | SEC-02 | Critical | API apply-coupon không yêu cầu JWT hợp lệ | [#7](https://github.com/MinhTri27343/HW06-Testing/issues/7) |
+| BUG-FR09-04 | FR-09 | SEC-05 | High | API apply-coupon không validation kiểu total_amount và user_id | [#8](https://github.com/MinhTri27343/HW06-Testing/issues/8) |
+| BUG-FR17-01 | FR-17 | SEC-02, SEC-03 | Critical | API quản lý coupon không kiểm tra role Admin | [#9](https://github.com/MinhTri27343/HW06-Testing/issues/9) |
+| BUG-FR17-02 | FR-17 | SEC-05 | High | API tạo coupon thiếu validation các trường bắt buộc | [#10](https://github.com/MinhTri27343/HW06-Testing/issues/10) |
+| BUG-FR17-03 | FR-17 | SEC-05 | Medium | Tạo coupon trùng trả 500 thay vì lỗi xung đột được kiểm soát | [#11](https://github.com/MinhTri27343/HW06-Testing/issues/11) |
+| BUG-FR17-04 | FR-17 | SEC-05 | Medium | Xóa coupon với ID không tồn tại hoặc sai định dạng vẫn báo thành công | [#12](https://github.com/MinhTri27343/HW06-Testing/issues/12) |
 
 ## BUG-FR03-01 - OTP đặt lại mật khẩu chỉ có 4 chữ số thay vì tối thiểu 6
 
@@ -36,6 +40,7 @@ Có 12 nhóm lỗi được xác nhận từ execution evidence. Hai test case n
 - **Severity:** High
 - **Endpoint:** `POST /api/forgot-password`
 - **Test case:** `FR-03-TC-001`, `FR-03-TC-002`, `FR-03-TC-013`
+- **GitHub Issue:** [#4](https://github.com/MinhTri27343/HW06-Testing/issues/4)
 
 ### Bước tái hiện
 
@@ -59,6 +64,10 @@ SUT trả OTP gồm 4 chữ số.
 
 ![BUG-FR03-01 - OTP đặt lại mật khẩu chỉ có 4 chữ số thay vì tối thiểu 6](bug-evidence/BUG-FR03-01.png)
 
+### Bằng chứng GitHub Issue
+
+![GitHub Issue BUG-FR03-01](bug-evidence/github-issue-BUG-FR03-01.png)
+
 ---
 
 ## BUG-FR03-02 - API forgot-password không validation định dạng email
@@ -67,6 +76,7 @@ SUT trả OTP gồm 4 chữ số.
 - **Severity:** Medium
 - **Endpoint:** `POST /api/forgot-password`
 - **Test case:** `FR-03-TC-004`, `FR-03-TC-005`, `FR-03-TC-006`, `FR-03-TC-007`, `FR-03-TC-008`, `FR-03-TC-009`, `FR-03-TC-011`, `FR-03-TC-039`
+- **GitHub Issue:** [#1](https://github.com/MinhTri27343/HW06-Testing/issues/1)
 
 ### Bước tái hiện
 
@@ -95,6 +105,10 @@ SUT truy vấn trực tiếp và trả HTTP 404 thay vì lỗi validation 400.
 
 ![BUG-FR03-02 - API forgot-password không validation định dạng email](bug-evidence/BUG-FR03-02.png)
 
+### Bằng chứng GitHub Issue
+
+![GitHub Issue BUG-FR03-02](bug-evidence/github-issue-BUG-FR03-02.png)
+
 ---
 
 ## BUG-FR03-03 - API reset-password chấp nhận mật khẩu yếu hoặc null
@@ -103,6 +117,7 @@ SUT truy vấn trực tiếp và trả HTTP 404 thay vì lỗi validation 400.
 - **Severity:** High
 - **Endpoint:** `POST /api/reset-password`
 - **Test case:** `FR-03-TC-027`, `FR-03-TC-028`, `FR-03-TC-029`, `FR-03-TC-030`, `FR-03-TC-031`, `FR-03-TC-032`
+- **GitHub Issue:** [#2](https://github.com/MinhTri27343/HW06-Testing/issues/2)
 
 ### Bước tái hiện
 
@@ -129,6 +144,10 @@ SUT trả HTTP 200 và cập nhật mật khẩu yếu hoặc null.
 
 ![BUG-FR03-03 - API reset-password chấp nhận mật khẩu yếu hoặc null](bug-evidence/BUG-FR03-03.png)
 
+### Bằng chứng GitHub Issue
+
+![GitHub Issue BUG-FR03-03](bug-evidence/github-issue-BUG-FR03-03.png)
+
 ---
 
 ## BUG-FR03-04 - Không giới hạn số lần thử OTP sai
@@ -137,6 +156,7 @@ SUT trả HTTP 200 và cập nhật mật khẩu yếu hoặc null.
 - **Severity:** High
 - **Endpoint:** `POST /api/reset-password`
 - **Test case:** `FR-03-TC-036`
+- **GitHub Issue:** [#3](https://github.com/MinhTri27343/HW06-Testing/issues/3)
 
 ### Bước tái hiện
 
@@ -158,6 +178,10 @@ SUT tiếp tục trả HTTP 400 và không khóa/rate-limit yêu cầu.
 
 ![BUG-FR03-04 - Không giới hạn số lần thử OTP sai](bug-evidence/BUG-FR03-04.png)
 
+### Bằng chứng GitHub Issue
+
+![GitHub Issue BUG-FR03-04](bug-evidence/github-issue-BUG-FR03-04.png)
+
 ---
 
 ## BUG-FR09-01 - Công thức giảm giá phần trăm tính sai
@@ -166,6 +190,7 @@ SUT tiếp tục trả HTTP 400 và không khóa/rate-limit yêu cầu.
 - **Severity:** Critical
 - **Endpoint:** `POST /api/apply-coupon`
 - **Test case:** `FR-09-TC-001`, `FR-09-TC-013`
+- **GitHub Issue:** [#5](https://github.com/MinhTri27343/HW06-Testing/issues/5)
 
 ### Bước tái hiện
 
@@ -188,6 +213,10 @@ SUT trả discount_amount âm và final_amount vượt tổng tiền ban đầu.
 
 ![BUG-FR09-01 - Công thức giảm giá phần trăm tính sai](bug-evidence/BUG-FR09-01.png)
 
+### Bằng chứng GitHub Issue
+
+![GitHub Issue BUG-FR09-01](bug-evidence/github-issue-BUG-FR09-01.png)
+
 ---
 
 ## BUG-FR09-02 - Coupon bị từ chối khi tổng tiền đúng bằng ngưỡng tối thiểu
@@ -196,6 +225,7 @@ SUT trả discount_amount âm và final_amount vượt tổng tiền ban đầu.
 - **Severity:** High
 - **Endpoint:** `POST /api/apply-coupon`
 - **Test case:** `FR-09-TC-011`, `FR-09-TC-014`
+- **GitHub Issue:** [#6](https://github.com/MinhTri27343/HW06-Testing/issues/6)
 
 ### Bước tái hiện
 
@@ -218,6 +248,10 @@ SUT trả HTTP 400 tại đúng giá trị biên tối thiểu.
 
 ![BUG-FR09-02 - Coupon bị từ chối khi tổng tiền đúng bằng ngưỡng tối thiểu](bug-evidence/BUG-FR09-02.png)
 
+### Bằng chứng GitHub Issue
+
+![GitHub Issue BUG-FR09-02](bug-evidence/github-issue-BUG-FR09-02.png)
+
 ---
 
 ## BUG-FR09-03 - API apply-coupon không yêu cầu JWT hợp lệ
@@ -226,6 +260,7 @@ SUT trả HTTP 400 tại đúng giá trị biên tối thiểu.
 - **Severity:** Critical
 - **Endpoint:** `POST /api/apply-coupon`
 - **Test case:** `FR-09-TC-023`, `FR-09-TC-024`
+- **GitHub Issue:** [#7](https://github.com/MinhTri27343/HW06-Testing/issues/7)
 
 ### Bước tái hiện
 
@@ -248,6 +283,10 @@ SUT vẫn xử lý coupon và trả HTTP 200.
 
 ![BUG-FR09-03 - API apply-coupon không yêu cầu JWT hợp lệ](bug-evidence/BUG-FR09-03.png)
 
+### Bằng chứng GitHub Issue
+
+![GitHub Issue BUG-FR09-03](bug-evidence/github-issue-BUG-FR09-03.png)
+
 ---
 
 ## BUG-FR09-04 - API apply-coupon không validation kiểu total_amount và user_id
@@ -256,6 +295,7 @@ SUT vẫn xử lý coupon và trả HTTP 200.
 - **Severity:** High
 - **Endpoint:** `POST /api/apply-coupon`
 - **Test case:** `FR-09-TC-019`, `FR-09-TC-021`, `FR-09-TC-028`, `FR-09-TC-029`
+- **GitHub Issue:** [#8](https://github.com/MinhTri27343/HW06-Testing/issues/8)
 
 ### Bước tái hiện
 
@@ -280,6 +320,10 @@ SUT ép kiểu hoặc tiếp tục xử lý và trả HTTP 200.
 
 ![BUG-FR09-04 - API apply-coupon không validation kiểu total_amount và user_id](bug-evidence/BUG-FR09-04.png)
 
+### Bằng chứng GitHub Issue
+
+![GitHub Issue BUG-FR09-04](bug-evidence/github-issue-BUG-FR09-04.png)
+
 ---
 
 ## BUG-FR17-01 - API quản lý coupon không kiểm tra role Admin
@@ -288,6 +332,7 @@ SUT ép kiểu hoặc tiếp tục xử lý và trả HTTP 200.
 - **Severity:** Critical
 - **Endpoint:** `GET/POST/DELETE /api/coupons`
 - **Test case:** `FR-17-TC-002`, `FR-17-TC-008`, `FR-17-TC-031`, `FR-17-TC-036`
+- **GitHub Issue:** [#9](https://github.com/MinhTri27343/HW06-Testing/issues/9)
 
 ### Bước tái hiện
 
@@ -312,6 +357,10 @@ User thường có thể xem, tạo và xóa coupon với HTTP 200.
 
 ![BUG-FR17-01 - API quản lý coupon không kiểm tra role Admin](bug-evidence/BUG-FR17-01.png)
 
+### Bằng chứng GitHub Issue
+
+![GitHub Issue BUG-FR17-01](bug-evidence/github-issue-BUG-FR17-01.png)
+
 ---
 
 ## BUG-FR17-02 - API tạo coupon thiếu validation các trường bắt buộc
@@ -320,6 +369,7 @@ User thường có thể xem, tạo và xóa coupon với HTTP 200.
 - **Severity:** High
 - **Endpoint:** `POST /api/admin/coupons`
 - **Test case:** `FR-17-TC-011`, `FR-17-TC-012`, `FR-17-TC-013`, `FR-17-TC-015`, `FR-17-TC-016`, `FR-17-TC-017`, `FR-17-TC-018`, `FR-17-TC-019`, `FR-17-TC-020`, `FR-17-TC-022`, `FR-17-TC-023`, `FR-17-TC-024`, `FR-17-TC-026`, `FR-17-TC-027`
+- **GitHub Issue:** [#10](https://github.com/MinhTri27343/HW06-Testing/issues/10)
 
 ### Bước tái hiện
 
@@ -354,6 +404,10 @@ SUT vẫn tạo coupon và trả HTTP 200 cho nhiều payload không hợp lệ.
 
 ![BUG-FR17-02 - API tạo coupon thiếu validation các trường bắt buộc](bug-evidence/BUG-FR17-02.png)
 
+### Bằng chứng GitHub Issue
+
+![GitHub Issue BUG-FR17-02](bug-evidence/github-issue-BUG-FR17-02.png)
+
 ---
 
 ## BUG-FR17-03 - Tạo coupon trùng trả 500 thay vì lỗi xung đột được kiểm soát
@@ -362,6 +416,7 @@ SUT vẫn tạo coupon và trả HTTP 200 cho nhiều payload không hợp lệ.
 - **Severity:** Medium
 - **Endpoint:** `POST /api/admin/coupons`
 - **Test case:** `FR-17-TC-014`, `FR-17-TC-037`
+- **GitHub Issue:** [#11](https://github.com/MinhTri27343/HW06-Testing/issues/11)
 
 ### Bước tái hiện
 
@@ -384,6 +439,10 @@ SUT để lỗi SQLite thoát ra thành HTTP 500 hoặc xử lý không nhất q
 
 ![BUG-FR17-03 - Tạo coupon trùng trả 500 thay vì lỗi xung đột được kiểm soát](bug-evidence/BUG-FR17-03.png)
 
+### Bằng chứng GitHub Issue
+
+![GitHub Issue BUG-FR17-03](bug-evidence/github-issue-BUG-FR17-03.png)
+
 ---
 
 ## BUG-FR17-04 - Xóa coupon với ID không tồn tại hoặc sai định dạng vẫn báo thành công
@@ -392,6 +451,7 @@ SUT để lỗi SQLite thoát ra thành HTTP 500 hoặc xử lý không nhất q
 - **Severity:** Medium
 - **Endpoint:** `DELETE /api/admin/coupons/:id`
 - **Test case:** `FR-17-TC-034`, `FR-17-TC-035`
+- **GitHub Issue:** [#12](https://github.com/MinhTri27343/HW06-Testing/issues/12)
 
 ### Bước tái hiện
 
@@ -414,9 +474,7 @@ SUT trả HTTP 200 và thông báo xóa thành công.
 
 ![BUG-FR17-04 - Xóa coupon với ID không tồn tại hoặc sai định dạng vẫn báo thành công](bug-evidence/BUG-FR17-04.png)
 
+### Bằng chứng GitHub Issue
 
-## Ghi chú
+![GitHub Issue BUG-FR17-04](bug-evidence/github-issue-BUG-FR17-04.png)
 
-- Ảnh evidence được chụp trực tiếp từ Newman HTML report sau lần chạy full suite ngày 2026-09-02.
-- Các failure được giữ nguyên theo oracle của SRS; không sửa SUT để làm test pass.
-- Thư mục `reports/issues/` không còn được sử dụng; toàn bộ bug report nằm trong file này.

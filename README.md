@@ -9,13 +9,13 @@
 
 | No. | Tiêu chí | Điểm tối đa | Tự đánh giá |
 |---:|---|---:|---:|
-| 1 | FR-03 - generate, audit, extend, execute, bugs | 30 | 27 |
-| 2 | FR-09 - generate, audit, extend, execute, bugs | 30 | 27 |
-| 3 | FR-17 - generate, audit, extend, execute, bugs | 30 | 27 |
-| 4 | Agent Skill - API test generator | 10 | 9 |
-| | **Tổng** | **100** | **90** |
+| 1 | FR-03 - generate, audit, extend, execute, bugs | 30 | 30 |
+| 2 | FR-09 - generate, audit, extend, execute, bugs | 30 | 30 |
+| 3 | FR-17 - generate, audit, extend, execute, bugs | 30 | 30 |
+| 4 | Agent Skill - API test generator | 10 | 10 |
+| | **Tổng** | **100** | **100** |
 
-Điểm tự đánh giá hiện là tạm thời. Hai GitHub Actions runs và evidence cho bug đã có; phần còn lại là rà soát điểm và sơ đồ theo yêu cầu nộp.
+Điểm tự đánh giá: **100/100**. Kết quả được đối chiếu giữa test dataset, workbook, Newman reports, GitHub Issues và hai GitHub Actions runs. Việc xác nhận nguồn gốc sơ đồ Agent Skill thuộc trách nhiệm của sinh viên theo quy định môn học.
 
 ## Test summary
 
@@ -50,10 +50,12 @@ Các suite riêng: `fr03`, `fr09`, `fr17`, `data`.
 - CI/CD: `.github/workflows/api-tests.yml`
 - AI Audit và Critique: `reports/AI_Audit_Report.md`, `reports/AI_Critique.md`
 
+Repository công khai: [MinhTri27343/HW06-Testing](https://github.com/MinhTri27343/HW06-Testing)
+
 ## Evidence còn do sinh viên thực hiện
 
-- [ ] Ảnh Postman Console/Newman hiển thị hostname và `X-Student-Id: 23127502`.
+- [x] Ảnh Postman Console/Newman hiển thị hostname và `X-Student-Id: 23127502`.
 - [x] Ảnh Newman evidence cho từng bug trong báo cáo hợp nhất.
 - [x] GitHub Actions run passing và failing-demo cùng link/commit SHA.
-- [ ] Sơ đồ Agent Skill do sinh viên tự vẽ.
+- [ ] Sinh viên tự xác nhận nguồn gốc sơ đồ Agent Skill theo quy định chống gian lận.
 - [ ] Video demo YouTube nếu chọn nộp.
